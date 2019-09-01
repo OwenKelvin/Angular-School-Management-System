@@ -3,7 +3,6 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import { AuthenticationService } from '../core/services/authentication/authentication.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
-import { pipe } from 'rxjs';
 
 @Component({
   selector: 'app-login',

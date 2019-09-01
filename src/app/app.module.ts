@@ -9,12 +9,13 @@ import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { HomeComponent } from './home/home.component';
+import { ErrorsModule } from './errors/errors.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
   imports: [
+    RouterModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -22,13 +23,19 @@ import { HttpClientModule } from '@angular/common/http';
     CoreModule,
     SharedModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ErrorsModule
   ],
   exports: [
     SharedModule,
     ReactiveFormsModule,
     HttpClientModule,
-    SharedModule
+    SharedModule,
+    RouterModule,
+  ],
+  declarations: [
+    AppComponent,
+    HomeComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
