@@ -6,17 +6,25 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatInputModule } from '@angular/material/input';
-
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatMenuModule } from '@angular/material/menu';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
-    MatButtonModule,
-    MatCheckboxModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatProgressSpinnerModule,
-    MatInputModule
+    FormsModule,
+    ReactiveFormsModule
+    // MatButtonModule,
+    // MatCheckboxModule,
+    // MatCardModule,
+    // MatFormFieldModule,
+    // MatProgressSpinnerModule,
+    // MatInputModule,
+    // MatToolbarModule,
+    // MatIconModule
   ],
   exports: [
     MatButtonModule,
@@ -24,7 +32,11 @@ import { MatInputModule } from '@angular/material/input';
     MatCardModule,
     MatFormFieldModule,
     MatProgressSpinnerModule,
-    MatInputModule
+    MatInputModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatSidenavModule,
+    MatMenuModule,
   ]
 })
 export class CustomMaterialModule { }

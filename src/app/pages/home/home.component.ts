@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { RoutesService } from '../core/services/routes/routes.service';
 
 @Component({
   selector: 'app-home',
@@ -9,10 +7,9 @@ import { RoutesService } from '../core/services/routes/routes.service';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private routerLinks: RoutesService) { }
+  constructor() { }
 
   ngOnInit() {
-    console.log(this.routerLinks.getRoutes());
   }
 
 }

@@ -44,11 +44,13 @@
                     <button 
                         type="submit" 
                         mat-flat-button
-                        color="success"
-                        [disabled]="!loginForm.valid"
+                        color="primary"
+                        
+                        [disabled]="!loginForm.valid || loading"
                     >
                         Login
                     </button>
+                    <mat-icon *ngIf="loading"><mat-spinner color="primary" diameter="25"></mat-spinner></mat-icon>
                 </div>
                 </form>
             </mat-card-content>

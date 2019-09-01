@@ -9,33 +9,37 @@ import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { HomeComponent } from './home/home.component';
 import { ErrorsModule } from './errors/errors.module';
 import { RouterModule } from '@angular/router';
+import { PagesModule } from './pages/pages.module';
+import { FormsModule } from '@angular/forms';
+import { SidebarComponent } from './shared/sidebar/sidebar/sidebar.component';
 
 @NgModule({
   imports: [
     RouterModule,
     BrowserModule,
-    AppRoutingModule,
     BrowserAnimationsModule,
     LoginModule,
     CoreModule,
     SharedModule,
     ReactiveFormsModule,
     HttpClientModule,
-    ErrorsModule
+    ErrorsModule,
+    PagesModule,
+    FormsModule,
+    AppRoutingModule,
   ],
   exports: [
-    SharedModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    SharedModule,
-    RouterModule,
+    // SharedModule,
+    // ReactiveFormsModule,
+    // HttpClientModule,
+    // RouterModule,
+    // FormsModule'
+    SidebarComponent
   ],
   declarations: [
     AppComponent,
-    HomeComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,10 @@
+<mat-sidenav-container class="example-container">
+    <mat-sidenav #sidenav mode="side" [(opened)]="opened" (openedChange)="openedChangeHandler()">
+        Some Content
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <main>
+            <ng-content></ng-content>
+        </main>
+    </mat-sidenav-content>
+</mat-sidenav-container>    
