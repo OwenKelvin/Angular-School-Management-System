@@ -1,6 +1,6 @@
-# FsmsApp
+# Angulat School Management System
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.1.2.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.1.2. It is a front end for a School Management System made with Angular
 
 ## Development server
 
