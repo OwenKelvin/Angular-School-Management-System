@@ -4,9 +4,10 @@
 
             <a mat-list-item [matMenuTriggerFor]="library" > 
                 <mat-icon class="material-icons">local_library</mat-icon> library 
+                <mat-icon class="material-icons">arrow_right</mat-icon>
             </a>
             <mat-menu #library="matMenu">
-                <button mat-menu-item >Search Catalogue</button>
+                <button mat-menu-item [routerLink]="'/library/search-catalogue'">Search Catalogue</button>
                 <button mat-menu-item [matMenuTriggerFor]="libraryAdmin">Admin</button>
             </mat-menu>
             <mat-menu #libraryAdmin="matMenu">

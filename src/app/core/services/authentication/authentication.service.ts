@@ -24,8 +24,10 @@ export class AuthenticationService {
   login({username, password, rememberMe}) {
     const loginData: OauthInterface = {
       grant_type : 'password',
-      client_id : '2',
-      client_secret : 'VxyKc8YkIfrvaZOFO2gnuSxEUIzRJCZ9nXwkZD27',
+      // client_id : '2',
+      // client_secret : 'VxyKc8YkIfrvaZOFO2gnuSxEUIzRJCZ9nXwkZD27',
+      client_id : '4',
+      client_secret : 'qIjZPXtKvazNRHaaUv2NM7hBpz4tMIehXB3T4ULV',
       remember_me: rememberMe,
       username,
       password,
@@ -53,13 +55,18 @@ export class AuthenticationService {
       })
     };
 
-    return this.http.post<any>(`${this.config.apiUrl}/api/oauth/token`, loginData, httpOptions)
+    return this.http.post<any>(url, loginData, httpOptions)
             .pipe(map(user => {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 localStorage.setItem('currentUser', JSON.stringify(user));
                 this.currentUserSubject.next(user);
                 return user;
-            }));
+            },
+            error => {
+              console.log(error);
+            }
+
+            ));
 
 
 
