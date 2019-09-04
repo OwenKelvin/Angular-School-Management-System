@@ -13,7 +13,7 @@ import { ErrorsModule } from './errors/errors.module';
 import { RouterModule } from '@angular/router';
 import { PagesModule } from './pages/pages.module';
 import { FormsModule } from '@angular/forms';
-import { SidebarComponent } from './shared/sidebar/sidebar/sidebar.component';
+import { SidebarComponent } from './shared/sidebar/sidebar.component';
 
 @NgModule({
   imports: [

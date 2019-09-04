@@ -1,0 +1,49 @@
+<mat-sidenav-container class="container">
+    <mat-sidenav #sidenav mode="side" [(opened)]="opened" (openedChange)="openedChangeHandler()">
+        <mat-nav-list>
+            <app-mat-menu-wrapper
+                *ngFor='let menuItem of menuItems'
+                [matMenuItem]='menuItem'
+            ></app-mat-menu-wrapper>
+            <a mat-menu-item [matMenuTriggerFor]="library"> 
+                <mat-icon class="material-icons">local_library</mat-icon> library 
+                <mat-icon class="material-icons">arrow_right</mat-icon>
+            </a>
+            <mat-menu #library="matMenu" xPosition="after">
+                <a mat-menu-item [routerLink]="'/library/search-catalogue'">Search Catalogue</a>
+                <a mat-menu-item [matMenuTriggerFor]="libraryAdmin">Admin</a>
+            </mat-menu>
+            <mat-menu #libraryAdmin="matMenu">
+                <a mat-menu-item [matMenuTriggerFor]="libraryAdminBooks">Books Management</a>
+                <a mat-menu-item [matMenuTriggerFor]="libraryAdminAuthors">Book Authors</a>
+                <a mat-menu-item [matMenuTriggerFor]="libraryAdminPublishers">Book Publisher</a>
+                <a mat-menu-item [matMenuTriggerFor]="libraryAdminUsers">User Management</a>
+            </mat-menu>
+            <mat-menu #libraryAdminBooks="matMenu">
+                <a mat-menu-item [routerLink]="'/library/books/view-book'">View Book Details</a>
+                <a mat-menu-item [routerLink]="'/library/books/add-book'">Add books</a>
+                <a mat-menu-item [routerLink]="'/library/books/edit-book'">Edit Existing Book</a>
+            </mat-menu>
+            <mat-menu #libraryAdminAuthors="matMenu">
+                <a mat-menu-item [routerLink]="'/library/authors/view-authors'">View Author Details</a>
+                <a mat-menu-item [routerLink]="'/library/authors/add-authors'">Add Book Author</a>
+                <a mat-menu-item [routerLink]="'/library/authors/edit-author'">Edit Existing Author</a>
+            </mat-menu>
+            <mat-menu #libraryAdminPublishers="matMenu">
+                <a mat-menu-item [routerLink]="'/library/publishers/view-publishers'">View Publisher Details</a>
+                <a mat-menu-item [routerLink]="'/library/publishers/add-publishers'">Add Book Publisher</a>
+                <a mat-menu-item [routerLink]="'/library/publishers/edit-publisher'">Edit Existing Publisher</a>
+            </mat-menu>
+            <mat-menu #libraryAdminUsers="matMenu">
+                <a mat-menu-item [routerLink]="'/library/publishers/view-publishers'">View Users</a>
+                <a mat-menu-item [routerLink]="'/library/publishers/add-publishers'">User Access Management</a>
+            </mat-menu>
+      
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <main>
+            <ng-content></ng-content>
+        </main>
+    </mat-sidenav-content>
+</mat-sidenav-container>    
