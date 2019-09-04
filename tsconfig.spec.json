@@ -13,8 +13,10 @@
   ],
   "include": [
     // "src/app/core/interceptors/jwt.interceptor.spec.ts",
+    // "src/app/pages/admissions/staff/add-staff/add-staff.component.spec.ts",
     "src/**/**/.spec.ts",
-    "src/app/core/guards/auth.guard.spec.ts",
+    "src/**/**/**/.spec.ts",
+    // "src/app/core/guards/auth.guard.spec.ts",
     "src/**/*.spec.ts",
     "src/**/*.d.ts"
   ]

@@ -1,15 +1,17 @@
-<a mat-menu-item [matMenuTriggerFor]="menu" *ngIf='matMenuItem.children'> 
-    <mat-icon *ngIf='matMenuItem.preIcon' class="material-icons">{{ matMenuItem.preIcon }}</mat-icon> {{ matMenuItem.label }} 
-    <mat-icon *ngIf='matMenuItem.postIcon' class="material-icons">{{ matMenuItem.postIcon }}</mat-icon>
-</a>
-
-<a mat-menu-item *ngIf='!matMenuItem.children' [routerLink]="matMenuItem.routerLink"> 
-    <mat-icon *ngIf='matMenuItem.preIcon' class="material-icons">{{ matMenuItem.preIcon }}</mat-icon> {{ matMenuItem.label }} 
-    <mat-icon *ngIf='matMenuItem.postIcon' class="material-icons">{{ matMenuItem.postIcon }}</mat-icon>
-</a>
-<mat-menu #menu="matMenu" xPosition="after">
-    <app-mat-menu-wrapper
-        *ngFor='let menuItem of matMenuItem.children'
-        [matMenuItem]='menuItem'
-    ></app-mat-menu-wrapper>
-</mat-menu> 
+<div *ngIf="matMenuItem">
+    <a mat-menu-item [matMenuTriggerFor]="menu" *ngIf='matMenuItem.children' > 
+        <mat-icon *ngIf='matMenuItem.preIcon' class="material-icons">{{ matMenuItem.preIcon }}</mat-icon> {{ matMenuItem.label }} 
+        <mat-icon *ngIf='matMenuItem.postIcon' class="material-icons">{{ matMenuItem.postIcon }}</mat-icon>
+    </a>
+    
+    <a mat-menu-item *ngIf='!matMenuItem?.children' [routerLink]="matMenuItem.routerLink"> 
+        <mat-icon *ngIf='matMenuItem.preIcon' class="material-icons">{{ matMenuItem.preIcon }}</mat-icon> {{ matMenuItem.label }} 
+        <mat-icon *ngIf='matMenuItem.postIcon' class="material-icons">{{ matMenuItem.postIcon }}</mat-icon>
+    </a>
+    <mat-menu  #menu="matMenu" xPosition="after">
+        <app-mat-menu-wrapper
+            *ngFor='let menuItem of matMenuItem.children'
+            [matMenuItem]='menuItem'
+        ></app-mat-menu-wrapper>
+    </mat-menu> 
+</div>

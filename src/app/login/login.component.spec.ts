@@ -9,6 +9,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatIconModule } from '@angular/material/icon';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -24,7 +26,9 @@ describe('LoginComponent', () => {
         MatFormFieldModule,
         MatInputModule,
         MatCheckboxModule,
-        BrowserAnimationsModule
+        MatProgressSpinnerModule,
+        BrowserAnimationsModule,
+        MatIconModule
       ],
       declarations: [ LoginComponent ]
     })

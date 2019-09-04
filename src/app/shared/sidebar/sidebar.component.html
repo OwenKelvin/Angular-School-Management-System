@@ -5,7 +5,7 @@
                 *ngFor='let menuItem of menuItems'
                 [matMenuItem]='menuItem'
             ></app-mat-menu-wrapper>
-            <a mat-menu-item [matMenuTriggerFor]="library"> 
+            <!-- <a mat-menu-item [matMenuTriggerFor]="library"> 
                 <mat-icon class="material-icons">local_library</mat-icon> library 
                 <mat-icon class="material-icons">arrow_right</mat-icon>
             </a>
@@ -37,7 +37,7 @@
             <mat-menu #libraryAdminUsers="matMenu">
                 <a mat-menu-item [routerLink]="'/library/publishers/view-publishers'">View Users</a>
                 <a mat-menu-item [routerLink]="'/library/publishers/add-publishers'">User Access Management</a>
-            </mat-menu>
+            </mat-menu> -->
       
         </mat-nav-list>
     </mat-sidenav>
