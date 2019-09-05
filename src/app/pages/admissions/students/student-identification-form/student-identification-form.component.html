@@ -1,0 +1,13 @@
+<h1>student-identification Information</h1>
+<form [formGroup]="userIdentificaionForm" (ngSubmit)="submit()">
+    <mat-form-field>
+        <label hidden for="firstName">First Name</label>
+        <span class="material-icons" matPrefix >person</span>
+        <input (blur)="validateFirstName()" id="firstName" type="text" placeholder="first Name" formControlName="firstName" matInput>
+        <mat-error
+            *ngIf="errors.firstName"
+        >
+            {{ errors.firstName }}
+        </mat-error>
+    </mat-form-field>
+</form>

@@ -10,9 +10,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatTabsModule } from '@angular/material';
+import { MatTabsModule, MatDatepickerModule, MatNativeDateModule } from '@angular/material';
 import { MatListModule } from '@angular/material/list';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { from } from 'rxjs';
 @NgModule({
   declarations: [],
@@ -42,7 +43,10 @@ import { from } from 'rxjs';
     MatSidenavModule,
     MatMenuModule,
     MatListModule,
-    MatTabsModule
+    MatTabsModule,
+    MatExpansionModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ]
 })
 export class CustomMaterialModule { }

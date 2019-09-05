@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-add-student',
@@ -6,10 +7,22 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./add-student.component.less']
 })
 export class AddStudentComponent implements OnInit {
-
-  constructor() { }
+  step = 0;
+  constructor(
+    private fb: FormBuilder
+  ) { }
 
   ngOnInit() {
   }
+  setStep(index: number) {
+    this.step = index;
+  }
 
+  nextStep() {
+    this.step++;
+  }
+
+  prevStep() {
+    this.step--;
+  }
 }

@@ -6,15 +6,20 @@ import { AddStudentComponent } from './add-student/add-student.component';
 import { EditStudentComponent } from './edit-student/edit-student.component';
 import { ViewStudentsComponent } from './view-students/view-students.component';
 import { StudentsComponent } from './students.component';
-import { MatTabsModule } from '@angular/material';
+import { MatTabsModule, MatFormFieldModule, MatExpansionModule, MatIconModule, MatDatepicker } from '@angular/material';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CustomMaterialModule } from 'src/app/shared/custom-material/custom-material.module';
+import { StudentIdentificationFormComponent } from './student-identification-form/student-identification-form.component';
 
 
 @NgModule({
-  declarations: [AddStudentComponent, EditStudentComponent, ViewStudentsComponent, StudentsComponent],
+  declarations: [AddStudentComponent, EditStudentComponent, ViewStudentsComponent, StudentsComponent, StudentIdentificationFormComponent],
   imports: [
     MatTabsModule,
     CommonModule,
-    StudentsRoutingModule
+    StudentsRoutingModule,
+    ReactiveFormsModule,
+    CustomMaterialModule
   ],
   exports: [StudentsComponent]
 })
