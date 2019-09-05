@@ -12,7 +12,9 @@ import { OauthInterface } from '../../interfaces/oauth.interface';
 export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<UserInterface>;
   public currentUser: Observable<UserInterface>;
-  constructor(private http: HttpClient, private config: Config) {
+  constructor(
+    private http: HttpClient,
+    private config: Config) {
     this.currentUserSubject = new BehaviorSubject<UserInterface>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
   }
@@ -23,11 +25,11 @@ export class AuthenticationService {
 
   login({username, password, rememberMe}) {
     const loginData: OauthInterface = {
-      grant_type : 'password',
-      // client_id : '2',
-      // client_secret : 'VxyKc8YkIfrvaZOFO2gnuSxEUIzRJCZ9nXwkZD27',
-      client_id : '4',
-      client_secret : 'qIjZPXtKvazNRHaaUv2NM7hBpz4tMIehXB3T4ULV',
+      grant_type : this.config.grantType,
+      client_id : this.config.clientId,
+      client_secret : this.config.clientSecret,
+      // client_id : '4',
+      // client_secret : 'qIjZPXtKvazNRHaaUv2NM7hBpz4tMIehXB3T4ULV',
       remember_me: rememberMe,
       username,
       password,

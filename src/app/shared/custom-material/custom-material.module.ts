@@ -10,6 +10,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatTabsModule } from '@angular/material';
 import { MatListModule } from '@angular/material/list';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { from } from 'rxjs';
@@ -18,6 +19,7 @@ import { from } from 'rxjs';
   imports: [
     CommonModule,
     FormsModule,
+    MatTabsModule,
     ReactiveFormsModule
     // MatButtonModule,
     // MatCheckboxModule,
@@ -39,7 +41,8 @@ import { from } from 'rxjs';
     MatIconModule,
     MatSidenavModule,
     MatMenuModule,
-    MatListModule
+    MatListModule,
+    MatTabsModule
   ]
 })
 export class CustomMaterialModule { }
