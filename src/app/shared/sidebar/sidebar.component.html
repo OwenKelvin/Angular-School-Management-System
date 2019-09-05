@@ -1,5 +1,11 @@
-<mat-sidenav-container class="container">
-    <mat-sidenav #sidenav mode="side" [(opened)]="opened" (openedChange)="openedChangeHandler()">
+<mat-sidenav-container  class="sidenav-container" >
+    <mat-sidenav 
+        #sidenav 
+        [attr.role]="isHandset ? 'dialogue': 'navigation'"
+        [mode]="(isHandset | async)!.matches ? 'over': 'side'"
+        [(opened)]="opened" 
+        (openedChange)="openedChangeHandler()"
+        >
         <mat-nav-list>
             <app-mat-menu-wrapper
                 *ngFor='let menuItem of menuItems'

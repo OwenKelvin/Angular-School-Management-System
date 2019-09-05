@@ -2,6 +2,8 @@ import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChange
 import { AuthenticationService } from 'src/app/core/services/authentication/authentication.service';
 import { Route, Router } from '@angular/router';
 import { MenuItemService } from 'src/app/core/menu-item/menu-item.service';
+import { Observable } from 'rxjs';
+import { BreakpointState, BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-sidebar',
@@ -9,11 +11,17 @@ import { MenuItemService } from 'src/app/core/menu-item/menu-item.service';
   styleUrls: ['./sidebar.component.less']
 })
 export class SidebarComponent implements OnInit, OnChanges {
+  isHandset: Observable<BreakpointState> = this.breakPointObserver.observe(Breakpoints.Handset);
   private menuItems: object[];
   @Input() isOpen: boolean;
   @Output() openedChange: EventEmitter<boolean>;
   opened: boolean;
-  constructor(private auth: AuthenticationService, private router: Router, private menuItem: MenuItemService) {
+  constructor(
+    private auth: AuthenticationService,
+    private router: Router,
+    private menuItem: MenuItemService,
+    private breakPointObserver: BreakpointObserver
+    ) {
     this.openedChange = new EventEmitter();
   }
 

@@ -1,7 +1,6 @@
 Create Student
 <mat-accordion class="example-headers-align">
     <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
-        <app-student-identification-form></app-student-identification-form>
       <mat-expansion-panel-header>
         <mat-panel-title>
           Personal data
@@ -12,13 +11,7 @@ Create Student
         </mat-panel-description>
       </mat-expansion-panel-header>
   
-      <mat-form-field>
-        <input matInput placeholder="First name">
-      </mat-form-field>
-  
-      <mat-form-field>
-        <input matInput type="number" min="1" placeholder="Age">
-      </mat-form-field>
+      <app-student-identification-form></app-student-identification-form>
   
       <mat-action-row>
         <button mat-button color="primary" (click)="nextStep()">Next</button>

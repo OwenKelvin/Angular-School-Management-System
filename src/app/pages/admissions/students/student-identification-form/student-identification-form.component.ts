@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
 @Component({
@@ -7,7 +7,7 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
   styleUrls: ['./student-identification-form.component.less']
 })
 export class StudentIdentificationFormComponent implements OnInit {
-
+  @Input() submitted: boolean;
   userIdentificaionForm: FormGroup;
   validators = {
     firstName: [Validators.required, Validators.minLength(2)],
@@ -40,5 +40,11 @@ export class StudentIdentificationFormComponent implements OnInit {
     });
   }
   validateFirstName() {
+  }
+  validateLastName() {
+  }
+  validateMiddleName() {
+  }
+  validateOtherNames() {
   }
 }
