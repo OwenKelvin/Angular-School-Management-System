@@ -1,4 +1,3 @@
-<h1>student-identification Information</h1>
 <form [formGroup]="userIdentificaionForm" (ngSubmit)="submit()">
     <mat-form-field>
         <label hidden for="firstName"><span class="material-icons" matPrefix >person</span> First Name</label>
@@ -35,6 +34,22 @@
             *ngIf="errors.otherNames"
         >
             {{ errors.lastName }}
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <input
+            matInput
+            [matDatepicker]="dateOfBirth"
+            placeholder="Date Of Birth"
+            formControlName="dateOfBirth"
+            (blur)="validateDateOfBirth()"
+            >
+        <mat-datepicker-toggle matSuffix [for]="dateOfBirth"></mat-datepicker-toggle>
+        <mat-datepicker #dateOfBirth></mat-datepicker>
+        <mat-error
+            *ngIf="errors.dateOfBirth"
+        >
+            {{ errors.dateOfBirth }}
         </mat-error>
     </mat-form-field>
 </form>

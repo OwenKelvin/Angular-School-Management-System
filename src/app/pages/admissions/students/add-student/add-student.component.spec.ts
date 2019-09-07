@@ -1,8 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddStudentComponent } from './add-student.component';
-import { MatTabsModule } from '@angular/material';
+import { MatTabsModule, MatExpansionModule, MatIconModule, MatCommonModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { StudentIdentificationFormComponent } from '../student-identification-form/student-identification-form.component';
+import { CustomMaterialModule } from 'src/app/shared/custom-material/custom-material.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 describe('AddStudentComponent', () => {
   let component: AddStudentComponent;
@@ -10,8 +13,14 @@ describe('AddStudentComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [MatTabsModule, BrowserAnimationsModule],
-      declarations: [ AddStudentComponent ]
+      imports: [
+        MatCommonModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        ReactiveFormsModule,
+        CustomMaterialModule,
+      ],
+      declarations: [ AddStudentComponent, StudentIdentificationFormComponent ]
     })
     .compileComponents();
   }));

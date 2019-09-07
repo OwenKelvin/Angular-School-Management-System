@@ -15,7 +15,7 @@ export class StudentIdentificationFormComponent implements OnInit {
     middleName: [],
     otherNames: [],
     namePrefix: [],
-    dateOfBirth: []
+    dateOfBirth: [Validators.required]
   };
   errors = {
     firstName: null,
@@ -37,14 +37,45 @@ export class StudentIdentificationFormComponent implements OnInit {
       otherNames: [ '', this.validators.otherNames ],
       middleName: [ '', this.validators.middleName ],
       namePrefix: [ '', this.validators.namePrefix ],
+      dateOfBirth: [ null, this.validators.dateOfBirth]
     });
   }
   validateFirstName() {
+    if ((this.userIdentificaionForm.get('firstName').dirty || this.userIdentificaionForm.get('firstName').touched) &&
+      !this.userIdentificaionForm.get('firstName').valid ) {
+        if (this.userIdentificaionForm.get('firstName').errors.required) {
+          this.errors.firstName = 'First Name is required';
+        } else if (this.userIdentificaionForm.get('firstName').errors.minlength) {
+          this.errors.firstName = 'First Name must have at least 2 characters';
+        } else {
+          this.errors.firstName = null;
+        }
+      }
   }
   validateLastName() {
+    if ((this.userIdentificaionForm.get('lastName').dirty || this.userIdentificaionForm.get('lastName').touched) &&
+      !this.userIdentificaionForm.get('lastName').valid ) {
+        if (this.userIdentificaionForm.get('lastName').errors.required) {
+          this.errors.lastName = 'First Name is required';
+        } else if (this.userIdentificaionForm.get('lastName').errors.minlength) {
+          this.errors.lastName = 'Last Name must have at least 2 characters';
+        } else {
+          this.errors.lastName = null;
+        }
+      }
   }
   validateMiddleName() {
   }
   validateOtherNames() {
+  }
+  validateDateOfBirth() {
+    if ((this.userIdentificaionForm.get('dateOfBirth').dirty || this.userIdentificaionForm.get('dateOfBirth').touched) &&
+    !this.userIdentificaionForm.get('dateOfBirth').valid ) {
+      if (this.userIdentificaionForm.get('dateOfBirth').errors.required) {
+        this.errors.dateOfBirth = 'Date Of Birth is required';
+      } else {
+        this.errors.dateOfBirth = null;
+      }
+    }
   }
 }

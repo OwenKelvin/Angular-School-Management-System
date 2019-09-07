@@ -12,10 +12,10 @@ import { first } from 'rxjs/operators';
 
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  username: FormControl = new FormControl('oking@example.net');
-  password: FormControl = new FormControl('password');
-  // username: FormControl = new FormControl('');
-  // password: FormControl = new FormControl('');
+  // username: FormControl = new FormControl('oking@example.net');
+  // password: FormControl = new FormControl('password');
+  username: FormControl = new FormControl('');
+  password: FormControl = new FormControl('');
   rememberMe: FormControl = new FormControl(false);
   submitted = false;
   loading = false;
