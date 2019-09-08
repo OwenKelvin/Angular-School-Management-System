@@ -40,8 +40,9 @@ export class StudentIdentificationFormComponent implements OnInit {
       dateOfBirth: [ null, this.validators.dateOfBirth]
     });
   }
-  validateFirstName() {
-    if ((this.userIdentificaionForm.get('firstName').dirty || this.userIdentificaionForm.get('firstName').touched) &&
+  validateFirstName({blur} = {blur: true}) {
+    const changeFirstNameError = () => {
+      if ((this.userIdentificaionForm.get('firstName').dirty || this.userIdentificaionForm.get('firstName').touched) &&
       !this.userIdentificaionForm.get('firstName').valid ) {
         if (this.userIdentificaionForm.get('firstName').errors.required) {
           this.errors.firstName = 'First Name is required';
@@ -51,6 +52,14 @@ export class StudentIdentificationFormComponent implements OnInit {
           this.errors.firstName = null;
         }
       }
+    }
+    if (blur) {
+      changeFirstNameError();
+    } else {
+      if ( this.errors.firstName ) {
+        changeFirstNameError();
+      }
+    }
   }
   validateLastName() {
     if ((this.userIdentificaionForm.get('lastName').dirty || this.userIdentificaionForm.get('lastName').touched) &&

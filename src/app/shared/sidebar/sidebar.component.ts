@@ -4,6 +4,7 @@ import { Route, Router } from '@angular/router';
 import { MenuItemService } from 'src/app/core/menu-item/menu-item.service';
 import { Observable } from 'rxjs';
 import { BreakpointState, BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-sidebar',
@@ -13,16 +14,17 @@ import { BreakpointState, BreakpointObserver, Breakpoints } from '@angular/cdk/l
 export class SidebarComponent implements OnInit, OnChanges {
   isHandset: Observable<BreakpointState> = this.breakPointObserver.observe(Breakpoints.Handset);
   private menuItems: object[];
-  @Input() isOpen: boolean;
-  @Output() openedChange: EventEmitter<boolean>;
+  // @Input() isOpen: boolean;
+  // @Output() openedChange: EventEmitter<boolean>;
   opened: boolean;
   constructor(
     private auth: AuthenticationService,
     private router: Router,
     private menuItem: MenuItemService,
-    private breakPointObserver: BreakpointObserver
+    private breakPointObserver: BreakpointObserver,
+    private store: Store<any>
     ) {
-    this.openedChange = new EventEmitter();
+    // this.openedChange = new EventEmitter();
   }
 
   ngOnInit() {
@@ -30,13 +32,17 @@ export class SidebarComponent implements OnInit, OnChanges {
   }
   ngOnChanges(changes: SimpleChanges): void {
     this.opened = changes.isOpen.currentValue;
+    this.store.dispatch({
+      type: '[APP STATE] toggle side bar',
+      payload: !this.opened
+    });
   }
   logout(): void {
     this.auth.logout();
     this.router.navigate(['/login']);
   }
-  openedChangeHandler(): void {
-    this.openedChange.emit(this.opened);
-  }
+  // openedChangeHandler(): void {
+  //   this.openedChange.emit(this.opened);
+  // }
 
 }

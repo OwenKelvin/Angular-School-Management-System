@@ -5,6 +5,8 @@ import { AdmissionsRoutingModule } from './admissions-routing.module';
 import { AdmissionsComponent } from './admissions.component';
 import { StudentsModule } from './students/students.module';
 import { StaffModule } from './staff/staff.module';
+import { StoreModule } from '@ngrx/store';
+import * as fromAdmissions from './store/reducers';
 
 
 @NgModule({
@@ -13,7 +15,8 @@ import { StaffModule } from './staff/staff.module';
     CommonModule,
     AdmissionsRoutingModule,
     StudentsModule,
-    StaffModule
+    StaffModule,
+    StoreModule.forFeature(fromAdmissions.admissionsFeatureKey, fromAdmissions.reducers, { metaReducers: fromAdmissions.metaReducers })
   ],
   exports: []
 })

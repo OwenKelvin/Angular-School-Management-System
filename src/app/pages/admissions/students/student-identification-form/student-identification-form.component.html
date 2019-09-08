@@ -2,7 +2,7 @@
     <mat-form-field>
         <label hidden for="firstName"><span class="material-icons" matPrefix >person</span> First Name</label>
         
-        <input (blur)="validateFirstName()" id="firstName" type="text" placeholder="first Name" formControlName="firstName" matInput>
+        <input (keyup)="validateFirstName({ blur: false })"  (blur)="validateFirstName()" id="firstName" type="text" placeholder="first Name" formControlName="firstName" matInput>
         <mat-error
             *ngIf="errors.firstName"
         >
