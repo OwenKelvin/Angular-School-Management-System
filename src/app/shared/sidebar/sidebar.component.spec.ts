@@ -9,6 +9,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { StoreModule } from '@ngrx/store';
+import { reducers } from 'src/app/store/reducers';
 
 describe('SidebarComponent', () => {
   let component: SidebarComponent;
@@ -23,7 +25,9 @@ describe('SidebarComponent', () => {
         MatListModule,
         MatSidenavModule,
         MatMenuModule,
-        RouterTestingModule],
+        RouterTestingModule,
+        StoreModule.forRoot(reducers),
+      ],
       declarations: [ SidebarComponent, MatMenuWrapperComponent ]
     })
     .compileComponents();

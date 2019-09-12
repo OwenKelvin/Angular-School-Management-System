@@ -1,5 +1,4 @@
-import { Component, OnInit, Input, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-add-student',
@@ -8,8 +7,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class AddStudentComponent implements OnInit {
   step = 0;
+  submitStudentIdentificationInfo: boolean;
   constructor(
-    private fb: FormBuilder
+    private cd: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
@@ -17,12 +17,20 @@ export class AddStudentComponent implements OnInit {
   setStep(index: number) {
     this.step = index;
   }
+  identificationSubmittedHandler() {
+    this.submitStudentIdentificationInfo = false;
+    // this.nextStep();
+  }
 
   nextStep() {
-    this.step++;
+    this.step += 1;
   }
 
   prevStep() {
-    this.step--;
+    this.step -= 1;
+  }
+  saveStudentIdentificationInfo() {
+    this.submitStudentIdentificationInfo = true;
+    this.cd.detectChanges();
   }
 }

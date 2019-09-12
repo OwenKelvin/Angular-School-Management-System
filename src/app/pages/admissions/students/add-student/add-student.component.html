@@ -1,9 +1,9 @@
-Create Student
+<h1>Create A New Student Form</h1>
 <mat-accordion class="example-headers-align">
     <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
       <mat-expansion-panel-header>
         <mat-panel-title>
-          <h1>Identification Information</h1>
+          <h2>Identification Information</h2>
         </mat-panel-title>
         <mat-panel-description>
           Type your name and age
@@ -11,10 +11,13 @@ Create Student
         </mat-panel-description>
       </mat-expansion-panel-header>
   
-      <app-student-identification-form></app-student-identification-form>
+      <app-student-identification-form 
+        (submitted)="identificationSubmittedHandler()"
+        [submit]="submitStudentIdentificationInfo"
+      ></app-student-identification-form>
   
       <mat-action-row>
-        <button mat-button color="primary" (click)="nextStep()">Next</button>
+        <button mat-button color="primary" (click)="saveStudentIdentificationInfo()">Next</button>
       </mat-action-row>
     </mat-expansion-panel>
   

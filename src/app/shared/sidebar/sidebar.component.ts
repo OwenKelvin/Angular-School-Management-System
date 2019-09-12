@@ -4,7 +4,7 @@ import { Route, Router } from '@angular/router';
 import { MenuItemService } from 'src/app/core/menu-item/menu-item.service';
 import { Observable } from 'rxjs';
 import { BreakpointState, BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 
 @Component({
   selector: 'app-sidebar',
@@ -24,7 +24,16 @@ export class SidebarComponent implements OnInit, OnChanges {
     private breakPointObserver: BreakpointObserver,
     private store: Store<any>
     ) {
-    // this.openedChange = new EventEmitter();
+    // TODO unsubscribe
+    this.store.pipe(select('app')).subscribe(
+      sidebar => {
+        if (sidebar) {
+          this.opened = sidebar = sidebar.app.showSideBar;
+        } else {
+          // this.opened = true;
+        }
+      }
+    );
   }
 
   ngOnInit() {
@@ -34,15 +43,18 @@ export class SidebarComponent implements OnInit, OnChanges {
     this.opened = changes.isOpen.currentValue;
     this.store.dispatch({
       type: '[APP STATE] toggle side bar',
-      payload: !this.opened
+      payload: this.opened
     });
   }
   logout(): void {
     this.auth.logout();
     this.router.navigate(['/login']);
   }
-  // openedChangeHandler(): void {
-  //   this.openedChange.emit(this.opened);
-  // }
+  openedChangeHandler(): void {
+    this.store.dispatch({
+      type: '[APP STATE] toggle side bar',
+      payload: this.opened
+    });
+  }
 
 }

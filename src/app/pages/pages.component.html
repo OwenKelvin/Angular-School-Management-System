@@ -1,9 +1,9 @@
 <mat-toolbar color="primary">
         <button
-            (click)="isSidebarOpen = !isSidebarOpen"
+            (click)="toggleSideBar()"
             mat-mini-fab
             color='primary'
-            ><span class="material-icons">{{ isSidebarOpen ? 'close' : 'menu' }}</span>
+            ><span class="material-icons">{{ isSidebarOpen ? 'menu_open' : 'menu' }}</span>
         </button>
         <span>School Management System</span>
         
@@ -27,7 +27,7 @@
 
     </mat-toolbar>
 <div class="mat-app-background basic-container">
-    <app-sidebar [isOpen]="isSidebarOpen" (openedChange)="openedChangeHandler($event)">
+    <app-sidebar>
         <router-outlet></router-outlet>
     </app-sidebar>
 </div>

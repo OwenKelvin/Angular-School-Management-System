@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../core/services/authentication/authentication.service';
+import { Store, select } from '@ngrx/store';
 
 @Component({
   selector: 'app-pages',
@@ -8,10 +9,21 @@ import { AuthenticationService } from '../core/services/authentication/authentic
 })
 export class PagesComponent implements OnInit {
 
-  constructor(private auth: AuthenticationService) { }
+  constructor(
+    private store: Store<any>,
+    private auth: AuthenticationService) { }
   isSidebarOpen: boolean;
   ngOnInit() {
     this.isSidebarOpen = false;
+    this.store.pipe(select('app')).subscribe(
+      sidebar => {
+        if (sidebar) {
+          this.isSidebarOpen = sidebar = sidebar.app.showSideBar;
+        } else {
+          // this.isSidebarOpen = true;
+        }
+      }
+    );
   }
   openedChangeHandler(event: boolean) {
     this.isSidebarOpen = event;
@@ -19,5 +31,11 @@ export class PagesComponent implements OnInit {
   logout() {
     this.auth.logout();
   }
-
+  toggleSideBar() {
+    this.isSidebarOpen = !this.isSidebarOpen;
+    this.store.dispatch({
+      type: '[APP STATE] toggle side bar',
+      payload: this.isSidebarOpen
+    });
+  }
 }

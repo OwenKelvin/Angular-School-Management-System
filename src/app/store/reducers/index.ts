@@ -20,8 +20,6 @@ export const reducers: ActionReducerMap<State> = {
 
 const TOGGLE_SIDEBAR = '[APP STATE] toggle side bar';
 export function reducer(state, action) {
-  console.log (state);
-
   switch (action.type) {
       case TOGGLE_SIDEBAR:
         const app = state ? state.app : {};

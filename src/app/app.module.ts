@@ -8,7 +8,7 @@ import { LoginModule } from './login/login.module';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ErrorsModule } from './errors/errors.module';
 import { RouterModule } from '@angular/router';
 import { PagesModule } from './pages/pages.module';
@@ -20,6 +20,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { AppEffects } from './store/effects/app.effects';
+import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   imports: [
@@ -35,6 +37,7 @@ import { AppEffects } from './store/effects/app.effects';
     PagesModule,
     FormsModule,
     AppRoutingModule,
+    FlexLayoutModule,
     StoreModule.forRoot(reducers, {
       metaReducers,
       runtimeChecks: {
@@ -57,7 +60,13 @@ import { AppEffects } from './store/effects/app.effects';
   declarations: [
     AppComponent,
   ],
-  providers: [],
+  providers: [
+    {
+      provide : HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi   : true,
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
