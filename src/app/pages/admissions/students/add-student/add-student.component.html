@@ -1,12 +1,12 @@
-<h1>Create A New Student Form</h1>
-<mat-accordion class="example-headers-align">
+<header>Create A New Student Form</header>
+<mat-accordion class="headers-align">
     <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
       <mat-expansion-panel-header>
         <mat-panel-title>
-          <h2>Identification Information</h2>
+          <h1>Identification Information</h1>
         </mat-panel-title>
         <mat-panel-description>
-          Type your name and age
+          &nbsp;
           <mat-icon>account_circle</mat-icon>
         </mat-panel-description>
       </mat-expansion-panel-header>
@@ -17,7 +17,7 @@
       ></app-student-identification-form>
   
       <mat-action-row>
-        <button mat-button color="primary" (click)="saveStudentIdentificationInfo()">Next</button>
+        <button mat-button mat-flat-button color="primary" (click)="saveStudentIdentificationInfo()">Next</button>
       </mat-action-row>
     </mat-expansion-panel>
   
@@ -38,7 +38,7 @@
   
       <mat-action-row>
         <button mat-button color="warn" (click)="prevStep()">Previous</button>
-        <button mat-button color="primary" (click)="nextStep()">Next</button>
+        <button mat-button mat-flat-button color="primary" (click)="nextStep()">Next</button>
       </mat-action-row>
     </mat-expansion-panel>
   

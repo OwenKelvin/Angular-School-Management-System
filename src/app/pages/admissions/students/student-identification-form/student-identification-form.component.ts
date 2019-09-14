@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
 import { SubmitStudentIdentificationService } from '../../services/submit-student-identification.service';
 
 @Component({
@@ -26,7 +26,8 @@ export class StudentIdentificationFormComponent implements OnInit, OnChanges {
     otherNames: null,
     prefix: null,
     dateOfBirth: null,
-    dateOfBirthNumber: null
+    dateOfBirthNumber: null,
+    idNumber: null
   };
   constructor(
     private fb: FormBuilder,
@@ -42,7 +43,19 @@ export class StudentIdentificationFormComponent implements OnInit, OnChanges {
       otherNames: [ '', this.validators.otherNames ],
       middleName: [ '', this.validators.middleName ],
       namePrefix: [ '', this.validators.namePrefix ],
-      dateOfBirth: [ null, this.validators.dateOfBirth]
+      dateOfBirth: [ null, this.validators.dateOfBirth],
+      autogenerateIdNumber: [true, Validators.required],
+      idNumber: new FormControl({value: '', disabled: true}, Validators.required),
+      birthCertNumber: ['']
+    });
+
+    this.userIdentificaionForm.get('autogenerateIdNumber').valueChanges.subscribe((autogenerate) => {
+      if (autogenerate) {
+        this.userIdentificaionForm.get('idNumber').setValue('');
+        this.userIdentificaionForm.get('idNumber').disable();
+      } else {
+        this.userIdentificaionForm.get('idNumber').enable();
+      }
     });
   }
 
@@ -50,7 +63,10 @@ export class StudentIdentificationFormComponent implements OnInit, OnChanges {
     if (changes.submit.currentValue && changes.submit && !changes.submit.firstChange) {
       if ( this.userIdentificaionForm.valid ) {
         this.submitted.emit(true);
-        this.formSubmit.submit( this.userIdentificaionForm.value);
+        this.formSubmit.submit( this.userIdentificaionForm.value).subscribe(
+          success => console.log(success),
+          error => console.log(error)
+        );
       } else {
         this.submitted.emit(false);
         Object.keys(this.userIdentificaionForm.controls).forEach(field => { // {1}
@@ -96,6 +112,16 @@ export class StudentIdentificationFormComponent implements OnInit, OnChanges {
           this.errors.lastName = 'Last Name must have at least 2 characters';
         } else {
           this.errors.lastName = null;
+        }
+      }
+  }
+  validateIdNumber() {
+    if ((this.userIdentificaionForm.get('idNumber').dirty || this.userIdentificaionForm.get('idNumber').touched) &&
+      !this.userIdentificaionForm.get('idNumber').valid ) {
+        if (this.userIdentificaionForm.get('idNumber').errors.required) {
+          this.errors.idNumber = 'Id Number is required';
+        } else {
+          this.errors.idNumber = null;
         }
       }
   }

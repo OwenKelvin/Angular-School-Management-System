@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Config } from 'src/app/config/app.config';
 import { map } from 'rxjs/operators';
+import { observable, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,13 +13,14 @@ export class SubmitStudentIdentificationService {
   constructor(
     private http: HttpClient,
     private config: Config) { }
-  submit(data: any) {
+  submit(data: any): Observable<any> {
     const submitData = {
       first_name: data.firstName,
       last_name: data.lastName,
       middle_name: data.middleName,
       other_names: data.otherNames,
       date_of_birth: data.dateOfBirth
+
     };
     console.log(data)
     const url = `${this.config.apiUrl}/api/admissions/students/identification`;
@@ -27,11 +29,8 @@ export class SubmitStudentIdentificationService {
         'Content-Type':  'application/json',
       })
     };
-    this.http.post<any>(url, submitData, httpOptions).pipe(map(user => {
-      // store user details and jwt token in local storage to keep user logged in between page refreshes
-      //  localStorage.setItem('currentUser', JSON.stringify(user));
-      // console.log(user)
+    return this.http.post<any>(url, submitData, httpOptions).pipe(map(user => {
       return user;
-    })).subscribe(success => console.log(success), error => console.log(error));
+    }));
   }
 }
