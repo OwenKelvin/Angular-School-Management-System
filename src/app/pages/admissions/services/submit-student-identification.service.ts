@@ -19,10 +19,12 @@ export class SubmitStudentIdentificationService {
       last_name: data.lastName,
       middle_name: data.middleName,
       other_names: data.otherNames,
-      date_of_birth: data.dateOfBirth
+      date_of_birth: data.dateOfBirth,
+      student_school_id_number: data.idNumber,
+      birth_cert_number: data.birth_cert_number
 
     };
-    console.log(data)
+    console.log(submitData);
     const url = `${this.config.apiUrl}/api/admissions/students/identification`;
     const httpOptions = {
       headers: new HttpHeaders({

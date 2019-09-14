@@ -1,6 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
-import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder, FormControl, AbstractControl } from '@angular/forms';
 import { SubmitStudentIdentificationService } from '../../services/submit-student-identification.service';
+import { debounceTime } from 'rxjs/operators';
+import { StudentIdNumberService } from '../../services/student-id-number/student-id-number.service';
+import { first } from 'rxjs/operators';
+import { IdNumberValidator } from '../validators/student-id-taken.validator';
 
 @Component({
   selector: 'app-student-identification-form',
@@ -31,7 +35,9 @@ export class StudentIdentificationFormComponent implements OnInit, OnChanges {
   };
   constructor(
     private fb: FormBuilder,
-    private formSubmit: SubmitStudentIdentificationService
+    private formSubmit: SubmitStudentIdentificationService,
+    private studentIdNumber: StudentIdNumberService,
+    private idNumberValidator: IdNumberValidator
   ) {
     this.submitted = new EventEmitter();
   }
@@ -45,7 +51,9 @@ export class StudentIdentificationFormComponent implements OnInit, OnChanges {
       namePrefix: [ '', this.validators.namePrefix ],
       dateOfBirth: [ null, this.validators.dateOfBirth],
       autogenerateIdNumber: [true, Validators.required],
-      idNumber: new FormControl({value: '', disabled: true}, Validators.required),
+      idNumber: new FormControl(
+        { value: '', disabled: true},
+        Validators.required, this.idNumberValidator.studentIdTaken.bind(this.idNumberValidator)),
       birthCertNumber: ['']
     });
 
@@ -57,6 +65,12 @@ export class StudentIdentificationFormComponent implements OnInit, OnChanges {
         this.userIdentificaionForm.get('idNumber').enable();
       }
     });
+
+    this.userIdentificaionForm.get('idNumber').valueChanges.pipe(
+      debounceTime(1000)
+    ).subscribe(
+      value => this.validateIdNumber()
+    );
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -69,15 +83,16 @@ export class StudentIdentificationFormComponent implements OnInit, OnChanges {
         );
       } else {
         this.submitted.emit(false);
-        Object.keys(this.userIdentificaionForm.controls).forEach(field => { // {1}
-          const control = this.userIdentificaionForm.get(field);            // {2}
-          control.markAsTouched({ onlySelf: true });       // {3}
+        Object.keys(this.userIdentificaionForm.controls).forEach(field => {
+          const control = this.userIdentificaionForm.get(field);
+          control.markAsTouched({ onlySelf: true });
         });
         this.validateFirstName();
         this.validateLastName();
         this.validateDateOfBirth();
         this.validateMiddleName();
         this.validateOtherNames();
+        this.validateIdNumber();
       }
     }
   }
@@ -94,7 +109,7 @@ export class StudentIdentificationFormComponent implements OnInit, OnChanges {
           this.errors.firstName = null;
         }
       }
-    }
+    };
     if (blur) {
       changeFirstNameError();
     } else {
@@ -116,10 +131,13 @@ export class StudentIdentificationFormComponent implements OnInit, OnChanges {
       }
   }
   validateIdNumber() {
-    if ((this.userIdentificaionForm.get('idNumber').dirty || this.userIdentificaionForm.get('idNumber').touched) &&
-      !this.userIdentificaionForm.get('idNumber').valid ) {
-        if (this.userIdentificaionForm.get('idNumber').errors.required) {
+    const idNumber = this.userIdentificaionForm.get('idNumber');
+    if ((idNumber.dirty || idNumber.touched) &&
+      !idNumber.valid ) {
+        if (idNumber.errors && idNumber.errors.required) {
           this.errors.idNumber = 'Id Number is required';
+        } else if (idNumber.errors && idNumber.errors.id_taken) {
+          this.errors.idNumber = 'Student with id "' + idNumber.value + '" exists';
         } else {
           this.errors.idNumber = null;
         }
