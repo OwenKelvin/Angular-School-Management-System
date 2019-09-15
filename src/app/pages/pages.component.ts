@@ -18,8 +18,6 @@ export class PagesComponent implements OnInit {
       sidebar => {
         if (sidebar) {
           this.isSidebarOpen = sidebar = sidebar.app.showSideBar;
-        } else {
-          // this.isSidebarOpen = true;
         }
       }
     );

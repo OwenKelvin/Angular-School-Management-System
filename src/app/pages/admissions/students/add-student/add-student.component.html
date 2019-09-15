@@ -11,8 +11,8 @@
       </mat-panel-description>
     </mat-expansion-panel-header>
 
-    <app-student-identification-details></app-student-identification-details>
-    <app-student-identification-form (submitted)="identificationSubmittedHandler()"
+    <!-- <app-student-identification-details></app-student-identification-details> -->
+    <app-student-identification-form (submitted)="identificationSubmittedHandler($event)"
       [submit]="submitStudentIdentificationInfo"></app-student-identification-form>
 
     <mat-action-row>

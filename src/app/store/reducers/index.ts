@@ -19,17 +19,25 @@ export const reducers: ActionReducerMap<State> = {
 };
 
 const TOGGLE_SIDEBAR = '[APP STATE] toggle side bar';
+const TOGGLE_DIALOGUE = '[APP STATE] show dialog';
+
 export function reducer(state, action) {
+  const app = state ? state.app : {};
   switch (action.type) {
-      case TOGGLE_SIDEBAR:
-        const app = state ? state.app : {};
-        const showSideBar = { ...app, showSideBar: action.payload };
-        return {
-            ...state,
-            app: showSideBar
+    case TOGGLE_SIDEBAR:
+      const showSideBar = { ...app, showSideBar: action.payload };
+      return {
+        ...state,
+        app: showSideBar
       };
-      default:
-          return state;
+    case TOGGLE_DIALOGUE:
+      const showMessage = { ...app, showMessage: action.payload };
+      return {
+        ...state,
+        app: showMessage
+      };
+    default:
+      return state;
   }
 }
 

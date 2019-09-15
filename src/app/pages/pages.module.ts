@@ -7,6 +7,7 @@ import { SharedModule } from '../shared/shared.module';
 import { LibraryModule } from './library/library.module';
 import { AdmissionsModule } from './admissions/admissions.module';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { CoreModule } from '../core/core.module';
 
 @NgModule({
   declarations: [PagesComponent, HomeComponent, UserProfileComponent],
@@ -15,7 +16,8 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     PagesRoutingModule,
     SharedModule,
     LibraryModule,
-    AdmissionsModule
+    AdmissionsModule,
+    CoreModule
   ]
 })
 export class PagesModule {}

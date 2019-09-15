@@ -14,6 +14,7 @@ import { MatTabsModule, MatDatepickerModule, MatNativeDateModule } from '@angula
 import { MatListModule } from '@angular/material/list';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatDialogModule } from '@angular/material/dialog';
 import { from } from 'rxjs';
 @NgModule({
   declarations: [],
@@ -46,7 +47,8 @@ import { from } from 'rxjs';
     MatTabsModule,
     MatExpansionModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatDialogModule
   ]
 })
 export class CustomMaterialModule { }

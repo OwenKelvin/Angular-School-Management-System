@@ -17,7 +17,8 @@ export class AddStudentComponent implements OnInit {
   setStep(index: number) {
     this.step = index;
   }
-  identificationSubmittedHandler() {
+  identificationSubmittedHandler($event) {
+    alert($event)
     this.submitStudentIdentificationInfo = false;
     // this.nextStep();
   }

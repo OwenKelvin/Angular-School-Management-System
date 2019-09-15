@@ -22,6 +22,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { AppEffects } from './store/effects/app.effects';
 import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { ErrorInterceptor } from './core/interceptors/error.interceptor';
+import { ErrorDialogComponent } from './core/error-dialog/error-dialog.component';
 
 @NgModule({
   imports: [
@@ -55,17 +57,17 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     // HttpClientModule,
     // RouterModule,
     // FormsModule'
-    SidebarComponent
+    SidebarComponent,
+    // ErrorDialogComponent
+    CoreModule
   ],
   declarations: [
     AppComponent,
+    // ErrorDialogComponent
   ],
   providers: [
-    {
-      provide : HTTP_INTERCEPTORS,
-      useClass: JwtInterceptor,
-      multi   : true,
-    }
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })
