@@ -10,10 +10,11 @@ import { MatTabsModule, MatFormFieldModule, MatExpansionModule, MatIconModule, M
 import { ReactiveFormsModule } from '@angular/forms';
 import { CustomMaterialModule } from 'src/app/shared/custom-material/custom-material.module';
 import { StudentIdentificationFormComponent } from './student-identification-form/student-identification-form.component';
+import { IdentificationDetailsComponent } from './view-student/identification-details/identification-details/identification-details.component';
 
 
 @NgModule({
-  declarations: [AddStudentComponent, EditStudentComponent, ViewStudentsComponent, StudentsComponent, StudentIdentificationFormComponent],
+  declarations: [AddStudentComponent, EditStudentComponent, ViewStudentsComponent, StudentsComponent, StudentIdentificationFormComponent, IdentificationDetailsComponent],
   imports: [
     MatTabsModule,
     CommonModule,

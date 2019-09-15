@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 
-@Injectable({
-  providedIn: 'root'
-})
-
 interface IMessage {
   type: string;
   message: string;
 }
+
+@Injectable({
+  providedIn: 'root'
+})
 export class MessageService {
 
   constructor() { }

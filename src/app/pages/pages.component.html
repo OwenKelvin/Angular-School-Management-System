@@ -1,33 +1,15 @@
 <mat-toolbar color="primary">
-        <button
-            (click)="toggleSideBar()"
-            mat-mini-fab
-            color='primary'
-            ><span class="material-icons">{{ isSidebarOpen ? 'menu_open' : 'menu' }}</span>
-        </button>
-        <span>School Management System</span>
-        
-        <!-- This fills the remaining space of the current row -->
-        <span class="fill-remaining-space"></span>
-        <button mat-button [matMenuTriggerFor]="loginMenu">
-            <mat-icon class="material-icons">person</mat-icon>
-            <span>User Name</span>
-            <mat-icon>arrow_drop_down</mat-icon>
-        </button>
-        <mat-menu #loginMenu="matMenu" xPosition="after">
-            <button mat-menu-item>
-                <mat-icon>person</mat-icon>
-                <span>My Profile</span>
-            </button>
-            <button mat-menu-item (click)="logout()">
-                <mat-icon>exit_to_app</mat-icon>
-                <span>Logout</span>
-            </button>
-        </mat-menu>
+  <button (click)="toggleSideBar()" mat-mini-fab color='primary'><span
+      class="material-icons">{{ isSidebarOpen ? 'menu_open' : 'menu' }}</span>
+  </button>
+  <span>School Management System</span>
 
-    </mat-toolbar>
+  <!-- This fills the remaining space of the current row -->
+  <span class="fill-remaining-space"></span>
+  <app-user-profile></app-user-profile>
+</mat-toolbar>
 <div class="mat-app-background basic-container">
-    <app-sidebar>
-        <router-outlet></router-outlet>
-    </app-sidebar>
+  <app-sidebar>
+    <router-outlet></router-outlet>
+  </app-sidebar>
 </div>

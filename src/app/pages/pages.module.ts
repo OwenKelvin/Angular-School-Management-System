@@ -6,9 +6,10 @@ import { PagesComponent } from './pages.component';
 import { SharedModule } from '../shared/shared.module';
 import { LibraryModule } from './library/library.module';
 import { AdmissionsModule } from './admissions/admissions.module';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 @NgModule({
-  declarations: [PagesComponent, HomeComponent],
+  declarations: [PagesComponent, HomeComponent, UserProfileComponent],
   imports: [
     CommonModule,
     PagesRoutingModule,

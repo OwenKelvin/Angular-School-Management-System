@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from '../core/services/authentication/authentication.service';
 import { Store, select } from '@ngrx/store';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-pages',
@@ -11,9 +9,8 @@ import { Router } from '@angular/router';
 export class PagesComponent implements OnInit {
 
   constructor(
-    private store: Store<any>,
-    private router: Router,
-    private auth: AuthenticationService) { }
+    private store: Store<any>
+    ) { }
   isSidebarOpen: boolean;
   ngOnInit() {
     this.isSidebarOpen = false;
@@ -29,10 +26,6 @@ export class PagesComponent implements OnInit {
   }
   openedChangeHandler(event: boolean) {
     this.isSidebarOpen = event;
-  }
-  logout() {
-    this.auth.logout();
-    this.router.navigate(['/login']);
   }
   toggleSideBar() {
     this.isSidebarOpen = !this.isSidebarOpen;

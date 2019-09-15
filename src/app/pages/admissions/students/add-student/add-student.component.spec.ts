@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StudentIdentificationFormComponent } from '../student-identification-form/student-identification-form.component';
 import { CustomMaterialModule } from 'src/app/shared/custom-material/custom-material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('AddStudentComponent', () => {
   let component: AddStudentComponent;
@@ -19,6 +20,7 @@ describe('AddStudentComponent', () => {
         FormsModule,
         ReactiveFormsModule,
         CustomMaterialModule,
+        HttpClientModule
       ],
       declarations: [ AddStudentComponent, StudentIdentificationFormComponent ]
     })

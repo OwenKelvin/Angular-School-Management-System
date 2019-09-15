@@ -1,0 +1,15 @@
+<button mat-button [matMenuTriggerFor]="loginMenu">
+  <mat-icon class="material-icons">person</mat-icon>
+  <span>User Name</span>
+  <mat-icon>arrow_drop_down</mat-icon>
+</button>
+<mat-menu #loginMenu="matMenu" xPosition="after">
+  <button mat-menu-item>
+    <mat-icon>person</mat-icon>
+    <span>My Profile</span>
+  </button>
+  <button mat-menu-item (click)="logout()">
+    <mat-icon>exit_to_app</mat-icon>
+    <span>Logout</span>
+  </button>
+</mat-menu>
