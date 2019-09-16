@@ -16,13 +16,13 @@ export class AppComponent implements OnInit {
   constructor(private store: Store<any>, public dialog: MatDialog) { }
   ngOnInit() {
     // console.log(this.store)
-    this.store.pipe(select(state => state.app)).subscribe(
-      app => {
-        if (app) {
-          this.message = app.app.showMessage;
-          this.openDialog();
-        }
-      });
+    // this.store.pipe(select(state => state.app)).subscribe(
+    //   app => {
+    //     if (app) {
+    //       this.message = app.app.showMessage;
+    //       this.openDialog();
+    //     }
+    //   });
   }
 
   openDialog(): void {

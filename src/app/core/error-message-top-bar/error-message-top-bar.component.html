@@ -1,0 +1,7 @@
+<section *ngIf="showMessage" class="error">
+  <mat-icon>warning</mat-icon>
+  <span>{{ message.status + ': '}}{{ message.message }} <br>
+    <small>{{ message.help }}</small>
+  </span>
+  <mat-icon class="closeDialog" (click)="closeDialog()">cancel</mat-icon>
+</section>

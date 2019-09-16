@@ -1,0 +1,38 @@
+.error {
+    display: absolute;
+  background: #bd1c31;
+  color: white;
+  border-radius: 5px;
+  font-size: 0.8em;
+  display: flex;
+  justify-content: space-between;
+  background: linear-gradient(#bd1c31, #f1687a)
+
+}
+
+.error .mat-icon {
+  margin: 0.5em;
+}
+
+span {
+  margin-top: 0;
+  margin-bottom: 0;
+  width: 90%;
+  font-weight: bold;
+  padding-bottom: 0.5em;
+  padding-top: 0.5em;
+  border-left: 4px solid;
+  padding-left: 8px;
+}
+
+span small {
+  margin-top: 0;
+  padding: 0;
+  font-weight: 100;
+  font-size: 0.8em;
+}
+
+.closeDialog {
+  float: right;
+  cursor: pointer;
+}
