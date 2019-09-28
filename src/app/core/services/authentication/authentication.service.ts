@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, of } from 'rxjs';
 import { UserInterface } from '../../interfaces/user.interface';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Config } from './../../../config/app.config';
 import { OauthInterface } from '../../interfaces/oauth.interface';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 
 @Injectable({
   providedIn: 'root'
@@ -44,7 +44,10 @@ export class AuthenticationService {
 
     return this.http.post<any>(url, loginData, httpOptions)
       .pipe(map(user => {
-
+        this.store.dispatch({
+          type: '[APP STATE] user details',
+          payload: user
+        });
         localStorage.setItem('currentUser', JSON.stringify(user));
         this.currentUserSubject.next(user);
 
@@ -52,6 +55,39 @@ export class AuthenticationService {
           type: '[APP STATE] show dialog',
           payload: null
         });
+
+        this.currentUserDetails().subscribe();
+
+        return user;
+      },
+        error => {
+          console.log(error);
+        }
+
+      ));
+  }
+
+  currentUserDetails(): Observable<any> {
+    // this.store.pipe(select(state => state), (state) => {
+    //   console.log(">>>>")
+    //   console.log(state)
+    //   console.log(">>>>")
+    // })).subscribe(value => {
+    //   console.log(value)
+    // });
+    const url = `${this.config.apiUrl}/api/user`;
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      })
+    };
+    return this.http.get<any>(url, httpOptions)
+      .pipe(map(user => {
+        this.store.dispatch({
+          type: '[APP STATE] set logged in user',
+          payload: user
+        });
+        this.currentUserSubject.next(user);
 
         return user;
       },

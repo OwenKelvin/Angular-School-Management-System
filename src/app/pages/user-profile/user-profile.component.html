@@ -1,6 +1,6 @@
 <button mat-button [matMenuTriggerFor]="loginMenu">
   <mat-icon class="material-icons">person</mat-icon>
-  <span>User Name</span>
+  <span>{{ "Hello " + user.first_name }}</span>
   <mat-icon>arrow_drop_down</mat-icon>
 </button>
 <mat-menu #loginMenu="matMenu" xPosition="after">

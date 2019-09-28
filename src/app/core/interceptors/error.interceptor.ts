@@ -29,6 +29,14 @@ export class ErrorInterceptor implements HttpInterceptor {
                 };
             }
             console.log(err)
+            if (err.status === 404) {
+                this.message = {
+                    message: err.statusText,
+                    type: 'error',
+                    status: err.status,
+                    help: 'The URl "' + err.url + '" is invalid, If this is an error kindly contact the admin'
+                };
+            }
             if (err.status === 401) {
                 this.message = {
                     message: error,

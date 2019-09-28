@@ -11,7 +11,7 @@ import { environment } from '../../../environments/environment';
 
 
 export interface State {
-  app: object;
+  app: { user: object, showSideBar: boolean, showMessage: boolean};
 }
 
 export const reducers: ActionReducerMap<State> = {
@@ -20,10 +20,26 @@ export const reducers: ActionReducerMap<State> = {
 
 const TOGGLE_SIDEBAR = '[APP STATE] toggle side bar';
 const TOGGLE_DIALOGUE = '[APP STATE] show dialog';
+const SET_LOGGED_IN_USER = '[APP STATE] set logged in user';
 
 export function reducer(state, action) {
-  const app = state ? state.app : {};
+  const freshState: State = {
+    app: {
+      user: {
+        first_name: '',
+        last_name: ''
+      },
+      showSideBar: false,
+      showMessage: false
+    }
+  };
+  const app: State = state ? state.app : freshState.app;
   switch (action.type) {
+    case SET_LOGGED_IN_USER:
+      return {
+        ...state, app: { ...app, user: action.payload }
+      };
+
     case TOGGLE_SIDEBAR:
       const showSideBar = { ...app, showSideBar: action.payload };
       return {

@@ -23,10 +23,9 @@ export class ErrorDialogComponent implements OnInit {
   }
   ngOnInit() {
     this.dialogText = {
-      message: 'Some Message'
+      message: ''
     };
     this.dialogRef.afterClosed().subscribe(result => {
-      alert('closed')
     });
   }
 

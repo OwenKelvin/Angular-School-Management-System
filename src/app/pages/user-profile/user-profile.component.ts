@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'src/app/core/services/authentication/authentication.service';
 import { Router } from '@angular/router';
+import { Store, select } from '@ngrx/store';
 
 @Component({
   selector: 'app-user-profile',
@@ -8,12 +9,27 @@ import { Router } from '@angular/router';
   styleUrls: ['./user-profile.component.css']
 })
 export class UserProfileComponent implements OnInit {
-
+  user: object;
   constructor(
     private router: Router,
+    private store: Store<any>,
     private auth: AuthenticationService) { }
 
   ngOnInit() {
+    this.user = { first_name: '' };
+    this.store.pipe(select(state => state.app)).subscribe(app => {
+      if (!app) {
+        this.auth.currentUserDetails().subscribe(user => {
+          this.user = user;
+        });
+      } else {
+        console.log()
+        if (app.app.user) {
+          this.user = app.app.user;
+        }
+
+      }
+    });
   }
   logout() {
     this.auth.logout();

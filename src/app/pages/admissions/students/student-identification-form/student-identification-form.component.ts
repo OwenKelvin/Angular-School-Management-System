@@ -4,6 +4,8 @@ import { SubmitStudentIdentificationService } from '../../services/submit-studen
 import { debounceTime } from 'rxjs/operators';
 import { StudentIdNumberService } from '../../services/student-id-number/student-id-number.service';
 import { IdNumberValidator } from '../validators/student-id-taken.validator';
+import { SET_ADMITTED_STUDENT_IDENTIFICATION_INFO } from '../../store/reducers';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-student-identification-form',
@@ -33,6 +35,7 @@ export class StudentIdentificationFormComponent implements OnInit, OnChanges {
     idNumber: null
   };
   constructor(
+    private store: Store<any>,
     private fb: FormBuilder,
     private formSubmit: SubmitStudentIdentificationService,
     private studentIdNumber: StudentIdNumberService,
@@ -77,7 +80,13 @@ export class StudentIdentificationFormComponent implements OnInit, OnChanges {
       if ( this.userIdentificaionForm.valid ) {
         this.submitted.emit(true);
         this.formSubmit.submit( this.userIdentificaionForm.value).subscribe(
-          success => console.log(success),
+          success => {
+            this.store.dispatch({
+              type: SET_ADMITTED_STUDENT_IDENTIFICATION_INFO,
+              payload: success
+            });
+
+          },
           error => console.log(error)
         );
       } else {
