@@ -102,4 +102,11 @@ export class AuthenticationService {
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
   }
+  authorizationToken(): string | undefined {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    if (currentUser) {
+      return `Bearer ${currentUser.access_token}`;
+    }
+
+  }
 }

@@ -54,7 +54,7 @@ import { ErrorDialogComponent } from './core/error-dialog/error-dialog.component
   exports: [
     // SharedModule,
     // ReactiveFormsModule,
-    // HttpClientModule,
+    HttpClientModule,
     // RouterModule,
     // FormsModule'
     SidebarComponent,
