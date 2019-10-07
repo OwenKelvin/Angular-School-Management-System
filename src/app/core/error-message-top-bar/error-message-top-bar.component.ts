@@ -22,7 +22,7 @@ export class ErrorMessageTopBarComponent implements OnInit {
       app => {
         if (app) {
           if (app.showMessage) {
-            this.message = app.app.showMessage;
+            this.message = app.showMessage;
             this.openDialog();
           } else {
             this.resetMessages();
