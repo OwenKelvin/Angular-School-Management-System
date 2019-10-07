@@ -18,7 +18,7 @@ export class RoutesService {
       obj[key] = component;
       return obj;
     }).forEach(route => {
-      returnObj = {...route, ...returnObj };
+      returnObj = { ...route, ...returnObj };
     });
     return returnObj;
   }

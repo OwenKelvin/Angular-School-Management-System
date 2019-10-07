@@ -33,17 +33,17 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private authenticationService: AuthenticationService,
-    ) {
-      if (this.authenticationService.currentUserValue) {
-        this.router.navigate(['/']);
-      }
+  ) {
+    if (this.authenticationService.currentUserValue) {
+      this.router.navigate(['/']);
+    }
   }
 
   ngOnInit() {
     this.loginForm = this.fb.group({
-      username: [ this.username.value, this.validators.username ],
-      password: [ this.password.value,  this.validators.password],
-      rememberMe: [ this.rememberMe.value]
+      username: [this.username.value, this.validators.username],
+      password: [this.password.value, this.validators.password],
+      rememberMe: [this.rememberMe.value]
     });
 
     this.loginForm.get('username').valueChanges.subscribe(value => {
@@ -56,15 +56,15 @@ export class LoginComponent implements OnInit {
   }
   validateUsername() {
     if ((this.loginForm.get('username').dirty || this.loginForm.get('username').touched) &&
-      !this.loginForm.get('username').valid ) {
-        if (this.loginForm.get('username').errors.required) {
-          this.errors.username = 'Username is required';
-        } else if (this.loginForm.get('username').errors.minlength) {
-          this.errors.username = 'Username must have at least 4 characters';
-        } else {
-          this.errors.username = null;
-        }
+      !this.loginForm.get('username').valid) {
+      if (this.loginForm.get('username').errors.required) {
+        this.errors.username = 'Username is required';
+      } else if (this.loginForm.get('username').errors.minlength) {
+        this.errors.username = 'Username must have at least 4 characters';
+      } else {
+        this.errors.username = null;
       }
+    }
   }
   submit() {
     this.submitted = true;
@@ -78,16 +78,16 @@ export class LoginComponent implements OnInit {
         rememberMe: this.loginForm.get('rememberMe').value,
       };
       this.authenticationService.login(loginData)
-      .pipe(first())
-      .subscribe(
-        data => {
+        .pipe(first())
+        .subscribe(
+          data => {
             this.router.navigate([this.returnUrl]);
-        },
-        error => {
+          },
+          error => {
             // this.alertService.error(error);
             this.loading = false;
-        });
-      }
+          });
+    }
   }
 
 }

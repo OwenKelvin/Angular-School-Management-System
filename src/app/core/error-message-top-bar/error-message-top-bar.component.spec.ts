@@ -8,9 +8,9 @@ describe('ErrorMessageTopBarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ErrorMessageTopBarComponent ]
+      declarations: [ErrorMessageTopBarComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

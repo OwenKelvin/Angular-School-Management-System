@@ -20,9 +20,9 @@ describe('StudentIdentificationFormComponent', () => {
         ReactiveFormsModule,
         HttpClientModule
       ],
-      declarations: [ StudentIdentificationFormComponent]
+      declarations: [StudentIdentificationFormComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

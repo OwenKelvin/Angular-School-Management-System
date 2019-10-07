@@ -1,97 +1,82 @@
 <form [formGroup]="userIdentificaionForm" (ngSubmit)="submit()">
+  <fieldset>
+    <legend>
+      <h2>ID Number</h2>
+    </legend>
+    <section class="id-number-field">
 
-    <fieldset>
-        <legend><h2>ID Number</h2></legend>
-            <section class="id-number-field">
-                    <label for="autogenerate-id-number">
-                            Autogenerate Id Number <mat-checkbox type="checkbox" formControlName="autogenerateIdNumber" id="autogenerate-id-number" ></mat-checkbox>
-                        </label> 
-                    
-                        
-                        <mat-form-field *ngIf="!userIdentificaionForm.get('autogenerateIdNumber').value">
-                                <label hidden for="idNumber"><span class="material-icons" matPrefix >person</span> Id Number</label>
-                            
-                                <input 
-                                    (blur)="validateIdNumber()"
-                                    id="idNumber"
-                                    type="text" 
-                                    placeholder="Id Number"
-                                    formControlName="idNumber"
-                                    matInput>
-                                    <mat-error
-                                    *ngIf="errors.idNumber"
-                                >
-                                    {{ errors.idNumber }}
-                                </mat-error>
-                                
-                            </mat-form-field>
-            </section>
-    </fieldset>
-    <fieldset>
-        <legend><h2>Name</h2></legend>
-            <mat-form-field>
-                    <label hidden for="firstName"><span class="material-icons" matPrefix >person</span> First Name</label>
-                    
-                    <input (keyup)="validateFirstName({ blur: false })"  (blur)="validateFirstName()" id="firstName" type="text" placeholder="first Name" formControlName="firstName" matInput>
-                    <mat-error
-                        *ngIf="errors.firstName"
-                    >
-                        {{ errors.firstName }}
-                    </mat-error>
-                </mat-form-field>
-                <mat-form-field>
-                    <label hidden for="lastName">Middle Name</label>
-                    <input (blur)="validateMiddleName()" id="middleName" type="text" placeholder="Middle Name" formControlName="middleName" matInput>
-                    <mat-error
-                        *ngIf="errors.middleName"
-                    >
-                        {{ errors.middleName }}
-                    </mat-error>
-                </mat-form-field>
-                <mat-form-field>
-                    <label hidden for="lastName">Last Name</label>
-                    <input (blur)="validateLastName()" id="lastName" type="text" placeholder="Last Name" formControlName="lastName" matInput>
-                    <mat-error
-                        *ngIf="errors.lastName"
-                    >
-                        {{ errors.lastName }}
-                    </mat-error>
-                </mat-form-field>
-                <mat-form-field>
-                    <label hidden for="otherNames">Other Names</label>
-                    <input (blur)="validateOtherNames()" id="otherNames" type="text" placeholder="Other Names" formControlName="otherNames" matInput>
-                    <mat-error
-                        *ngIf="errors.otherNames"
-                    >
-                        {{ errors.lastName }}
-                    </mat-error>
-                </mat-form-field>
-    </fieldset>
-    <fieldset>
-        <legend><h2>Other Details</h2></legend>
-            <mat-form-field>
-                    <input
-                        matInput
-                        [matDatepicker]="dateOfBirth"
-                        placeholder="Date Of Birth"
-                        formControlName="dateOfBirth"
-                        (blur)="validateDateOfBirth()"
-                        >
-                    <mat-datepicker-toggle matSuffix [for]="dateOfBirth"></mat-datepicker-toggle>
-                    <mat-datepicker #dateOfBirth></mat-datepicker>
-                    <mat-error
-                        *ngIf="errors.dateOfBirth"
-                    >
-                        {{ errors.dateOfBirth }}
-                    </mat-error>
-                </mat-form-field>
-                <mat-form-field>
-                        <input
-                            matInput
-                            placeholder="Birth Certificate Number"
-                            formControlName="birthCertNumber"
-                            >
-                    
-                    </mat-form-field>
-    </fieldset>
+      <label for="autogenerate-id-number">
+        Autogenerate Id Number <mat-checkbox type="checkbox" formControlName="autogenerateIdNumber"
+          id="autogenerate-id-number"></mat-checkbox>
+      </label>
+
+
+      <mat-form-field *ngIf="!userIdentificaionForm.get('autogenerateIdNumber').value">
+        <label hidden for="idNumber"><span class="material-icons" matPrefix>person</span> Id Number</label>
+
+        <input (blur)="validateIdNumber()" id="idNumber" type="text" placeholder="Id Number" formControlName="idNumber"
+          matInput>
+        <mat-error *ngIf="errors.idNumber">
+          {{ errors.idNumber }}
+        </mat-error>
+
+      </mat-form-field>
+    </section>
+  </fieldset>
+  <fieldset>
+    <legend>
+      <h2>Name</h2>
+    </legend>
+    <mat-form-field>
+      <label hidden for="firstName"><span class="material-icons" matPrefix>person</span> First Name</label>
+
+      <input (keyup)="validateFirstName({ blur: false })" (blur)="validateFirstName()" id="firstName" type="text"
+        placeholder="first Name" formControlName="firstName" matInput>
+      <mat-error *ngIf="errors.firstName">
+        {{ errors.firstName }}
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <label hidden for="lastName">Middle Name</label>
+      <input (blur)="validateMiddleName()" id="middleName" type="text" placeholder="Middle Name"
+        formControlName="middleName" matInput>
+      <mat-error *ngIf="errors.middleName">
+        {{ errors.middleName }}
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <label hidden for="lastName">Last Name</label>
+      <input (blur)="validateLastName()" id="lastName" type="text" placeholder="Last Name" formControlName="lastName"
+        matInput>
+      <mat-error *ngIf="errors.lastName">
+        {{ errors.lastName }}
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <label hidden for="otherNames">Other Names</label>
+      <input (blur)="validateOtherNames()" id="otherNames" type="text" placeholder="Other Names"
+        formControlName="otherNames" matInput>
+      <mat-error *ngIf="errors.otherNames">
+        {{ errors.lastName }}
+      </mat-error>
+    </mat-form-field>
+  </fieldset>
+  <fieldset>
+    <legend>
+      <h2>Other Details</h2>
+    </legend>
+    <mat-form-field>
+      <input matInput [matDatepicker]="dateOfBirth" placeholder="Date Of Birth" formControlName="dateOfBirth"
+        (blur)="validateDateOfBirth()">
+      <mat-datepicker-toggle matSuffix [for]="dateOfBirth"></mat-datepicker-toggle>
+      <mat-datepicker #dateOfBirth></mat-datepicker>
+      <mat-error *ngIf="errors.dateOfBirth">
+        {{ errors.dateOfBirth }}
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Birth Certificate Number" formControlName="birthCertNumber">
+
+    </mat-form-field>
+  </fieldset>
 </form>

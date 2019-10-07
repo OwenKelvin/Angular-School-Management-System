@@ -11,7 +11,7 @@ export class Error404Component implements OnInit {
 
   path: string;
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.route.data.pipe(take(1))

@@ -5,7 +5,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 describe('RoutesService', () => {
   beforeEach(() => TestBed.configureTestingModule({
-    imports: [ RouterTestingModule ],
+    imports: [RouterTestingModule],
     declarations: [
     ]
   }));

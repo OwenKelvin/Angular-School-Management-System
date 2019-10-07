@@ -30,9 +30,9 @@ describe('LoginComponent', () => {
         BrowserAnimationsModule,
         MatIconModule
       ],
-      declarations: [ LoginComponent ]
+      declarations: [LoginComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

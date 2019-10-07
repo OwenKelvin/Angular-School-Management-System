@@ -9,22 +9,18 @@ import { environment } from '../../../../environments/environment';
 
 export const admissionsFeatureKey = 'admissions';
 
-export interface State {
-
-}
-
 const STUDENT_IDENTIFICATION = '[STUDENT IDENTIFICATION] save details';
 export function reducer(state, action) {
   switch (action.type) {
-      case STUDENT_IDENTIFICATION:
-        const student = state ? state.student : {};
-        const newStudentIdentityInfo = { ...student, new_student_identity_info: action.payload };
-        return {
-            ...state,
-            new_student_identity_info: newStudentIdentityInfo
+    case STUDENT_IDENTIFICATION:
+      const student = state ? state.student : {};
+      const newStudentIdentityInfo = { ...student, new_student_identity_info: action.payload };
+      return {
+        ...state,
+        new_student_identity_info: newStudentIdentityInfo
       };
-      default:
-          return state;
+    default:
+      return state;
   }
 }
 

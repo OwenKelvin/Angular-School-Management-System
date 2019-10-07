@@ -5,5 +5,5 @@ const SET_STUDENT_IDENTIFICATION_INFO = '[Student Identification Info] set detai
 
 export const setStudentIdentificationInfo = createAction(
     SET_STUDENT_IDENTIFICATION_INFO,
-    props<{identificationInfo: IStudentIdentificationInfo}>()
-    );
+    props<{ identificationInfo: IStudentIdentificationInfo }>()
+);

@@ -1,5 +1,5 @@
 .error {
-    display: absolute;
+  display: absolute;
   background: #bd1c31;
   color: white;
   border-radius: 5px;
@@ -7,7 +7,6 @@
   display: flex;
   justify-content: space-between;
   background: linear-gradient(#bd1c31, #f1687a)
-
 }
 
 .error .mat-icon {

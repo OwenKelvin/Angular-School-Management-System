@@ -10,9 +10,9 @@ describe('Error404Component', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
-      declarations: [ Error404Component ]
+      declarations: [Error404Component]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -5,7 +5,7 @@ import { debounceTime } from 'rxjs/operators';
 import { StudentIdNumberService } from '../../services/student-id-number/student-id-number.service';
 import { IdNumberValidator } from '../validators/student-id-taken.validator';
 import { SET_ADMITTED_STUDENT_IDENTIFICATION_INFO } from '../../store/reducers';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 
 @Component({
   selector: 'app-student-identification-form',
@@ -15,6 +15,7 @@ import { Store } from '@ngrx/store';
 export class StudentIdentificationFormComponent implements OnInit, OnChanges {
   @Input() submit = false;
   @Output() submitted: EventEmitter<any>;
+  idNumber: string | number | null | undefined;
   userIdentificaionForm: FormGroup;
   validators = {
     firstName: [Validators.required, Validators.minLength(2)],
@@ -46,15 +47,15 @@ export class StudentIdentificationFormComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.userIdentificaionForm = this.fb.group({
-      firstName: [ '', this.validators.firstName ],
-      lastName: [ '', this.validators.lastName ],
-      otherNames: [ '', this.validators.otherNames ],
-      middleName: [ '', this.validators.middleName ],
-      namePrefix: [ '', this.validators.namePrefix ],
-      dateOfBirth: [ null, this.validators.dateOfBirth],
+      firstName: ['', this.validators.firstName],
+      lastName: ['', this.validators.lastName],
+      otherNames: ['', this.validators.otherNames],
+      middleName: ['', this.validators.middleName],
+      namePrefix: ['', this.validators.namePrefix],
+      dateOfBirth: [null, this.validators.dateOfBirth],
       autogenerateIdNumber: [true, Validators.required],
       idNumber: new FormControl(
-        { value: '', disabled: true},
+        { value: '', disabled: true },
         Validators.required, this.idNumberValidator.studentIdTaken.bind(this.idNumberValidator)),
       birthCertNumber: ['']
     });
@@ -71,15 +72,23 @@ export class StudentIdentificationFormComponent implements OnInit, OnChanges {
     this.userIdentificaionForm.get('idNumber').valueChanges.pipe(
       debounceTime(1000)
     ).subscribe(
-      value => this.validateIdNumber()
+      () => this.validateIdNumber()
     );
+
+    this.store.pipe(select(state => state.admissions)).subscribe(
+      app => {
+        this.idNumber = 53;
+        // this.idNumber = app ? app.student.student_id : null;
+        // TODO uncomment this line
+      });
+
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.submit.currentValue && changes.submit && !changes.submit.firstChange) {
-      if ( this.userIdentificaionForm.valid ) {
+      if (this.userIdentificaionForm.valid) {
         this.submitted.emit(true);
-        this.formSubmit.submit( this.userIdentificaionForm.value).subscribe(
+        this.formSubmit.submit(this.userIdentificaionForm.value).subscribe(
           success => {
             this.store.dispatch({
               type: SET_ADMITTED_STUDENT_IDENTIFICATION_INFO,
@@ -87,7 +96,7 @@ export class StudentIdentificationFormComponent implements OnInit, OnChanges {
             });
 
           },
-          error => { 
+          error => {
             // Error Has been captured by interceptor 
           }
         );
@@ -107,10 +116,10 @@ export class StudentIdentificationFormComponent implements OnInit, OnChanges {
     }
   }
 
-  validateFirstName({blur} = {blur: true}) {
+  validateFirstName({ blur } = { blur: true }) {
     const changeFirstNameError = () => {
       if ((this.userIdentificaionForm.get('firstName').dirty || this.userIdentificaionForm.get('firstName').touched) &&
-      !this.userIdentificaionForm.get('firstName').valid ) {
+        !this.userIdentificaionForm.get('firstName').valid) {
         if (this.userIdentificaionForm.get('firstName').errors.required) {
           this.errors.firstName = 'First Name is required';
         } else if (this.userIdentificaionForm.get('firstName').errors.minlength) {
@@ -123,35 +132,35 @@ export class StudentIdentificationFormComponent implements OnInit, OnChanges {
     if (blur) {
       changeFirstNameError();
     } else {
-      if ( this.errors.firstName ) {
+      if (this.errors.firstName) {
         changeFirstNameError();
       }
     }
   }
   validateLastName() {
     if ((this.userIdentificaionForm.get('lastName').dirty || this.userIdentificaionForm.get('lastName').touched) &&
-      !this.userIdentificaionForm.get('lastName').valid ) {
-        if (this.userIdentificaionForm.get('lastName').errors.required) {
-          this.errors.lastName = 'First Name is required';
-        } else if (this.userIdentificaionForm.get('lastName').errors.minlength) {
-          this.errors.lastName = 'Last Name must have at least 2 characters';
-        } else {
-          this.errors.lastName = null;
-        }
+      !this.userIdentificaionForm.get('lastName').valid) {
+      if (this.userIdentificaionForm.get('lastName').errors.required) {
+        this.errors.lastName = 'First Name is required';
+      } else if (this.userIdentificaionForm.get('lastName').errors.minlength) {
+        this.errors.lastName = 'Last Name must have at least 2 characters';
+      } else {
+        this.errors.lastName = null;
       }
+    }
   }
   validateIdNumber() {
     const idNumber = this.userIdentificaionForm.get('idNumber');
     if ((idNumber.dirty || idNumber.touched) &&
-      !idNumber.valid ) {
-        if (idNumber.errors && idNumber.errors.required) {
-          this.errors.idNumber = 'Id Number is required';
-        } else if (idNumber.errors && idNumber.errors.id_taken) {
-          this.errors.idNumber = 'Student with id "' + idNumber.value + '" exists';
-        } else {
-          this.errors.idNumber = null;
-        }
+      !idNumber.valid) {
+      if (idNumber.errors && idNumber.errors.required) {
+        this.errors.idNumber = 'Id Number is required';
+      } else if (idNumber.errors && idNumber.errors.id_taken) {
+        this.errors.idNumber = 'Student with id "' + idNumber.value + '" exists';
+      } else {
+        this.errors.idNumber = null;
       }
+    }
   }
   validateMiddleName() {
   }
@@ -159,7 +168,7 @@ export class StudentIdentificationFormComponent implements OnInit, OnChanges {
   }
   validateDateOfBirth() {
     if ((this.userIdentificaionForm.get('dateOfBirth').dirty || this.userIdentificaionForm.get('dateOfBirth').touched) &&
-    !this.userIdentificaionForm.get('dateOfBirth').valid ) {
+      !this.userIdentificaionForm.get('dateOfBirth').valid) {
       if (this.userIdentificaionForm.get('dateOfBirth').errors.required) {
         this.errors.dateOfBirth = 'Date Of Birth is required';
       } else {

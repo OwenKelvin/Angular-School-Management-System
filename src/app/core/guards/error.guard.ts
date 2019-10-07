@@ -7,12 +7,12 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Rout
 export class ErrorGuard implements CanActivate {
   constructor(
     private router: Router,
-) {}
+  ) { }
 
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot) {
-      alert (state.url);
-      return true;
+    alert(state.url);
+    return true;
   }
 }
