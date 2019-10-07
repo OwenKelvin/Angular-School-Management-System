@@ -13,7 +13,6 @@ export class StudentIdNumberService {
   constructor(
     private config: Config,
     private http: HttpClient,
-    private auth: AuthenticationService
   ) { }
   get(idNumber: string): Observable<any> {
 

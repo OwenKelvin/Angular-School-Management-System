@@ -7,6 +7,10 @@ import {
 } from '@ngrx/store';
 import { environment } from '../../../../environments/environment';
 
+export class State {
+
+}
+
 export const admissionsFeatureKey = 'admissions';
 
 const STUDENT_IDENTIFICATION = '[STUDENT IDENTIFICATION] save details';

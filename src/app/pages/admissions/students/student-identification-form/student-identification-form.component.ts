@@ -4,8 +4,10 @@ import { SubmitStudentIdentificationService } from '../../services/submit-studen
 import { debounceTime } from 'rxjs/operators';
 import { StudentIdNumberService } from '../../services/student-id-number/student-id-number.service';
 import { IdNumberValidator } from '../validators/student-id-taken.validator';
-import { SET_ADMITTED_STUDENT_IDENTIFICATION_INFO } from '../../store/reducers';
+import { SET_ADMITTED_STUDENT_IDENTIFICATION_INFO } from '../../store/actions/pages.actions';
+import { SET_STUDENT_ID_NUMBER } from '../../store/actions/pages.actions';
 import { Store, select } from '@ngrx/store';
+import { StudentDetailsService, IStudentDetails } from '../../services/studen-details/student-details.service';
 
 @Component({
   selector: 'app-student-identification-form',
@@ -15,6 +17,7 @@ import { Store, select } from '@ngrx/store';
 export class StudentIdentificationFormComponent implements OnInit, OnChanges {
   @Input() submit = false;
   @Output() submitted: EventEmitter<any>;
+  serverStudentData: object;
   idNumber: string | number | null | undefined;
   userIdentificaionForm: FormGroup;
   validators = {
@@ -40,12 +43,31 @@ export class StudentIdentificationFormComponent implements OnInit, OnChanges {
     private fb: FormBuilder,
     private formSubmit: SubmitStudentIdentificationService,
     private studentIdNumber: StudentIdNumberService,
-    private idNumberValidator: IdNumberValidator
+    private idNumberValidator: IdNumberValidator,
+    private studentDetails: StudentDetailsService
   ) {
     this.submitted = new EventEmitter();
   }
+  setFormData() {
+    if (this.idNumber) {
+      this.studentDetails.getIdentificationInfo(this.idNumber).subscribe(data => {
+        this.serverStudentData = data;
+        this.userIdentificaionForm.get('firstName').setValue(data.first_name);
+        this.userIdentificaionForm.get('lastName').setValue(data.last_name);
+        this.userIdentificaionForm.get('otherNames').setValue(data.other_names);
+        this.userIdentificaionForm.get('middleName').setValue(data.middle_name);
+        this.userIdentificaionForm.get('namePrefix').setValue(data.name_prefix_id);
+        this.userIdentificaionForm.get('dateOfBirth').setValue(data.date_of_birth);
+        this.userIdentificaionForm.get('birthCertNumber').setValue(data.birth_cert_number);
+      });
+    }
+  }
 
   ngOnInit() {
+    this.store.dispatch({
+      type: SET_STUDENT_ID_NUMBER,
+      payload: 'S2354'
+    });
     this.userIdentificaionForm = this.fb.group({
       firstName: ['', this.validators.firstName],
       lastName: ['', this.validators.lastName],
@@ -59,6 +81,7 @@ export class StudentIdentificationFormComponent implements OnInit, OnChanges {
         Validators.required, this.idNumberValidator.studentIdTaken.bind(this.idNumberValidator)),
       birthCertNumber: ['']
     });
+    this.setFormData();
 
     this.userIdentificaionForm.get('autogenerateIdNumber').valueChanges.subscribe((autogenerate) => {
       if (autogenerate) {
@@ -77,9 +100,10 @@ export class StudentIdentificationFormComponent implements OnInit, OnChanges {
 
     this.store.pipe(select(state => state.admissions)).subscribe(
       app => {
-        this.idNumber = 53;
-        // this.idNumber = app ? app.student.student_id : null;
-        // TODO uncomment this line
+        this.idNumber = app ? app.student_id_number : null;
+        if (this.idNumber) {
+          this.setFormData();
+        }
       });
 
   }
@@ -88,11 +112,15 @@ export class StudentIdentificationFormComponent implements OnInit, OnChanges {
     if (changes.submit.currentValue && changes.submit && !changes.submit.firstChange) {
       if (this.userIdentificaionForm.valid) {
         this.submitted.emit(true);
-        this.formSubmit.submit(this.userIdentificaionForm.value).subscribe(
-          success => {
+        this.formSubmit.submit({ ...this.serverStudentData, ...this.userIdentificaionForm.value }, this.idNumber).subscribe(
+          data => {
+            this.store.dispatch({
+              type: SET_STUDENT_ID_NUMBER,
+              payload: data.student_id
+            });
             this.store.dispatch({
               type: SET_ADMITTED_STUDENT_IDENTIFICATION_INFO,
-              payload: success
+              payload: data
             });
 
           },

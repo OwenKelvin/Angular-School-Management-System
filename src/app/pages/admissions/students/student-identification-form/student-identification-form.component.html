@@ -4,8 +4,10 @@
       <h2>ID Number</h2>
     </legend>
     <section class="id-number-field">
-
-      <label for="autogenerate-id-number">
+      <section [hidden]="!idNumber">
+        Studeny Id Number: {{ idNumber }}
+      </section>
+      <label for="autogenerate-id-number" [hidden]="idNumber">
         Autogenerate Id Number <mat-checkbox type="checkbox" formControlName="autogenerateIdNumber"
           id="autogenerate-id-number"></mat-checkbox>
       </label>

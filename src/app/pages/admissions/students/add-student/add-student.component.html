@@ -3,7 +3,10 @@
   <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
     <mat-expansion-panel-header>
       <mat-panel-title>
-        <h1>Identification Information</h1>
+        <h1>
+          Identification Information
+          <small [hidden]="!idNumber"> => Id: {{ idNumber }}</small>
+        </h1>
       </mat-panel-title>
       <mat-panel-description>
         &nbsp;
