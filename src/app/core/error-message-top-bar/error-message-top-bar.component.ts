@@ -21,7 +21,7 @@ export class ErrorMessageTopBarComponent implements OnInit {
     this.store.pipe(select(state => state.app)).subscribe(
       app => {
         if (app) {
-          if (app.app.showMessage) {
+          if (app.showMessage) {
             this.message = app.app.showMessage;
             this.openDialog();
           } else {

@@ -7,9 +7,6 @@ import { StudentsModule } from './students/students.module';
 import { StaffModule } from './staff/staff.module';
 import { StoreModule } from '@ngrx/store';
 import * as fromAdmissions from './store/reducers';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { JwtInterceptor } from 'src/app/core/interceptors/jwt.interceptor';
-import { ErrorInterceptor } from 'src/app/core/interceptors/error.interceptor';
 
 @NgModule({
   declarations: [AdmissionsComponent],
@@ -18,7 +15,8 @@ import { ErrorInterceptor } from 'src/app/core/interceptors/error.interceptor';
     AdmissionsRoutingModule,
     StudentsModule,
     StaffModule,
-    StoreModule.forFeature(fromAdmissions.admissionsFeatureKey, fromAdmissions.reducers, { metaReducers: fromAdmissions.metaReducers })
+    // StoreModule.forFeature(fromAdmissions.admissionsFeatureKey, fromAdmissions.reducers, { metaReducers: fromAdmissions.metaReducers })
+    StoreModule.forFeature(fromAdmissions.admissionsFeatureKey, fromAdmissions.reducer)
   ],
   exports: [],
 })

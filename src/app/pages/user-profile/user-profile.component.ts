@@ -23,9 +23,8 @@ export class UserProfileComponent implements OnInit {
           this.user = user;
         });
       } else {
-        console.log()
-        if (app.app.user) {
-          this.user = app.app.user;
+        if (app.user) {
+          this.user = app.user;
         }
 
       }

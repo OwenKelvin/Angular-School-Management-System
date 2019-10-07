@@ -10,14 +10,14 @@ export class PagesComponent implements OnInit {
 
   constructor(
     private store: Store<any>
-    ) { }
+  ) { }
   isSidebarOpen: boolean;
   ngOnInit() {
     this.isSidebarOpen = false;
     this.store.pipe(select('app')).subscribe(
       sidebar => {
         if (sidebar) {
-          this.isSidebarOpen = sidebar = sidebar.app.showSideBar;
+          this.isSidebarOpen = sidebar = sidebar.showSideBar;
         }
       }
     );

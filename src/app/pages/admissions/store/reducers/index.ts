@@ -6,12 +6,11 @@ import {
   MetaReducer
 } from '@ngrx/store';
 import { environment } from '../../../../../environments/environment';
+import { State } from 'src/app/pages/store/reducers';
 
 export const admissionsFeatureKey = 'admissions';
 
-export interface State {
-  admissions: object;
-}
+
 
 export const reducers: ActionReducerMap<State> = {
   admissions: reducer
@@ -23,6 +22,7 @@ export const metaReducers: MetaReducer<State>[] = !environment.production ? [] :
 export const SET_ADMITTED_STUDENT_IDENTIFICATION_INFO = '[ADMISSIONS STUDENT] Set student details';
 export function reducer(state, action) {
 
+  console.log(state)
   const admissions = state ? state.admissions : {};
   switch (action.type) {
     case SET_ADMITTED_STUDENT_IDENTIFICATION_INFO:
@@ -30,7 +30,7 @@ export function reducer(state, action) {
       console.log(state)
       return {
         ...state,
-        admissions: studentInfo
+        studentInfo
       };
     default:
       return state;

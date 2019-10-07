@@ -24,14 +24,8 @@ export class SubmitStudentIdentificationService {
       birth_cert_number: data.birth_cert_number
 
     };
-    console.log(submitData);
     const url = `${this.config.apiUrl}/api/admissions/students/identification`;
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-      })
-    };
-    return this.http.post<any>(url, submitData, httpOptions).pipe(map(user => {
+    return this.http.post<any>(url, submitData).pipe(map(user => {
       return user;
     }));
   }

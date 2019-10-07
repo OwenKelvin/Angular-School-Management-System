@@ -23,16 +23,9 @@ import { from } from 'rxjs';
     FormsModule,
     MatTabsModule,
     ReactiveFormsModule
-    // MatButtonModule,
-    // MatCheckboxModule,
-    // MatCardModule,
-    // MatFormFieldModule,
-    // MatProgressSpinnerModule,
-    // MatInputModule,
-    // MatToolbarModule,
-    // MatIconModule
   ],
   exports: [
+    MatTabsModule,
     MatButtonModule,
     MatCheckboxModule,
     MatCardModule,

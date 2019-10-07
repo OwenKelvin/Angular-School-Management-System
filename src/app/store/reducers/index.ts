@@ -33,24 +33,24 @@ export function reducer(state, action) {
       showMessage: false
     }
   };
-  const app: State = state ? state.app : freshState.app;
   switch (action.type) {
     case SET_LOGGED_IN_USER:
+      const user = state ? { ...state.user, ...action.payload } : {...action.payload};
       return {
-        ...state, app: { ...app, user: action.payload }
+        ...state, user
       };
 
     case TOGGLE_SIDEBAR:
-      const showSideBar = { ...app, showSideBar: action.payload };
+
       return {
         ...state,
-        app: showSideBar
+        showSideBar: action.payload
       };
     case TOGGLE_DIALOGUE:
-      const showMessage = { ...app, showMessage: action.payload };
+
       return {
         ...state,
-        app: showMessage
+        showMessage: action.payload
       };
     default:
       return state;

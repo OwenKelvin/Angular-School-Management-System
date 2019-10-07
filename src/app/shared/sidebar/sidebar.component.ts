@@ -28,7 +28,7 @@ export class SidebarComponent implements OnInit, OnChanges {
     this.store.pipe(select('app')).subscribe(
       sidebar => {
         if (sidebar) {
-          this.opened = sidebar = sidebar.app.showSideBar;
+          this.opened = sidebar = sidebar.showSideBar;
         } else {
           // this.opened = true;
         }
