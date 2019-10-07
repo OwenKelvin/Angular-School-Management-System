@@ -28,7 +28,6 @@ export class ErrorInterceptor implements HttpInterceptor {
                     help: err.error
                 };
             }
-            console.log(err)
             if (err.status === 404) {
                 this.message = {
                     message: err.statusText,

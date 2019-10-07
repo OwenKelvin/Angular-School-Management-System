@@ -15,7 +15,6 @@ export class AppComponent implements OnInit {
   private message: IMessage;
   constructor(private store: Store<any>, public dialog: MatDialog) { }
   ngOnInit() {
-    // console.log(this.store)
     // this.store.pipe(select(state => state.app)).subscribe(
     //   app => {
     //     if (app) {

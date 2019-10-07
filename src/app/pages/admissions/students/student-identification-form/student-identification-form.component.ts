@@ -87,7 +87,9 @@ export class StudentIdentificationFormComponent implements OnInit, OnChanges {
             });
 
           },
-          error => console.log(error)
+          error => { 
+            // Error Has been captured by interceptor 
+          }
         );
       } else {
         this.submitted.emit(false);

@@ -27,7 +27,7 @@ export class StudentIdNumberService {
       return data;
     },
       error => {
-        console.log(error);
+        // Error Has been captured by interceptor
       }
     ));
   }

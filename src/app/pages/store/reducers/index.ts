@@ -15,8 +15,6 @@ export interface State {
 
 const STUDENT_IDENTIFICATION = '[STUDENT IDENTIFICATION] save details';
 export function reducer(state, action) {
-  console.log (state);
-
   switch (action.type) {
       case STUDENT_IDENTIFICATION:
         const student = state ? state.student : {};

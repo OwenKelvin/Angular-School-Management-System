@@ -1,7 +1,6 @@
 const TOGGLE_SIDEBAR = '[APP STATE] toggle side bar';
 const TOGGLE_DIALOGUE = '[APP STATE] show dialog';
 export const reducer = (state, action) => {
-  console.log(state);
   switch (action.type) {
     case TOGGLE_SIDEBAR:
       return {

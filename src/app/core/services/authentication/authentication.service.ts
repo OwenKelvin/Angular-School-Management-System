@@ -61,20 +61,13 @@ export class AuthenticationService {
         return user;
       },
         error => {
-          console.log(error);
+          // Error Has been captured by interceptor
         }
 
       ));
   }
 
   currentUserDetails(): Observable<any> {
-    // this.store.pipe(select(state => state), (state) => {
-    //   console.log(">>>>")
-    //   console.log(state)
-    //   console.log(">>>>")
-    // })).subscribe(value => {
-    //   console.log(value)
-    // });
     const url = `${this.config.apiUrl}/api/user`;
     const httpOptions = {
       headers: new HttpHeaders({
@@ -92,7 +85,7 @@ export class AuthenticationService {
         return user;
       },
         error => {
-          console.log(error);
+          // Error Has been captured by interceptor
         }
 
       ));

@@ -10,4 +10,9 @@ if (environment.production) {
 }
 
 platformBrowserDynamic().bootstrapModule(AppModule)
-  .catch(err => console.error(err));
+  .catch(err => {
+    this.store.dispatch({
+      type: '[APP STATE] show dialog',
+      payload: 'Unable to bootstrap the application'
+    });
+  });
