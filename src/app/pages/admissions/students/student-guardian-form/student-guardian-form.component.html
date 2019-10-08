@@ -7,36 +7,47 @@
         <legend>
           <h2>Email and Phone Number</h2>
         </legend>
-        <section class="id-number-field">
-          <mat-form-field>
-            <label hidden attr.for="{{ email + i }}"><span class="material-icons" matPrefix>person</span> Id
-              Number</label>
+        <section class="row">
+          <section class="col-sm-6 col-md-4 col-lg-3">
+            <mat-form-field>
+              <mat-icon matPrefix>email</mat-icon>
+              <label hidden attr.for="{{ email + i }}"> Email </label>
 
-            <input (blur)="validateEmail(i)" id="{{ email + i }}" type="text" placeholder="Id Number"
-              formControlName="email" matInput>
-            <mat-error *ngIf="errors.guardians[i]?.email">
-              {{ errors.guardians[i]?.email }}
-            </mat-error>
+              <input (blur)="validateEmail(i)" id="{{ email + i }}" type="text" placeholder="Email"
+                formControlName="email" matInput>
+              <mat-error *ngIf="errors.guardians[i]?.email">
+                {{ errors.guardians[i]?.email }}
+              </mat-error>
 
-          </mat-form-field>
-          <section *ngIf="idNumber">
-            Studeny Id Number: {{ idNumber }}
+            </mat-form-field>
           </section>
-          <label for="autogenerate-id-number" *ngIf="!idNumber">
-            Autogenerate Id Number <mat-checkbox type="checkbox" formControlName="autogenerateIdNumber"
-              id="autogenerate-id-number"></mat-checkbox>
-          </label>
 
-          <mat-form-field *ngIf="!guardian.get('autogenerateIdNumber').value">
-            <label hidden for="idNumber"><span class="material-icons" matPrefix>person</span> Id Number</label>
+          <section class="col-sm-6 col-md-4 col-lg-3" *ngIf="idNumber">
+            Guardian Id Number: {{ idNumber }}
+          </section>
+          <section class="col-sm-6 col-md-4 col-lg-3" class="phone">
+            <international-phone-number formControlName="phone" placeholder="Phone Number (+254 0712345678)"
+              [maxlength]="20" [defaultCountry]="'ke'" [required]="true" [allowedCountries]="allowedPhoneCountries">
+            </international-phone-number>
+          </section>
+          <section class="col-sm-6 col-md-4 col-lg-3" *ngIf="!idNumber">
+            <label for="autogenerate-id-number">
+              Autogenerate Id Number <mat-checkbox type="checkbox" formControlName="autogenerateIdNumber"
+                id="autogenerate-id-number"></mat-checkbox>
+            </label>
+          </section>
+          <section col-sm-6 col-md-4 col-lg-3>
+            <mat-form-field *ngIf="!guardian.get('autogenerateIdNumber').value">
+              <label hidden for="idNumber"><span class="material-icons" matPrefix>person</span> Id
+                Number</label>
 
-            <input (blur)="validateIdNumber(i)" id="idNumber" type="text" placeholder="Id Number"
-              formControlName="idNumber" matInput>
-            <mat-error *ngIf="errors.guardians[i]?.idNumber">
-              {{ errors.guardians[i]?.idNumber }}
-            </mat-error>
-
-          </mat-form-field>
+              <input (blur)="validateIdNumber(i)" id="idNumber" type="text" placeholder="Id Number"
+                formControlName="idNumber" matInput>
+              <mat-error *ngIf="errors.guardians[i]?.idNumber">
+                {{ errors.guardians[i]?.idNumber }}
+              </mat-error>
+            </mat-form-field>
+          </section>
         </section>
       </fieldset>
       <fieldset>

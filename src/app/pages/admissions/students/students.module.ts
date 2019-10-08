@@ -12,6 +12,7 @@ import { StudentIdentificationFormComponent } from './student-identification-for
 import { IdentificationDetailsComponent } from './view-student/identification-details/identification-details.component';
 import { StudentGuardianFormComponent } from './student-guardian-form/student-guardian-form.component';
 import { OrdinalPipe } from 'src/app/shared/pipes/ordinal.pipe';
+import { InternationalPhoneNumberModule } from 'ngx-international-phone-number';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { OrdinalPipe } from 'src/app/shared/pipes/ordinal.pipe';
     CommonModule,
     StudentsRoutingModule,
     ReactiveFormsModule,
-    CustomMaterialModule
+    CustomMaterialModule,
+    InternationalPhoneNumberModule
   ],
   exports: [StudentsComponent]
 })

@@ -10,6 +10,7 @@ import { Store, select } from '@ngrx/store';
 import { StudentDetailsService, IStudentDetails } from '../../services/studen-details/student-details.service';
 import { GenderService } from 'src/app/core/services/gender/gender.service';
 import { ReligionService } from 'src/app/core/services/religion/religion.service';
+import { AllowedPhoneNumbersService } from 'src/app/core/services/countries/allowed-phone-numbers.service';
 interface IError {
   email?: string;
   firstName: string;
@@ -32,6 +33,7 @@ export class StudentGuardianFormComponent implements OnInit {
   @Output() submitted: EventEmitter<any>;
   genders: any[];
   religions: any[];
+  allowedPhoneCountries: any[];
   serverStudentData: object;
   idNumber: string | number | null | undefined;
   userIdentificaionForm: FormGroup;
@@ -71,7 +73,8 @@ export class StudentGuardianFormComponent implements OnInit {
     private idNumberValidator: IdNumberValidator,
     private studentDetails: StudentDetailsService,
     private getGenders: GenderService,
-    private getReligions: ReligionService
+    private getReligions: ReligionService,
+    private allowedPhoneNumbers: AllowedPhoneNumbersService
   ) {
     this.submitted = new EventEmitter();
   }
@@ -110,7 +113,9 @@ export class StudentGuardianFormComponent implements OnInit {
     });
   }
   ngOnInit() {
-
+    this.allowedPhoneNumbers.getAllowedCountries().subscribe(data => {
+      this.allowedPhoneCountries = data;
+    });
     this.getGenders.getAll().subscribe(data => {
       this.genders = data;
     });
@@ -141,7 +146,8 @@ export class StudentGuardianFormComponent implements OnInit {
         { value: '', disabled: true },
         Validators.required, this.idNumberValidator.studentIdTaken.bind(this.idNumberValidator)),
       birthCertNumber: [''],
-      email: ['', this.validators.email]
+      email: ['', this.validators.email],
+      phone: ['']
     });
   }
   validateFirstName(i) {

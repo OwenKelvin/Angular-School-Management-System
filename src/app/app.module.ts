@@ -25,6 +25,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 import { ErrorDialogComponent } from './core/error-dialog/error-dialog.component';
 import { CacheInterceptor } from './core/interceptors/cache,interceptor';
+import { InternationalPhoneNumberModule } from 'ngx-international-phone-number';
 
 @NgModule({
   imports: [
