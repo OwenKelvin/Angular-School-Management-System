@@ -11,6 +11,8 @@ export interface IStudentDetails {
   birth_cert_number?: string;
   date_of_birth?: string;
   name_prefix_id?: string;
+  gender_id?: number;
+  religion_id?: number;
 }
 
 @Injectable({
@@ -32,18 +34,6 @@ export class StudentDetailsService {
         // Error Has been captured by interceptor
       }
     ));
-
-
-
-    const v: IStudentDetails = {
-      first_name: 'OWEN',
-      last_name: 'Kelvin',
-      middle_name: '',
-      other_names: '',
-      date_of_birth: '2019-01-01',
-      birth_cert_number: '4446466',
-    };
-    return of(v);
 
   }
 }

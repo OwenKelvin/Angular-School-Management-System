@@ -26,17 +26,15 @@
   <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
     <mat-expansion-panel-header>
       <mat-panel-title>
-        Destination
+        Guardian Information
       </mat-panel-title>
       <mat-panel-description>
-        Type the country name
-        <mat-icon>map</mat-icon>
+        Please enter guardian Infomation
+        <mat-icon>people_alt</mat-icon>
       </mat-panel-description>
     </mat-expansion-panel-header>
 
-    <mat-form-field>
-      <input matInput placeholder="Country">
-    </mat-form-field>
+    <app-student-guardian-form></app-student-guardian-form>
 
     <mat-action-row>
       <button mat-button color="warn" (click)="prevStep()">Previous</button>

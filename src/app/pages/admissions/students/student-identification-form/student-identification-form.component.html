@@ -4,14 +4,13 @@
       <h2>ID Number</h2>
     </legend>
     <section class="id-number-field">
-      <section [hidden]="!idNumber">
+      <section *ngIf="idNumber">
         Studeny Id Number: {{ idNumber }}
       </section>
-      <label for="autogenerate-id-number" [hidden]="idNumber">
+      <label for="autogenerate-id-number" *ngIf="!idNumber">
         Autogenerate Id Number <mat-checkbox type="checkbox" formControlName="autogenerateIdNumber"
           id="autogenerate-id-number"></mat-checkbox>
       </label>
-
 
       <mat-form-field *ngIf="!userIdentificaionForm.get('autogenerateIdNumber').value">
         <label hidden for="idNumber"><span class="material-icons" matPrefix>person</span> Id Number</label>
@@ -68,6 +67,15 @@
       <h2>Other Details</h2>
     </legend>
     <mat-form-field>
+      <label hidden for="gender">Gender</label>
+      <mat-select id="gender" formControlName="gender" placeholder="Gender">
+        <mat-option *ngFor="let gender of genders" [value]="gender.id">
+          {{ gender.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
       <input matInput [matDatepicker]="dateOfBirth" placeholder="Date Of Birth" formControlName="dateOfBirth"
         (blur)="validateDateOfBirth()">
       <mat-datepicker-toggle matSuffix [for]="dateOfBirth"></mat-datepicker-toggle>
@@ -78,7 +86,14 @@
     </mat-form-field>
     <mat-form-field>
       <input matInput placeholder="Birth Certificate Number" formControlName="birthCertNumber">
-
+    </mat-form-field>
+    <mat-form-field>
+      <label hidden for="religion">Religion</label>
+      <mat-select id="religion" formControlName="religion" placeholder="Religion">
+        <mat-option *ngFor="let religion of religions" [value]="religion.id">
+          {{ religion.name }}
+        </mat-option>
+      </mat-select>
     </mat-form-field>
   </fieldset>
 </form>

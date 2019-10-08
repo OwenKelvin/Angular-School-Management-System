@@ -8,6 +8,8 @@ import { SET_ADMITTED_STUDENT_IDENTIFICATION_INFO } from '../../store/actions/pa
 import { SET_STUDENT_ID_NUMBER } from '../../store/actions/pages.actions';
 import { Store, select } from '@ngrx/store';
 import { StudentDetailsService, IStudentDetails } from '../../services/studen-details/student-details.service';
+import { GenderService } from 'src/app/core/services/gender/gender.service';
+import { ReligionService } from 'src/app/core/services/religion/religion.service';
 
 @Component({
   selector: 'app-student-identification-form',
@@ -17,6 +19,8 @@ import { StudentDetailsService, IStudentDetails } from '../../services/studen-de
 export class StudentIdentificationFormComponent implements OnInit, OnChanges {
   @Input() submit = false;
   @Output() submitted: EventEmitter<any>;
+  genders: any[];
+  religions: any[];
   serverStudentData: object;
   idNumber: string | number | null | undefined;
   userIdentificaionForm: FormGroup;
@@ -44,7 +48,9 @@ export class StudentIdentificationFormComponent implements OnInit, OnChanges {
     private formSubmit: SubmitStudentIdentificationService,
     private studentIdNumber: StudentIdNumberService,
     private idNumberValidator: IdNumberValidator,
-    private studentDetails: StudentDetailsService
+    private studentDetails: StudentDetailsService,
+    private getGenders: GenderService,
+    private getReligions: ReligionService
   ) {
     this.submitted = new EventEmitter();
   }
@@ -59,14 +65,23 @@ export class StudentIdentificationFormComponent implements OnInit, OnChanges {
         this.userIdentificaionForm.get('namePrefix').setValue(data.name_prefix_id);
         this.userIdentificaionForm.get('dateOfBirth').setValue(data.date_of_birth);
         this.userIdentificaionForm.get('birthCertNumber').setValue(data.birth_cert_number);
+        this.userIdentificaionForm.get('gender').setValue(data.gender_id);
+        this.userIdentificaionForm.get('religion').setValue(data.religion_id);
       });
     }
   }
 
   ngOnInit() {
+
+    this.getGenders.getAll().subscribe(data => {
+      this.genders = data;
+    });
+    this.getReligions.getAll().subscribe(data => {
+      this.religions = data;
+    });
     this.store.dispatch({
       type: SET_STUDENT_ID_NUMBER,
-      payload: 'S2354'
+      payload: 'Sqwerty'
     });
     this.userIdentificaionForm = this.fb.group({
       firstName: ['', this.validators.firstName],
@@ -74,6 +89,8 @@ export class StudentIdentificationFormComponent implements OnInit, OnChanges {
       otherNames: ['', this.validators.otherNames],
       middleName: ['', this.validators.middleName],
       namePrefix: ['', this.validators.namePrefix],
+      gender: [null],
+      religion: [null],
       dateOfBirth: [null, this.validators.dateOfBirth],
       autogenerateIdNumber: [true, Validators.required],
       idNumber: new FormControl(

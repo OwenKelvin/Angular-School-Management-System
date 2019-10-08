@@ -21,7 +21,9 @@ export class SubmitStudentIdentificationService {
       other_names: data.otherNames,
       date_of_birth: data.dateOfBirth,
       student_school_id_number: data.idNumber,
-      birth_cert_number: data.birthCertNumber
+      birth_cert_number: data.birthCertNumber,
+      gender_id: data.gender,
+      religion_id: data.gender
 
     };
     let url = `${this.config.apiUrl}/api/admissions/students/identification`;

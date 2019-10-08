@@ -5,11 +5,12 @@ import { FormsModule } from '@angular/forms';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { RouterLink, RouterModule } from '@angular/router';
 import { MatMenuWrapperComponent } from './mat-menu-wrapper/mat-menu-wrapper.component';
+import { SelectComponent } from './select/select.component';
 
 
 
 @NgModule({
-  declarations: [SidebarComponent, MatMenuWrapperComponent],
+  declarations: [SidebarComponent, MatMenuWrapperComponent, SelectComponent],
   imports: [
     FormsModule,
     CommonModule,

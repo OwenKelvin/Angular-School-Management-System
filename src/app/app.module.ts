@@ -24,6 +24,7 @@ import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 import { ErrorDialogComponent } from './core/error-dialog/error-dialog.component';
+import { CacheInterceptor } from './core/interceptors/cache,interceptor';
 
 @NgModule({
   imports: [
@@ -59,7 +60,7 @@ import { ErrorDialogComponent } from './core/error-dialog/error-dialog.component
     // FormsModule'
     SidebarComponent,
     // ErrorDialogComponent
-    CoreModule
+    CoreModule,
   ],
   declarations: [
     AppComponent,
@@ -68,6 +69,7 @@ import { ErrorDialogComponent } from './core/error-dialog/error-dialog.component
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })
