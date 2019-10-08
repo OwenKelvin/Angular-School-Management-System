@@ -25,10 +25,29 @@
           <section class="col-sm-6 col-md-4 col-lg-3" *ngIf="idNumber">
             Guardian Id Number: {{ idNumber }}
           </section>
-          <section class="col-sm-6 col-md-4 col-lg-3" class="phone">
-            <international-phone-number formControlName="phone" placeholder="Phone Number (+254 0712345678)"
-              [maxlength]="20" [defaultCountry]="'ke'" [required]="true" [allowedCountries]="allowedPhoneCountries">
-            </international-phone-number>
+          <section formGroupName="phoneDetails" class="col-sm-6 col-md-4 col-lg-3" class="phone">
+            <mat-form-field style="width: 78px;">
+              <mat-select [(value)]="selectedPhoneCode" (blur)="validatePhone(i)" formControlName="phoneCode"
+                id="{{ 'phoneCode' + i}}">
+                <mat-select-trigger>
+                  <span class="flag-icon flag-icon-{{ selectedPhoneCode.country | lowercase}}">
+                  </span>(+{{ selectedPhoneCode.code }})
+                </mat-select-trigger>
+                <mat-option *ngFor="let country of countries" [value]="country">
+                  <span class="flag-icon flag-icon-{{ country.country | lowercase}}"></span>
+                  {{ country.country }} (+{{ country.code }})
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+              <input (blur)="validatePhone(i)" id="{{ 'phoneNumber' + i}}" type="text" placeholder="Phone Number"
+                formControlName="phoneNumber" matInput>
+              <label hidden attr.for="{{ 'phoneNumber' + i}}"><span class=" material-icons" matSuffix>phone</span> Phone
+                Number</label>
+              <mat-error *ngIf="errors.guardians[i]?.phone">
+                {{ errors.guardians[i]?.phone }}
+              </mat-error>
+            </mat-form-field>
           </section>
           <section class="col-sm-6 col-md-4 col-lg-3" *ngIf="!idNumber">
             <label for="autogenerate-id-number">

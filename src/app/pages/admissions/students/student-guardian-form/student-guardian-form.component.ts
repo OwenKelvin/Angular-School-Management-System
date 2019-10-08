@@ -50,6 +50,8 @@ export class StudentGuardianFormComponent implements OnInit {
     guardians: [
     ]
   };
+  countries: any;
+  selectedPhoneCode: any;
   createError(i): void {
     if (!this.errors.guardians[i]) {
       this.errors.guardians[i] = {
@@ -113,8 +115,12 @@ export class StudentGuardianFormComponent implements OnInit {
     });
   }
   ngOnInit() {
+    this.selectedPhoneCode = { code: 254, country: 'KE' }
     this.allowedPhoneNumbers.getAllowedCountries().subscribe(data => {
       this.allowedPhoneCountries = data;
+    });
+    this.allowedPhoneNumbers.getAllCountryCodes().subscribe(data => {
+      this.countries = data as Array<any>;
     });
     this.getGenders.getAll().subscribe(data => {
       this.genders = data;
@@ -147,6 +153,10 @@ export class StudentGuardianFormComponent implements OnInit {
         Validators.required, this.idNumberValidator.studentIdTaken.bind(this.idNumberValidator)),
       birthCertNumber: [''],
       email: ['', this.validators.email],
+      phoneDetails: this.fb.group({
+        phoneCode: ['{ code: 254, country: "KE" }'],
+        phoneNumber: []
+      }),
       phone: ['']
     });
   }
@@ -227,5 +237,10 @@ export class StudentGuardianFormComponent implements OnInit {
       }
     }
 
+  }
+  validatePhone(i) {
+    const getControl = this.guardians().controls[i].get('phoneDetails');
+    const phone = String(this.selectedPhoneCode.code) + String(getControl.get('phoneNumber').value);
+    this.guardians().controls[i].get('phone').setValue(phone);
   }
 }

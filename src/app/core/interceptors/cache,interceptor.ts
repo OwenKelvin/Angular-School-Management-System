@@ -13,7 +13,8 @@ export class CacheInterceptor implements HttpInterceptor {
         const cachedResponse: HttpResponse<any> = this.cacheService.get(req.url);
         const cachableUrl: string[] = [
             `${this.config.apiUrl}/api/genders/all`,
-            `${this.config.apiUrl}/api/religions/all`
+            `${this.config.apiUrl}/api/religions/all`,
+            `${this.config.apiUrl}/api/phones/allowed-countries`
         ];
         if (req.method === 'GET' && cachableUrl.includes(req.url)) {
             if (cachedResponse) {
