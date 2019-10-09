@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Store, select } from '@ngrx/store';
+import { SUBMIT_STUDENT_GUARDIAN } from '../../store/actions/pages.actions';
 
 @Component({
   selector: 'app-add-student',
@@ -42,5 +43,11 @@ export class AddStudentComponent implements OnInit {
   saveStudentIdentificationInfo() {
     this.submitStudentIdentificationInfo = true;
     this.cd.detectChanges();
+  }
+  saveStudentGuardiansInfo() {
+    this.store.dispatch({
+      type: SUBMIT_STUDENT_GUARDIAN,
+      payload: true
+    });
   }
 }

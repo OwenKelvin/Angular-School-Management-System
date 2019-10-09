@@ -3,6 +3,7 @@
   <div formArrayName="guardians" style="display: flex; flex-direction: column-reverse">
     <fieldset *ngFor="let guardian of guardians().controls; let i = index" [formGroupName]="i">
       <legend>Enter Details for the {{ i + 1 | ordinal }} Guardian </legend>
+      <button style="float: right" (click)="removeGuadian(i)" [disabled]="guardians().controls.length === 1" mat-button color="warn">remove</button>
       <fieldset>
         <legend>
           <h2>Email and Phone Number</h2>
@@ -21,30 +22,31 @@
 
             </mat-form-field>
           </section>
-
           <section class="col-sm-6 col-md-4 col-lg-3" *ngIf="idNumber">
             Guardian Id Number: {{ idNumber }}
           </section>
           <section formGroupName="phoneDetails" class="col-sm-6 col-md-4 col-lg-3" class="phone">
             <mat-form-field style="width: 78px;">
-              <mat-select [(value)]="selectedPhoneCode" (blur)="validatePhone(i)" formControlName="phoneCode"
-                id="{{ 'phoneCode' + i}}">
+
+              <mat-select formControlName="phoneCode" (selectionChange)="updateSelectedPhone(i)"
+                [(value)]="selectedPhoneCode" (blur)="validatePhone(i)" id="{{ 'phoneCode' + i}}">
                 <mat-select-trigger>
-                  <span class="flag-icon flag-icon-{{ selectedPhoneCode.country | lowercase}}">
-                  </span>(+{{ selectedPhoneCode.code }})
+                  <span class="flag-icon flag-icon-{{ selectedPhone.country | lowercase}}">
+                  </span>(+{{ selectedPhone.code }})
                 </mat-select-trigger>
-                <mat-option *ngFor="let country of countries" [value]="country">
+                <mat-option *ngFor="let country of countries" [value]="country.code" selected>
                   <span class="flag-icon flag-icon-{{ country.country | lowercase}}"></span>
                   {{ country.country }} (+{{ country.code }})
                 </mat-option>
               </mat-select>
             </mat-form-field>
             <mat-form-field>
-              <input (blur)="validatePhone(i)" id="{{ 'phoneNumber' + i}}" type="text" placeholder="Phone Number"
-                formControlName="phoneNumber" matInput>
-              <label hidden attr.for="{{ 'phoneNumber' + i}}"><span class=" material-icons" matSuffix>phone</span> Phone
-                Number</label>
-              <mat-error *ngIf="errors.guardians[i]?.phone">
+              <label hidden attr.for="{{ 'phoneNumber' + i}}"> Phone
+                Number
+              </label>
+              <input (keyup)="updatePhoneInputErrorState(i)" [errorStateMatcher]="phoneErrorMatcher" (blur)="validatePhone(i)" id="{{ 'phoneNumber' + i}}"
+                type="text" placeholder="Phone Number" formControlName="phoneNumber" matInput>
+              <mat-error>
                 {{ errors.guardians[i]?.phone }}
               </mat-error>
             </mat-form-field>
@@ -57,10 +59,10 @@
           </section>
           <section col-sm-6 col-md-4 col-lg-3>
             <mat-form-field *ngIf="!guardian.get('autogenerateIdNumber').value">
-              <label hidden for="idNumber"><span class="material-icons" matPrefix>person</span> Id
+              <label hidden attr.for="{{ 'idNumber' + i}}"><span class="material-icons" matPrefix>person</span> Id
                 Number</label>
 
-              <input (blur)="validateIdNumber(i)" id="idNumber" type="text" placeholder="Id Number"
+              <input (blur)="validateIdNumber(i)" id="{{ 'idNumber' + i}}" type="text" placeholder="Id Number"
                 formControlName="idNumber" matInput>
               <mat-error *ngIf="errors.guardians[i]?.idNumber">
                 {{ errors.guardians[i]?.idNumber }}
@@ -81,6 +83,9 @@
             formControlName="firstName" matInput>
           <mat-error *ngIf="errors.guardians[i]?.firstName">
             {{ errors.guardians[i]?.firstName }}
+          </mat-error>
+          <mat-error>
+            {{ errors.guardians[i]?.phone }}
           </mat-error>
         </mat-form-field>
         <mat-form-field>

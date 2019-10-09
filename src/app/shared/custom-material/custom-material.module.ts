@@ -43,7 +43,8 @@ import { from } from 'rxjs';
     MatDatepickerModule,
     MatNativeDateModule,
     MatDialogModule,
-    MatSelectModule
+    MatSelectModule,
+    ReactiveFormsModule
   ]
 })
 export class CustomMaterialModule { }

@@ -7,7 +7,7 @@ import {
 } from '@ngrx/store';
 import { environment } from '../../../../../environments/environment';
 import { State } from 'src/app/pages/store/reducers';
-import { SET_ADMITTED_STUDENT_IDENTIFICATION_INFO, SET_STUDENT_ID_NUMBER } from '../actions/pages.actions';
+import { SET_ADMITTED_STUDENT_IDENTIFICATION_INFO, SET_STUDENT_ID_NUMBER, SUBMIT_STUDENT_GUARDIAN } from '../actions/pages.actions';
 
 export const admissionsFeatureKey = 'admissions';
 
@@ -37,6 +37,11 @@ export function reducer(state, action) {
       return {
         ...state,
         ...student
+      };
+    case SUBMIT_STUDENT_GUARDIAN:
+      return {
+        ...state,
+        submitGuardian: action.payload
       };
     default:
       return state;

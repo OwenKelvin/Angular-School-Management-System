@@ -1,16 +1,12 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
-import { FormGroup, Validators, FormBuilder, FormControl, AbstractControl, FormArray } from '@angular/forms';
-import { SubmitStudentIdentificationService } from '../../services/submit-student-identification.service';
-import { debounceTime } from 'rxjs/operators';
-import { StudentIdNumberService } from '../../services/student-id-number/student-id-number.service';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FormGroup, Validators, FormBuilder, FormControl, FormArray } from '@angular/forms';
 import { IdNumberValidator } from '../validators/student-id-taken.validator';
-import { SET_ADMITTED_STUDENT_IDENTIFICATION_INFO } from '../../store/actions/pages.actions';
 import { SET_STUDENT_ID_NUMBER } from '../../store/actions/pages.actions';
-import { Store, select } from '@ngrx/store';
-import { StudentDetailsService, IStudentDetails } from '../../services/studen-details/student-details.service';
+import { Store } from '@ngrx/store';
 import { GenderService } from 'src/app/core/services/gender/gender.service';
 import { ReligionService } from 'src/app/core/services/religion/religion.service';
 import { AllowedPhoneNumbersService } from 'src/app/core/services/countries/allowed-phone-numbers.service';
+import { ErrorStateMatcher } from '@angular/material';
 interface IError {
   email?: string;
   firstName: string;
@@ -21,6 +17,12 @@ interface IError {
   dateOfBirth: string;
   dateOfBirthNumber: string;
   idNumber: string;
+  phone?: string;
+}
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl): boolean {
+    return control.hasError('invalid');
+  }
 }
 @Component({
   selector: 'app-student-guardian-form',
@@ -44,14 +46,17 @@ export class StudentGuardianFormComponent implements OnInit {
     otherNames: [],
     namePrefix: [],
     dateOfBirth: [Validators.required],
-    email: [Validators.email, Validators.required]
+    email: [
+      Validators.pattern('^[a-zA-Z]+([\.-]?[a-zA-Z0-9]+)*@[a-zA-Z]+([\.-]?[a-zA-Z]+)*(\.[a-zA-Z]{2,3})+$'), Validators.required]
   };
   errors: { guardians: IError[] } = {
     guardians: [
     ]
   };
   countries: any;
-  selectedPhoneCode: any;
+  selectedPhoneCode: number | string;
+  selectedPhone: object;
+  phoneErrorMatcher: MyErrorStateMatcher;
   createError(i): void {
     if (!this.errors.guardians[i]) {
       this.errors.guardians[i] = {
@@ -70,10 +75,7 @@ export class StudentGuardianFormComponent implements OnInit {
   constructor(
     private store: Store<any>,
     private fb: FormBuilder,
-    private formSubmit: SubmitStudentIdentificationService,
-    private studentIdNumber: StudentIdNumberService,
     private idNumberValidator: IdNumberValidator,
-    private studentDetails: StudentDetailsService,
     private getGenders: GenderService,
     private getReligions: ReligionService,
     private allowedPhoneNumbers: AllowedPhoneNumbersService
@@ -115,7 +117,8 @@ export class StudentGuardianFormComponent implements OnInit {
     });
   }
   ngOnInit() {
-    this.selectedPhoneCode = { code: 254, country: 'KE' }
+    this.phoneErrorMatcher = new MyErrorStateMatcher();
+    this.selectedPhone = { code: 254, country: 'KE' };
     this.allowedPhoneNumbers.getAllowedCountries().subscribe(data => {
       this.allowedPhoneCountries = data;
     });
@@ -139,23 +142,24 @@ export class StudentGuardianFormComponent implements OnInit {
 
   buildGuardianProfile(): FormGroup {
     return this.fb.group({
-      firstName: ['', this.validators.firstName],
-      lastName: ['', this.validators.lastName],
+      firstName: ['owen', this.validators.firstName],
+      lastName: ['kelvin', this.validators.lastName],
       otherNames: ['', this.validators.otherNames],
       middleName: ['', this.validators.middleName],
       namePrefix: ['', this.validators.namePrefix],
       gender: [null],
       religion: [null],
-      dateOfBirth: [null, this.validators.dateOfBirth],
+      // dateOfBirth: [null, this.validators.dateOfBirth],
+      dateOfBirth: ['2000-01-01', this.validators.dateOfBirth],
       autogenerateIdNumber: [true, Validators.required],
       idNumber: new FormControl(
         { value: '', disabled: true },
         Validators.required, this.idNumberValidator.studentIdTaken.bind(this.idNumberValidator)),
       birthCertNumber: [''],
-      email: ['', this.validators.email],
+      email: ['okotino@yahoo.com', this.validators.email],
       phoneDetails: this.fb.group({
-        phoneCode: ['{ code: 254, country: "KE" }'],
-        phoneNumber: []
+        phoneCode: [254],
+        phoneNumber: ['']
       }),
       phone: ['']
     });
@@ -232,15 +236,42 @@ export class StudentGuardianFormComponent implements OnInit {
       !this.guardians().controls[i].get('email').valid) {
       if (this.guardians().controls[i].get('email').errors.required) {
         this.errors.guardians[i].email = 'Email is required';
-      } else if (this.guardians().controls[i].get('email').errors.email) {
+      } else if (this.guardians().controls[i].get('email').errors.pattern) {
         this.errors.guardians[i].email = 'Please enter a valid email';
       }
     }
 
   }
+  updatePhoneInputErrorState(i) {
+    if (this.guardians().controls[i].get('phone').dirty) {
+      this.validatePhone(i);
+    }
+
+  }
   validatePhone(i) {
+    this.createError(i);
     const getControl = this.guardians().controls[i].get('phoneDetails');
-    const phone = String(this.selectedPhoneCode.code) + String(getControl.get('phoneNumber').value);
+    const phone = String(getControl.get('phoneCode').value) + String(getControl.get('phoneNumber').value);
     this.guardians().controls[i].get('phone').setValue(phone);
+    if (!this.allowedPhoneNumbers.isValidPhoneNumber(phone)) {
+      this.guardians().controls[i].get('phone').markAsDirty();
+      this.errors.guardians[i].phone = 'The Phone Number Entered is Invalid';
+      // getControl.get('phoneNumber').markAsDirty();
+      getControl.get('phoneNumber').setErrors({ invalid: 'Phone Number is invalid' });
+    } else {
+      getControl.get('phoneNumber').setErrors(null);
+      getControl.get('phoneNumber').clearValidators();
+      this.guardians().controls[i].get('phone').clearValidators();
+      this.errors.guardians[i].phone = null;
+    }
+  }
+  updateSelectedPhone(i) {
+    this.selectedPhone = this.countries.find(country => country.code === this.selectedPhoneCode);
+  }
+  removeGuadian(i) {
+    const confirmed = confirm(' Are You sure you wish to remove Item?');
+    if (confirmed) {
+      this.guardians().controls.splice(i, 1);
+    }
   }
 }

@@ -8,8 +8,12 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AllowedPhoneNumbersService {
-
-  constructor(private config: Config, private http: HttpClient) { }
+  lib: any;
+  phoneUtil: any;
+  constructor(private config: Config, private http: HttpClient) {
+    this.lib = require('google-libphonenumber');
+    this.phoneUtil = this.lib.PhoneNumberUtil.getInstance();
+  }
   getAllowedCountries(): Observable<any> {
     const url = `${this.config.apiUrl}/api/phones/allowed-countries`;
     return this.http.get<any>(url)
@@ -22,11 +26,9 @@ export class AllowedPhoneNumbersService {
       ));
   }
   getAllCountryCodes(): Observable<any> {
-    const lib = require('google-libphonenumber');
-    const phoneUtil = lib.PhoneNumberUtil.getInstance();
     const countries = require('google-libphonenumber').shortnumbermetadata.countryCodeToRegionCodeMap['0'];
     return of(countries.map(country => {
-      const code = phoneUtil.getCountryCodeForRegion(country);
+      const code = this.phoneUtil.getCountryCodeForRegion(country);
       return { code, country };
     }).sort((a, b) => {
       const nameA = a.country.toUpperCase(); // ignore upper and lowercase
@@ -41,5 +43,14 @@ export class AllowedPhoneNumbersService {
       // names must be equal
       return 0;
     }));
+  }
+  isValidPhoneNumber(phoneNumber) {
+    try {
+      const testNumber = this.phoneUtil.parseAndKeepRawInput('+' + phoneNumber, 'KE');
+      return this.phoneUtil.isPossibleNumber(testNumber);
+    } catch (err) {
+      return false;
+    }
+
   }
 }

@@ -18,7 +18,10 @@ import * as fromAdmissions from './store/reducers';
     // StoreModule.forFeature(fromAdmissions.admissionsFeatureKey, fromAdmissions.reducers, { metaReducers: fromAdmissions.metaReducers })
     StoreModule.forFeature(fromAdmissions.admissionsFeatureKey, fromAdmissions.reducer)
   ],
-  exports: [],
+  exports: [
+    StudentsModule,
+    StaffModule,
+  ],
 })
 
 export class AdmissionsModule { }

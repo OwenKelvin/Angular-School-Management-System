@@ -15,6 +15,13 @@ import { OrdinalPipe } from 'src/app/shared/pipes/ordinal.pipe';
 
 
 @NgModule({
+  imports: [
+    CommonModule,
+    StudentsRoutingModule,
+    CustomMaterialModule,
+    ReactiveFormsModule,
+  ],
+  exports: [StudentsComponent],
   declarations: [
     OrdinalPipe,
     AddStudentComponent,
@@ -24,12 +31,5 @@ import { OrdinalPipe } from 'src/app/shared/pipes/ordinal.pipe';
     StudentIdentificationFormComponent,
     IdentificationDetailsComponent,
     StudentGuardianFormComponent],
-  imports: [
-    CommonModule,
-    StudentsRoutingModule,
-    ReactiveFormsModule,
-    CustomMaterialModule,
-  ],
-  exports: [StudentsComponent]
 })
 export class StudentsModule { }
