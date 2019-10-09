@@ -1,20 +1,20 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Config } from 'src/app/config/app.config';
-import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { Config } from 'src/app/config/app.config'; import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
-
-export class SubmitStudentIdentificationService {
+export class SubmitStudentGuardiansService {
 
   constructor(
     private http: HttpClient,
     private config: Config) { }
-  submit(data: any, idNumber: any): Observable<any> {
+  submit(data: any): Observable<any> {
     const submitData = {
+      id: data.id,
+      email: data.email,
       first_name: data.firstName,
       last_name: data.lastName,
       middle_name: data.middleName,
@@ -23,14 +23,17 @@ export class SubmitStudentIdentificationService {
       student_school_id_number: data.idNumber,
       birth_cert_number: data.birthCertNumber,
       gender_id: data.gender,
-      religion_id: data.religion
+      religion_id: data.religion,
+      phone: data.phone,
+      student_id: data.student_id,
+      relation: data.relation
 
     };
-    let url = `${this.config.apiUrl}/api/admissions/students/identification`;
+    let url = `${this.config.apiUrl}/api/admissions/students/guardians`;
 
-    if (idNumber) {
+    if (data.id) {
       url = `${url}/${data.id}`;
-      return this.http.patch<any>(url, { ...submitData }).pipe(map(user => {
+      return this.http.patch<any>(url, submitData).pipe(map(user => {
         return user;
       }));
     } else {

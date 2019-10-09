@@ -6,6 +6,7 @@ import {
   MetaReducer
 } from '@ngrx/store';
 import { environment } from '../../../environments/environment';
+import { SHOW_SUCCESS_MESSAGE } from '../actions/app.action';
 // import { reducer } from './app.reducer';
 
 
@@ -51,6 +52,11 @@ export function reducer(state, action) {
       return {
         ...state,
         showMessage: action.payload
+      };
+    case SHOW_SUCCESS_MESSAGE:
+      return {
+        ...state,
+        showSuccessMessage: action.payload
       };
     default:
       return state;

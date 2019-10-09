@@ -25,7 +25,7 @@ export class StudentDetailsService {
     private config: Config,
     private http: HttpClient,
   ) { }
-  getIdentificationInfo(idNumber): Observable<IStudentDetails> | undefined{
+  getIdentificationInfo(idNumber): Observable<IStudentDetails> | undefined {
     const url = `${this.config.apiUrl}/api/student/id-number/identification-details?q=${idNumber}`;
     return this.http.get<IStudentDetails>(url).pipe(map(data => {
       return data;

@@ -4,12 +4,13 @@ import { SubmitStudentIdentificationService } from '../../services/submit-studen
 import { debounceTime } from 'rxjs/operators';
 import { StudentIdNumberService } from '../../services/student-id-number/student-id-number.service';
 import { IdNumberValidator } from '../validators/student-id-taken.validator';
-import { SET_ADMITTED_STUDENT_IDENTIFICATION_INFO } from '../../store/actions/pages.actions';
+import { SET_ADMITTED_STUDENT_IDENTIFICATION_INFO, STUDENT_GUARDIANS_CREATED } from '../../store/actions/pages.actions';
 import { SET_STUDENT_ID_NUMBER } from '../../store/actions/pages.actions';
 import { Store, select } from '@ngrx/store';
 import { StudentDetailsService, IStudentDetails } from '../../services/studen-details/student-details.service';
 import { GenderService } from 'src/app/core/services/gender/gender.service';
 import { ReligionService } from 'src/app/core/services/religion/religion.service';
+import { SHOW_SUCCESS_MESSAGE } from 'src/app/store/actions/app.action';
 
 @Component({
   selector: 'app-student-identification-form',
@@ -139,7 +140,14 @@ export class StudentIdentificationFormComponent implements OnInit, OnChanges {
               type: SET_ADMITTED_STUDENT_IDENTIFICATION_INFO,
               payload: data
             });
-
+            // this.store.dispatch({
+            //   type: SHOW_SUCCESS_MESSAGE,
+            //   payload: true
+            // });
+            this.store.dispatch({
+              type: STUDENT_GUARDIANS_CREATED,
+              payload: true
+            });
           },
           error => {
             // Error Has been captured by interceptor 

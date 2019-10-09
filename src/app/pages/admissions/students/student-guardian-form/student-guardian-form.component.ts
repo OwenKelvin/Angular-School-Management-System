@@ -2,11 +2,16 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, Validators, FormBuilder, FormControl, FormArray } from '@angular/forms';
 import { IdNumberValidator } from '../validators/student-id-taken.validator';
 import { SET_STUDENT_ID_NUMBER } from '../../store/actions/pages.actions';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { GenderService } from 'src/app/core/services/gender/gender.service';
 import { ReligionService } from 'src/app/core/services/religion/religion.service';
 import { AllowedPhoneNumbersService } from 'src/app/core/services/countries/allowed-phone-numbers.service';
 import { ErrorStateMatcher } from '@angular/material';
+import { SubmitStudentGuardiansService } from '../../services/submit-student-guardians.service';
+import { SHOW_SUCCESS_MESSAGE } from 'src/app/store/actions/app.action';
+import { debounceTime } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { UsersService } from 'src/app/shared/services/users/users.service';
 interface IError {
   email?: string;
   firstName: string;
@@ -18,6 +23,7 @@ interface IError {
   dateOfBirthNumber: string;
   idNumber: string;
   phone?: string;
+  relation?: string;
 }
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl): boolean {
@@ -57,6 +63,9 @@ export class StudentGuardianFormComponent implements OnInit {
   selectedPhoneCode: number | string;
   selectedPhone: object;
   phoneErrorMatcher: MyErrorStateMatcher;
+  studentAdmissionNumber: any;
+  usersData: any[];
+  confirmData: any[];
   createError(i): void {
     if (!this.errors.guardians[i]) {
       this.errors.guardians[i] = {
@@ -68,7 +77,9 @@ export class StudentGuardianFormComponent implements OnInit {
         prefix: null,
         dateOfBirth: null,
         dateOfBirthNumber: null,
-        idNumber: null
+        idNumber: null,
+        phone: null,
+        relation: null
       };
     }
   }
@@ -78,9 +89,13 @@ export class StudentGuardianFormComponent implements OnInit {
     private idNumberValidator: IdNumberValidator,
     private getGenders: GenderService,
     private getReligions: ReligionService,
-    private allowedPhoneNumbers: AllowedPhoneNumbersService
+    private allowedPhoneNumbers: AllowedPhoneNumbersService,
+    private studentGuardian: SubmitStudentGuardiansService,
+    private users: UsersService
   ) {
     this.submitted = new EventEmitter();
+    this.usersData = [null];
+    this.confirmData = [false];
   }
 
   guardians(): FormArray {
@@ -89,6 +104,9 @@ export class StudentGuardianFormComponent implements OnInit {
   addGuardians(): void {
     if (this.userIdentificaionForm.valid) {
       this.guardians().push(this.buildGuardianProfile());
+      this.usersData.push(null);
+      this.confirmData.push(false);
+      this.subscribeToEmailChecking();
     } else {
       this.validateAllFormFields(this.userIdentificaionForm);
       alert('please fix the errors to continue');
@@ -112,6 +130,7 @@ export class StudentGuardianFormComponent implements OnInit {
           this.validateOtherNames(i);
           this.validateIdNumber(i);
           this.validateEmail(i);
+          this.validateRelation(i);
         });
       }
     });
@@ -138,19 +157,60 @@ export class StudentGuardianFormComponent implements OnInit {
     this.userIdentificaionForm = this.fb.group({
       guardians: this.fb.array([this.buildGuardianProfile()])
     });
+
+    this.store.pipe(select(state => state.admissions)).subscribe(
+      admissions => {
+        if (admissions.student_id_number) {
+          this.studentAdmissionNumber = admissions.student_id_number;
+        }
+        if (admissions && admissions.submitGuardian) {
+          if (this.userIdentificaionForm.valid) {
+            this.userIdentificaionForm.get('guardians').value.forEach(item => {
+              this.studentGuardian.submit({ ...item, student_id: this.studentAdmissionNumber })
+                .subscribe(data => {
+                  // this.store.dispatch({
+                  //   type: SHOW_SUCCESS_MESSAGE,
+                  //   payload: true
+                  // });
+                });
+            });
+          } else {
+            this.validateAllFormFields(this.userIdentificaionForm);
+          }
+        }
+      });
+    this.subscribeToEmailChecking();
+  }
+  subscribeToEmailChecking() {
+    (this.userIdentificaionForm.get('guardians') as FormArray).controls.forEach((element, i) => {
+      element.get('email').valueChanges.pipe(
+        debounceTime(1000)
+      ).subscribe(
+        (event) => {
+          if (event && event.length && event.length > 5) {
+            this.users.findIfEmailExists(event).subscribe(data => {
+              this.confirmData[i] = false;
+              if (data) {
+                this.confirmData[i] = true;
+              }
+              this.usersData[i] = data;
+            });
+          }
+        }
+      );
+    });
   }
 
   buildGuardianProfile(): FormGroup {
     return this.fb.group({
-      firstName: ['owen', this.validators.firstName],
-      lastName: ['kelvin', this.validators.lastName],
+      firstName: ['', this.validators.firstName],
+      lastName: ['', this.validators.lastName],
       otherNames: ['', this.validators.otherNames],
       middleName: ['', this.validators.middleName],
       namePrefix: ['', this.validators.namePrefix],
       gender: [null],
       religion: [null],
-      // dateOfBirth: [null, this.validators.dateOfBirth],
-      dateOfBirth: ['2000-01-01', this.validators.dateOfBirth],
+      dateOfBirth: [null, this.validators.dateOfBirth],
       autogenerateIdNumber: [true, Validators.required],
       idNumber: new FormControl(
         { value: '', disabled: true },
@@ -161,7 +221,8 @@ export class StudentGuardianFormComponent implements OnInit {
         phoneCode: [254],
         phoneNumber: ['']
       }),
-      phone: ['']
+      phone: [''],
+      relation: ['', Validators.required]
     });
   }
   validateFirstName(i) {
@@ -194,6 +255,17 @@ export class StudentGuardianFormComponent implements OnInit {
         this.errors.guardians[i].lastName = 'First Name is required';
       } else if (this.guardians().controls[i].get('lastName').errors.minlength) {
         this.errors.guardians[i].lastName = 'Last Name must have at least 2 characters';
+      } else {
+        this.errors.guardians[i].lastName = null;
+      }
+    }
+  }
+  validateRelation(i) {
+    this.createError(i);
+    if ((this.guardians().controls[i].get('relation').dirty || this.guardians().controls[i].get('relation').touched) &&
+      !this.guardians().controls[i].get('relation').valid) {
+      if (this.guardians().controls[i].get('relation').errors.required) {
+        this.errors.guardians[i].relation = 'Relation to student is required';
       } else {
         this.errors.guardians[i].lastName = null;
       }
@@ -253,10 +325,11 @@ export class StudentGuardianFormComponent implements OnInit {
     const getControl = this.guardians().controls[i].get('phoneDetails');
     const phone = String(getControl.get('phoneCode').value) + String(getControl.get('phoneNumber').value);
     this.guardians().controls[i].get('phone').setValue(phone);
-    if (!this.allowedPhoneNumbers.isValidPhoneNumber(phone)) {
+    if (getControl.get('phoneNumber').value === null || getControl.get('phoneNumber').value === '') {
+
+    } else if (!this.allowedPhoneNumbers.isValidPhoneNumber(phone)) {
       this.guardians().controls[i].get('phone').markAsDirty();
       this.errors.guardians[i].phone = 'The Phone Number Entered is Invalid';
-      // getControl.get('phoneNumber').markAsDirty();
       getControl.get('phoneNumber').setErrors({ invalid: 'Phone Number is invalid' });
     } else {
       getControl.get('phoneNumber').setErrors(null);
@@ -269,9 +342,30 @@ export class StudentGuardianFormComponent implements OnInit {
     this.selectedPhone = this.countries.find(country => country.code === this.selectedPhoneCode);
   }
   removeGuadian(i) {
+    this.guardians().controls[i].get('phoneDetails').get('phoneNumber').setErrors(null);
     const confirmed = confirm(' Are You sure you wish to remove Item?');
     if (confirmed) {
       this.guardians().controls.splice(i, 1);
+      this.usersData.splice(i, 1);
+      this.confirmData.splice(i, 1);
     }
+  }
+  updateFieldsForEmail(i) {
+    const data = this.usersData[i];
+    this.guardians().controls[i].get('firstName').setValue(data.first_name);
+    this.guardians().controls[i].get('lastName').setValue(data.last_name);
+    this.guardians().controls[i].get('middleName').setValue(data.middle_name);
+    this.guardians().controls[i].get('otherNames').setValue(data.other_names);
+    this.guardians().controls[i].get('namePrefix').setValue(data.name_prefix_id);
+    this.guardians().controls[i].get('dateOfBirth').setValue(data.date_of_birth);
+    this.guardians().controls[i].get('birthCertNumber').setValue(data.birth_cert_number);
+    this.guardians().controls[i].get('gender').setValue(data.gender_id);
+    this.guardians().controls[i].get('religion').setValue(data.religion_id);
+    this.confirmData[i] = false;
+  }
+  clearEmail(i) {
+    this.guardians().controls[i].get('email').setValue('');
+    this.usersData[i] = null;
+    this.confirmData[i] = false;
   }
 }

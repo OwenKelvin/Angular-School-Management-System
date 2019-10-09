@@ -1,9 +1,10 @@
 <form [formGroup]="userIdentificaionForm" (ngSubmit)="submit()">
-  <button mat-raised-button color="primary" type="button" (click)="addGuardians()">Add Guardian</button>
+  <button mat-raised-button color="primary" type="button" (click)="addGuardians()">add</button>
   <div formArrayName="guardians" style="display: flex; flex-direction: column-reverse">
     <fieldset *ngFor="let guardian of guardians().controls; let i = index" [formGroupName]="i">
       <legend>Enter Details for the {{ i + 1 | ordinal }} Guardian </legend>
-      <button style="float: right" (click)="removeGuadian(i)" [disabled]="guardians().controls.length === 1" mat-button color="warn">remove</button>
+      <button type="button" style="float: right" (click)="removeGuadian(i)"
+        [disabled]="guardians().controls.length === 1" mat-button color="warn">remove</button>
       <fieldset>
         <legend>
           <h2>Email and Phone Number</h2>
@@ -22,10 +23,15 @@
 
             </mat-form-field>
           </section>
-          <section class="col-sm-6 col-md-4 col-lg-3" *ngIf="idNumber">
+          <section *ngIf="confirmData[i]">
+            User with the email Exists. Do You wish to Use this Email?
+            <button (click)="updateFieldsForEmail(i)" style="margin-left: 15px" type="button" mat-raised-button color="primary">Yes</button>
+            <button (click)="clearEmail(i)" style="margin-left: 15px" type="button" mat-raised-button color="warn">No</button>
+          </section>
+          <section class="col-sm-6 col-md-4 col-lg-3" *ngIf="idNumber" [hidden]="confirmData[i]">
             Guardian Id Number: {{ idNumber }}
           </section>
-          <section formGroupName="phoneDetails" class="col-sm-6 col-md-4 col-lg-3" class="phone">
+          <section [hidden]="confirmData[i]" formGroupName="phoneDetails" class="col-sm-6 col-md-4 col-lg-3" class="phone">
             <mat-form-field style="width: 78px;">
 
               <mat-select formControlName="phoneCode" (selectionChange)="updateSelectedPhone(i)"
@@ -44,20 +50,21 @@
               <label hidden attr.for="{{ 'phoneNumber' + i}}"> Phone
                 Number
               </label>
-              <input (keyup)="updatePhoneInputErrorState(i)" [errorStateMatcher]="phoneErrorMatcher" (blur)="validatePhone(i)" id="{{ 'phoneNumber' + i}}"
-                type="text" placeholder="Phone Number" formControlName="phoneNumber" matInput>
+              <input (keyup)="updatePhoneInputErrorState(i)" [errorStateMatcher]="phoneErrorMatcher"
+                (blur)="validatePhone(i)" id="{{ 'phoneNumber' + i}}" type="text" placeholder="Phone Number"
+                formControlName="phoneNumber" matInput>
               <mat-error>
                 {{ errors.guardians[i]?.phone }}
               </mat-error>
             </mat-form-field>
           </section>
-          <section class="col-sm-6 col-md-4 col-lg-3" *ngIf="!idNumber">
+          <section class="col-sm-6 col-md-4 col-lg-3" *ngIf="!idNumber" [hidden]="confirmData[i]">
             <label for="autogenerate-id-number">
               Autogenerate Id Number <mat-checkbox type="checkbox" formControlName="autogenerateIdNumber"
                 id="autogenerate-id-number"></mat-checkbox>
             </label>
           </section>
-          <section col-sm-6 col-md-4 col-lg-3>
+          <section col-sm-6 col-md-4 col-lg-3 [hidden]="confirmData[i]">
             <mat-form-field *ngIf="!guardian.get('autogenerateIdNumber').value">
               <label hidden attr.for="{{ 'idNumber' + i}}"><span class="material-icons" matPrefix>person</span> Id
                 Number</label>
@@ -71,7 +78,7 @@
           </section>
         </section>
       </fieldset>
-      <fieldset>
+      <fieldset [hidden]="confirmData[i]">
         <legend>
           <h2>Name</h2>
         </legend>
@@ -83,9 +90,6 @@
             formControlName="firstName" matInput>
           <mat-error *ngIf="errors.guardians[i]?.firstName">
             {{ errors.guardians[i]?.firstName }}
-          </mat-error>
-          <mat-error>
-            {{ errors.guardians[i]?.phone }}
           </mat-error>
         </mat-form-field>
         <mat-form-field>
@@ -113,10 +117,20 @@
           </mat-error>
         </mat-form-field>
       </fieldset>
-      <fieldset>
+      <fieldset [hidden]="confirmData[i]">
         <legend>
           <h2>Other Details</h2>
         </legend>
+        <mat-form-field>
+          <label hidden attr.for="{{ 'relation' + i}}">
+            <span class="material-icons" matPrefix>person</span>Relation To Student</label>
+
+          <input (keyup)="validateRelation(i)" id="{{ 'relation' + i }}" type="text"
+            placeholder="Relationship To Student" formControlName="relation" matInput>
+          <mat-error *ngIf="errors.guardians[i]?.relation">
+            {{ errors.guardians[i]?.relation }}
+          </mat-error>
+        </mat-form-field>
         <mat-form-field>
           <label hidden attr.for="gender">Gender</label>
           <mat-select id="{{ 'gender' + i}}" formControlName="gender" placeholder="Gender">

@@ -6,11 +6,12 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { RouterLink, RouterModule } from '@angular/router';
 import { MatMenuWrapperComponent } from './mat-menu-wrapper/mat-menu-wrapper.component';
 import { SelectComponent } from './select/select.component';
+import { SnackBarComponent, SnackbarTemplateComponent } from './snackbar/snackbar.component';
 
 
 
 @NgModule({
-  declarations: [SidebarComponent, MatMenuWrapperComponent, SelectComponent],
+  declarations: [SidebarComponent, MatMenuWrapperComponent, SelectComponent, SnackBarComponent, SnackbarTemplateComponent],
   imports: [
     FormsModule,
     CommonModule,
@@ -19,7 +20,10 @@ import { SelectComponent } from './select/select.component';
   ],
   exports: [
     CustomMaterialModule,
-    SidebarComponent
-  ]
+    SidebarComponent,
+    SnackBarComponent,
+    SnackbarTemplateComponent
+  ],
+  entryComponents: [SnackbarTemplateComponent],
 })
 export class SharedModule { }

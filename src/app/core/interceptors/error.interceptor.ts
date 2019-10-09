@@ -25,7 +25,15 @@ export class ErrorInterceptor implements HttpInterceptor {
                     message: err.statusText,
                     type: 'error',
                     status: err.status,
-                    help: err.error
+                    help:  err.error
+                };
+            }
+            if (err.status === 422) {
+                this.message = {
+                    message: err.statusText + ': ' + err.error.message,
+                    type: 'error',
+                    status: err.status,
+                    help: Object.values(err.error.errors).join(', ')
                 };
             }
             if (err.status === 404) {
