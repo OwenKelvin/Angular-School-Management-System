@@ -8,6 +8,8 @@ import { LibraryModule } from './library/library.module';
 import { AdmissionsModule } from './admissions/admissions.module';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { CoreModule } from '../core/core.module';
+import { AcademicYearModule } from './academic-year/academic-year.module';
+import { CurriculumMaintenanceModule } from './curriculum-maintenance/curriculum-maintenance.module';
 
 @NgModule({
   declarations: [PagesComponent, HomeComponent, UserProfileComponent],
@@ -17,7 +19,10 @@ import { CoreModule } from '../core/core.module';
     SharedModule,
     LibraryModule,
     AdmissionsModule,
-    CoreModule
-  ]
+    CoreModule,
+    AcademicYearModule,
+    CurriculumMaintenanceModule
+  ],
+  exports: []
 })
 export class PagesModule {}

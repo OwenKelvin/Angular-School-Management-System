@@ -1,4 +1,4 @@
-<form [formGroup]="userIdentificaionForm" (ngSubmit)="submit()">
+<form [formGroup]="userIdentificaionForm">
   <button mat-raised-button color="primary" type="button" (click)="addGuardians()">add</button>
   <div formArrayName="guardians" style="display: flex; flex-direction: column-reverse">
     <fieldset *ngFor="let guardian of guardians().controls; let i = index" [formGroupName]="i">
@@ -25,13 +25,16 @@
           </section>
           <section *ngIf="confirmData[i]">
             User with the email Exists. Do You wish to Use this Email?
-            <button (click)="updateFieldsForEmail(i)" style="margin-left: 15px" type="button" mat-raised-button color="primary">Yes</button>
-            <button (click)="clearEmail(i)" style="margin-left: 15px" type="button" mat-raised-button color="warn">No</button>
+            <button (click)="updateFieldsForEmail(i)" style="margin-left: 15px" type="button" mat-raised-button
+              color="primary">Yes</button>
+            <button (click)="clearEmail(i)" style="margin-left: 15px" type="button" mat-raised-button
+              color="warn">No</button>
           </section>
           <section class="col-sm-6 col-md-4 col-lg-3" *ngIf="idNumber" [hidden]="confirmData[i]">
             Guardian Id Number: {{ idNumber }}
           </section>
-          <section [hidden]="confirmData[i]" formGroupName="phoneDetails" class="col-sm-6 col-md-4 col-lg-3" class="phone">
+          <section [hidden]="confirmData[i]" formGroupName="phoneDetails" class="col-sm-6 col-md-4 col-lg-3"
+            class="phone">
             <mat-form-field style="width: 78px;">
 
               <mat-select formControlName="phoneCode" (selectionChange)="updateSelectedPhone(i)"
