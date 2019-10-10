@@ -10,8 +10,8 @@ import { ErrorStateMatcher } from '@angular/material';
 import { SubmitStudentGuardiansService } from '../../services/submit-student-guardians.service';
 import { SHOW_SUCCESS_MESSAGE } from 'src/app/store/actions/app.action';
 import { debounceTime } from 'rxjs/operators';
-import { of } from 'rxjs';
 import { UsersService } from 'src/app/shared/services/users/users.service';
+import { GuardianService } from '../../services/guardian-details/guardian.service';
 interface IError {
   email?: string;
   firstName: string;
@@ -91,7 +91,8 @@ export class StudentGuardianFormComponent implements OnInit {
     private getReligions: ReligionService,
     private allowedPhoneNumbers: AllowedPhoneNumbersService,
     private studentGuardian: SubmitStudentGuardiansService,
-    private users: UsersService
+    private users: UsersService,
+    private studentGuardians: GuardianService
   ) {
     this.submitted = new EventEmitter();
     this.usersData = [null];
@@ -183,6 +184,23 @@ export class StudentGuardianFormComponent implements OnInit {
         }
       });
     this.subscribeToEmailChecking();
+    this.getGuardians();
+  }
+  getGuardians() {
+    if (this.studentAdmissionNumber) {
+      this.studentGuardians.getGuardiansFor(this.studentAdmissionNumber).subscribe(data => {
+        // TODO update any guardians found
+        if ((data as Array<any>).length > 0) {
+          (this.userIdentificaionForm.get('guardians') as FormArray).clear();
+          (data as Array<any>).forEach((item, i) => {
+            this.addGuardians();
+            this.usersData[i] = item;
+            this.updateFieldsForEmail(i);
+          });
+        }
+
+      });
+    }
   }
   subscribeToEmailChecking() {
     (this.userIdentificaionForm.get('guardians') as FormArray).controls.forEach((element, i) => {
