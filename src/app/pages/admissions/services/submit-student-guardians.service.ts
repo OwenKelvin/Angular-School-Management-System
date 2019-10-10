@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Config } from 'src/app/config/app.config'; import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+import { STUDENT_GUARDIANS_CREATED } from '../store/actions/pages.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +12,8 @@ export class SubmitStudentGuardiansService {
 
   constructor(
     private http: HttpClient,
-    private config: Config) { }
+    private config: Config,
+    private store: Store<any>) { }
   submit(data: any): Observable<any> {
     const submitData = {
       id: data.id,

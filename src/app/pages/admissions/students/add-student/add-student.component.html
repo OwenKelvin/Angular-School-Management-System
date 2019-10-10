@@ -34,7 +34,7 @@
       </mat-panel-description>
     </mat-expansion-panel-header>
 
-    <app-student-guardian-form></app-student-guardian-form>
+    <app-student-guardian-form (submitted)="guardiansSubmittedHandler($event)"></app-student-guardian-form>
 
     <mat-action-row>
       <button mat-button color="warn" (click)="prevStep()">Previous</button>

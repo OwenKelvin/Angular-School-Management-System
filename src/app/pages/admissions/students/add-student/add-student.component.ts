@@ -27,10 +27,13 @@ export class AddStudentComponent implements OnInit {
   }
   identificationSubmittedHandler($event) {
     if ($event) {
-      this.nextStep() ;
+      this.nextStep();
     }
     this.submitStudentIdentificationInfo = false;
     // this.nextStep();
+  }
+  guardiansSubmittedHandler($event) {
+    this.nextStep();
   }
 
   nextStep() {

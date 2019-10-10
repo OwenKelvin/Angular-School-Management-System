@@ -163,15 +163,18 @@ export class StudentGuardianFormComponent implements OnInit {
         if (admissions.student_id_number) {
           this.studentAdmissionNumber = admissions.student_id_number;
         }
+
         if (admissions && admissions.submitGuardian) {
+
           if (this.userIdentificaionForm.valid) {
             this.userIdentificaionForm.get('guardians').value.forEach(item => {
               this.studentGuardian.submit({ ...item, student_id: this.studentAdmissionNumber })
                 .subscribe(data => {
-                  // this.store.dispatch({
-                  //   type: SHOW_SUCCESS_MESSAGE,
-                  //   payload: true
-                  // });
+                  this.submitted.emit(true);
+                  this.store.dispatch({
+                    type: SHOW_SUCCESS_MESSAGE,
+                    payload: true
+                  });
                 });
             });
           } else {
@@ -222,7 +225,7 @@ export class StudentGuardianFormComponent implements OnInit {
         phoneNumber: ['']
       }),
       phone: [''],
-      relation: ['', Validators.required]
+      relation: ['Father', Validators.required]
     });
   }
   validateFirstName(i) {

@@ -12,7 +12,6 @@ export class ErrorGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot) {
-    alert(state.url);
     return true;
   }
 }

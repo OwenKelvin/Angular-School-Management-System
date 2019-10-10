@@ -10,5 +10,5 @@ export const setStudentIdentificationInfo = createAction(
 
 export const SET_ADMITTED_STUDENT_IDENTIFICATION_INFO = '[ADMISSIONS STUDENT] Set student details';
 export const SET_STUDENT_ID_NUMBER = '[ADMISSION STUDENT] set id number';
-export const SUBMIT_STUDENT_GUARDIAN  = '[ADMISSIONS STUDENT] submit student guardians';
+export const SUBMIT_STUDENT_GUARDIAN = '[ADMISSIONS STUDENT] submit student guardians';
 export const STUDENT_GUARDIANS_CREATED = '[ADMISSIONS STUDENT] guardians created';
