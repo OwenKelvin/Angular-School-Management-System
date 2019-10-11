@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
 
+export const CREATE_UNIT_CATEGORY_CURRICULUM = '/curriculum/subject-categories/create';
+export const EDIT_UNIT_CATEGORY_CURRICULUM = (id: string | number) => {
+  return '/curriculum/subject-categories/edit/' + id;
+};
 @Injectable({
   providedIn: 'root'
 })
@@ -24,7 +28,7 @@ export class MenuItemsService {
           preIcon: 'border_color',
           label: 'Create Subject Category',
           postIcon: 'edit',
-          routerLink: '/curriculum/subject-categories/create'
+          routerLink: CREATE_UNIT_CATEGORY_CURRICULUM
         }],
       }]
     };

@@ -1,4 +1,4 @@
-<h1>Create Unit/Subject Category</h1>
+<h1>{{ newForm ? 'Create': 'Update'}} Unit/Subject Category</h1>
 <section>
   <form (submit)="submit()" [formGroup]="newSubjectCategoryForm">
     <section class="row">
@@ -16,13 +16,20 @@
       </section>
       <section class="col-lg-2 col-md-3 col-sm-4">
         <mat-slide-toggle color="primary" formControlName="active">
-            {{ newSubjectCategoryForm.get('active').value ? 'Active' : 'Inactive'}}
+          {{ newSubjectCategoryForm.get('active').value ? 'Active' : 'Inactive'}}
         </mat-slide-toggle>
       </section>
 
-
+      <section class="col-lg-4 col-md-3 col-sm-6">
+        <mat-form-field>
+          <label hidden for="description">Subject Description</label>
+          <textarea id="description" placeholder="Subject Description" formControlName="description"
+            matInput></textarea>
+        </mat-form-field>
+      </section>
       <section class="col-lg-2 col-md-3 col-sm-6">
-        <button type="submit" mat-raised-button color="primary">Create Category</button>
+        <button type="submit" mat-raised-button color="primary">
+          {{ newForm ? 'Create': 'Update'}} Category</button>
       </section>
     </section>
 

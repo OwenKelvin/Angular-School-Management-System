@@ -14,9 +14,16 @@ export class NewSubjectCategoryService {
     private config: Config
   ) { }
   submit(data: any): Observable<any> {
-    const url = `${this.config.apiUrl}/api/curriculum/subject-categories`;
-    return this.http.post<any>(url, data).pipe(map(user => {
-      return user;
-    }));
+    let url = `${this.config.apiUrl}/api/curriculum/unit-categories`;
+    if (data.id) {
+      url += '/' + data.id;
+      return this.http.patch<any>(url, data).pipe(map(res => {
+        return res;
+      }));
+    } else {
+      return this.http.post<any>(url, data).pipe(map(res => {
+        return res;
+      }));
+    }
   }
 }

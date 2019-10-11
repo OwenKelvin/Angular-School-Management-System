@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Store, select } from '@ngrx/store';
+import { SHOW_SUCCESS_MESSAGE } from 'src/app/store/actions/app.action';
 
 @Component({
   selector: 'app-snackbar-template',
@@ -26,6 +27,10 @@ export class SnackBarComponent implements OnInit {
     this.store.pipe(select(state => state.app)).subscribe(app => {
       if (app && app.showSuccessMessage) {
         this.openSnackBar();
+        this.store.dispatch({
+          type: SHOW_SUCCESS_MESSAGE,
+          payload: false
+        });
       }
     });
   }
