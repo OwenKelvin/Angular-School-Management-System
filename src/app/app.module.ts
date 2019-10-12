@@ -40,7 +40,7 @@ import { SuccessInterceptor } from './core/interceptors/success.interceptor';
     PagesModule,
     FormsModule,
     AppRoutingModule,
-    FlexLayoutModule,
+    // FlexLayoutModule,
     StoreModule.forRoot(reducers, {
       metaReducers,
       runtimeChecks: {
@@ -60,7 +60,7 @@ import { SuccessInterceptor } from './core/interceptors/success.interceptor';
     // FormsModule'
     SidebarComponent,
     // ErrorDialogComponent
-    CoreModule,
+    // CoreModule,
   ],
   declarations: [
     AppComponent,

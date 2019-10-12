@@ -3,7 +3,8 @@ import { SubjectCategoryService } from '../services/subject-category.service';
 import { map } from 'rxjs/operators';
 import {
   CREATE_UNIT_CATEGORY_CURRICULUM,
-  EDIT_UNIT_CATEGORY_CURRICULUM
+  EDIT_UNIT_CATEGORY_CURRICULUM,
+  VIEW_UNIT_CATEGORY_CURRICULUM
 } from '../../services/menu-items.service';
 
 export interface IUnitCategory {
@@ -23,6 +24,7 @@ export class ViewSubjectCategoriesComponent implements OnInit {
   unitCategories: IUnitCategory[];
   createUnitCategoryCurriculum: string;
   editUnitCategoryCurriculum: any;
+  viewUnitCategoryCurriculum: (id: string | number) => string;
   constructor(
     private subjectCategories: SubjectCategoryService
   ) { }
@@ -30,6 +32,7 @@ export class ViewSubjectCategoriesComponent implements OnInit {
   ngOnInit() {
     this.createUnitCategoryCurriculum = CREATE_UNIT_CATEGORY_CURRICULUM;
     this.editUnitCategoryCurriculum = EDIT_UNIT_CATEGORY_CURRICULUM;
+    this.viewUnitCategoryCurriculum = VIEW_UNIT_CATEGORY_CURRICULUM;
     this.getItems();
   }
   getItems(): void {

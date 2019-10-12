@@ -1,0 +1,30 @@
+<section *ngIf="currentSubjectCategory">
+  <mat-chip-list selectable="false">
+    <h1>Subject Category: {{ currentSubjectCategory.name }}
+      <mat-chip *ngIf="currentSubjectCategory.active === 1" disableRipple="true" selectable="false" color="primary"
+        selected>
+        Active
+      </mat-chip>
+      <mat-chip *ngIf="currentSubjectCategory.active === 0" selectable="false" color="primary" selected>Inactive
+      </mat-chip>
+    </h1>
+  </mat-chip-list>
+</section>
+<section>
+  <h1>Description</h1>
+  <p>{{ currentSubjectCategory.description }}</p>
+</section>
+<h1>Subjects/Units</h1>
+<section>
+    <button mat-raised-button type="button" color="primary">Add Subject/Unit</button>
+</section>
+<section class="row" style="border: 1px">
+  <section class="col-lg-3" *ngFor="let message of [1,2,3,4,5,6]">
+    <mat-list>
+      <mat-list-item>
+        <mat-icon mat-list-icon>label_important_outline</mat-icon>
+        <h3 matLine> Something Here</h3>
+      </mat-list-item>
+    </mat-list>
+  </section>
+</section>

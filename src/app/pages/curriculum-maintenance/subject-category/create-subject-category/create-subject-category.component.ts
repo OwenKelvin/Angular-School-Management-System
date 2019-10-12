@@ -4,7 +4,6 @@ import { SHOW_SUCCESS_MESSAGE } from 'src/app/store/actions/app.action';
 import { Store } from '@ngrx/store';
 import { NewSubjectCategoryService } from '../services/new-subject-category.service';
 import { Router, ActivatedRouteSnapshot } from '@angular/router';
-import { Observable } from 'rxjs';
 import { SubjectCategoryService } from '../services/subject-category.service';
 import { IUnitCategory } from '../view-subject-categories/view-subject-categories.component';
 interface Ierror {
@@ -23,7 +22,7 @@ export class CreateSubjectCategoryComponent implements OnInit {
     private fb: FormBuilder,
     private store: Store<any>,
     private newSubjectCategory: NewSubjectCategoryService,
-    private subjetCategory: SubjectCategoryService,
+    private subjectCategory: SubjectCategoryService,
     private router: Router
   ) { }
 
@@ -36,7 +35,7 @@ export class CreateSubjectCategoryComponent implements OnInit {
       this.newForm = true;
     } else {
       this.newForm = false;
-      this.subjetCategory.get(id).subscribe(item => {
+      this.subjectCategory.get(id).subscribe(item => {
         this.generateForm(item);
       });
     }

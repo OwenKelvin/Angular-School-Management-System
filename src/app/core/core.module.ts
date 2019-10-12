@@ -5,6 +5,7 @@ import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ErrorMessageTopBarComponent } from './error-message-top-bar/error-message-top-bar.component';
 import { MatIconModule } from '@angular/material';
+import { MessageComponent } from './message/message.component';
 
 
 @NgModule({
@@ -13,8 +14,8 @@ import { MatIconModule } from '@angular/material';
     MatDialogModule,
     MatIconModule
   ],
-  declarations: [ ErrorDialogComponent, ErrorMessageTopBarComponent],
-  exports: [ErrorDialogComponent, ErrorMessageTopBarComponent],
+  declarations: [ ErrorDialogComponent, ErrorMessageTopBarComponent, MessageComponent],
+  exports: [ErrorDialogComponent, ErrorMessageTopBarComponent, MessageComponent],
   providers: [ AuthGuard ],
 })
 export class CoreModule { }

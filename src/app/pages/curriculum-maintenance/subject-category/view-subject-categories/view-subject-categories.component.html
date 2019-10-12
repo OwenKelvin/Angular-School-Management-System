@@ -35,9 +35,15 @@
           attr.aria-label="{{ 'Edit subject category ' + category.name }}" title="Edit" type="button" mat-icon-button>
           <mat-icon color="primary">edit</mat-icon>
         </button>
-        <button (click)="deleteSubjectCategory(category.id)" attr.aria-label="{{ 'Delete subject category ' + category.name }}" title="Delete Item" type="button"
+        <button (click)="deleteSubjectCategory(category.id)"
+          attr.aria-label="{{ 'Delete subject category ' + category.name }}" title="Delete Item" type="button"
           mat-icon-button>
           <mat-icon color="warn">delete</mat-icon>
+        </button>
+        <button [routerLink]="viewUnitCategoryCurriculum(category.id)"
+          attr.aria-label="{{ 'View subject category ' + category.name }}" title="View Item" type="button"
+          mat-icon-button>
+          <mat-icon color="accent">remove_red_eye</mat-icon>
         </button>
       </td>
     </ng-container>
