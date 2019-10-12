@@ -12,6 +12,20 @@
           </mat-error>
         </mat-form-field>
       </section>
+      <section class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+        <!-- <app-select type="units" formControlName="unitCategory"></app-select> -->
+        <mat-select placeholder="Select category" (selectionChange)="selectedCategory($event)"
+          formControlName="unitCategory" (blur)="validateUnitCategory()"
+          id="unitForm">
+
+          <mat-select-trigger>
+            {{ unitCategorySelected }}
+          </mat-select-trigger>
+          <mat-option *ngFor="let category of unitCategories" [value]="category.id" selected>
+            {{ category.name }}
+          </mat-option>
+        </mat-select>
+      </section>
       <section class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
         <mat-form-field>
           <label hidden for="name-abbr">Subject/Unit abbreviation</label>
@@ -58,10 +72,9 @@
           </section>
           <section class="col-">
             <button type="button" [disabled]="unitForm.get('subjectLevels').controls.length < 1" mat-icon-button>
-              <mat-icon (click)="deleteSubjectLevel(i)"
-              class="text-danger" clickable>delete</mat-icon>
+              <mat-icon (click)="deleteSubjectLevel(i)" class="text-danger" clickable>delete</mat-icon>
             </button>
-            
+
           </section>
         </section>
       </section>

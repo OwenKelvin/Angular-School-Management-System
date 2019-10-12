@@ -3,6 +3,9 @@ import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { UnitService } from '../services/unit.service';
 import { SHOW_SUCCESS_MESSAGE } from 'src/app/store/actions/app.action';
+import { SubjectCategoryService } from '../../subject-category/services/subject-category.service';
+import { IUnitCategory } from '../../subject-category/view-subject-categories/view-subject-categories.component';
+import { MatSelectChange, MatSelect } from '@angular/material';
 
 export default interface IUnitForm {
   id?: number;
@@ -11,6 +14,7 @@ export default interface IUnitForm {
   abbr: string;
   description?: string;
   subjectLevels?: FormArray | undefined | null;
+  unitCategory: number;
 }
 @Component({
   selector: 'app-create-unit',
@@ -18,7 +22,10 @@ export default interface IUnitForm {
   styleUrls: ['./create-unit.component.css']
 })
 export class CreateUnitComponent implements OnInit {
+  unitCategories: IUnitCategory[];
+  unitCategorySelected: any;
   constructor(
+    private subjectCategoriesService: SubjectCategoryService,
     private fb: FormBuilder,
     private store: Store<any>,
     private unit: UnitService
@@ -27,14 +34,23 @@ export class CreateUnitComponent implements OnInit {
     name: string;
     abbr: string;
     subjectLevels: string[];
+    unitCategory: string;
   };
   unitForm: FormGroup;
   newForm: boolean;
 
   ngOnInit() {
     this.newForm = true;
-    this.errors = { name: '', abbr: '', subjectLevels: [] };
+    this.errors = {
+      name: '',
+      abbr: '',
+      subjectLevels: [],
+      unitCategory: ''
+    };
     this.generateUnitForm();
+    this.subjectCategoriesService.getAll().subscribe(items => {
+      this.unitCategories = items;
+    });
   }
   generateUnitForm(
     {
@@ -43,14 +59,16 @@ export class CreateUnitComponent implements OnInit {
       active = true,
       abbr = '',
       description = '',
-      subjectLevels = null
+      subjectLevels = null,
+      unitCategory = null
     }: IUnitForm = {
       id: null,
       name: '',
       active: true,
       description: '',
       abbr: '',
-      subjectLevels: null
+      subjectLevels: null,
+      unitCategory: null
     }
   ) {
     if (subjectLevels === null) {
@@ -63,9 +81,9 @@ export class CreateUnitComponent implements OnInit {
       abbr: [abbr, [Validators.required]],
       description: [description],
       active: [active],
-      subjectLevels
+      subjectLevels,
+      unitCategory: [unitCategory, Validators.required]
     });
-
   }
   buildUnitForm() {
     return this.fb.group({ name: ['', Validators.required] });
@@ -81,6 +99,25 @@ export class CreateUnitComponent implements OnInit {
         this.errors.name = null;
       }
     }
+  }
+  validateUnitCategory() {
+  if (
+    (this.unitForm.get('unitCategory').dirty || this.unitForm.get('unitCategory').touched) &&
+    !this.unitForm.get('unitCategory').valid
+   ) {
+     if (this.unitForm.get('unitCategory').errors.required) {
+        this.errors.unitCategory = 'UnitCategory field is required';
+        } else {
+          this.errors.unitCategory = null;
+        }
+      }
+    }
+
+  selectedCategory({ source }) {
+    const selected = (source as MatSelect).selected;
+    const { viewValue } = selected as { viewValue: string};
+
+    this.unitCategorySelected = viewValue;
   }
   validateAbbr() {
     if (
@@ -108,7 +145,9 @@ export class CreateUnitComponent implements OnInit {
     }
   }
   addSubjectLevel() {
-    (this.unitForm.get('subjectLevels') as FormArray).push(this.buildUnitForm());
+    (this.unitForm.get('subjectLevels') as FormArray).push(
+      this.buildUnitForm()
+    );
   }
   deleteSubjectLevel(i) {
     const deletionConfirmed = confirm('Are you sure you wish to delete item?');

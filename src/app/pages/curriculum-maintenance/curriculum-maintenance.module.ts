@@ -6,7 +6,7 @@ import { CurriculumMaintenanceComponent } from './curriculum-maintenance.compone
 import { SubjectCategoryComponent } from './subject-category/subject-category.component';
 import { CreateSubjectCategoryComponent } from './subject-category/create-subject-category/create-subject-category.component';
 import { CustomMaterialModule } from 'src/app/shared/custom-material/custom-material.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ViewSubjectCategoriesComponent } from './subject-category/view-subject-categories/view-subject-categories.component';
 import { ViewSubjectCategoryComponent } from './subject-category/view-subject-category/view-subject-category.component';
 import { CreateUnitComponent } from './units/create-unit/create-unit.component';
@@ -27,7 +27,8 @@ import { CoreModule } from 'src/app/core/core.module';
     CurriculumMaintenanceRoutingModule,
     CustomMaterialModule,
     ReactiveFormsModule,
-    CoreModule
+    CoreModule,
+    FormsModule
   ]
 })
 export class CurriculumMaintenanceModule {}

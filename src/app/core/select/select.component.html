@@ -1,0 +1,10 @@
+<mat-select [disabled]="disabled" [placeholder]="label"
+  (selectionChange)="selectedCategory($event)"
+  (blur)="validate()" id="name">
+  <mat-select-trigger>
+    {{ categorySelected }}
+  </mat-select-trigger>
+  <mat-option *ngFor="let category of categories" [value]="category.id" selected>
+    {{ category.name }}
+  </mat-option>
+</mat-select>

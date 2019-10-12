@@ -3,15 +3,14 @@ import { CommonModule } from '@angular/common';
 import { CustomMaterialModule } from './custom-material/custom-material.module';
 import { FormsModule } from '@angular/forms';
 import { SidebarComponent } from './sidebar/sidebar.component';
-import { RouterLink, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { MatMenuWrapperComponent } from './mat-menu-wrapper/mat-menu-wrapper.component';
-import { SelectComponent } from './select/select.component';
 import { SnackBarComponent, SnackbarTemplateComponent } from './snackbar/snackbar.component';
 
 
 
 @NgModule({
-  declarations: [SidebarComponent, MatMenuWrapperComponent, SelectComponent, SnackBarComponent, SnackbarTemplateComponent],
+  declarations: [SidebarComponent, MatMenuWrapperComponent, SnackBarComponent, SnackbarTemplateComponent],
   imports: [
     FormsModule,
     CommonModule,

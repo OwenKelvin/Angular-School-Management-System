@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, forwardRef } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginModule } from './login/login.module';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ErrorsModule } from './errors/errors.module';
 import { RouterModule } from '@angular/router';
@@ -25,6 +25,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 import { CacheInterceptor } from './core/interceptors/cache.interceptor';
 import { SuccessInterceptor } from './core/interceptors/success.interceptor';
+import { SelectComponent } from './core/select/select.component';
 
 @NgModule({
   imports: [
@@ -61,6 +62,7 @@ import { SuccessInterceptor } from './core/interceptors/success.interceptor';
     SidebarComponent,
     // ErrorDialogComponent
     // CoreModule,
+    // SelectComponent
   ],
   declarations: [
     AppComponent,
@@ -70,6 +72,7 @@ import { SuccessInterceptor } from './core/interceptors/success.interceptor';
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi: true },
+   
    // { provide: HTTP_INTERCEPTORS, useClass: SuccessInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
