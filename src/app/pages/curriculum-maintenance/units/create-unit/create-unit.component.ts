@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { UnitService } from '../services/unit.service';
@@ -28,6 +28,8 @@ export class CreateUnitComponent implements OnInit {
   unitCategories: IUnitCategory[];
   unitCategorySelected: any;
   formId: any;
+  @Input() category: number;
+  @Output() submitted: EventEmitter<any> = new EventEmitter();
   constructor(
     private subjectCategoriesService: SubjectCategoryService,
     private fb: FormBuilder,
@@ -58,25 +60,38 @@ export class CreateUnitComponent implements OnInit {
       this.unitCategories = items;
     });
 
-    const activatedRoute: ActivatedRouteSnapshot = this.router.routerState.root.children[0].children[0].children[0].snapshot;
+    const activatedRoute: ActivatedRouteSnapshot = this.router.routerState.root
+      .children[0].children[0].children[0].snapshot;
     const id = activatedRoute.params.id;
-    if (id === undefined) {
-      this.newForm = true;
-    } else {
-      this.newForm = false;
-      this.formId = id;
-      this.unit.get(id, 1).pipe(map(res => {
-        return {
-          ...res,
-          unitCategory: Number(res.unit_category_id),
-          abbr: res.abbreviation,
-          subjectLevels: res.unit_levels as Array<any>
-        };
-      })).subscribe(item => {
-        this.generateUnitForm(item);
+    if (this.category) {
+      this.generateUnitForm({
+        unitCategory: this.category,
+        name: '',
+        abbr: ''
       });
+    } else {
+      if (id === undefined) {
+        this.newForm = true;
+      } else {
+        this.newForm = false;
+        this.formId = id;
+        this.unit
+          .get(id, 1)
+          .pipe(
+            map(res => {
+              return {
+                ...res,
+                unitCategory: Number(res.unit_category_id),
+                abbr: res.abbreviation,
+                subjectLevels: res.unit_levels as Array<any>
+              };
+            })
+          )
+          .subscribe(item => {
+            this.generateUnitForm(item);
+          });
+      }
     }
-
   }
   generateUnitForm(
     {
@@ -100,7 +115,9 @@ export class CreateUnitComponent implements OnInit {
     if (subjectLevels === null) {
       subjectLevels = this.fb.array([this.buildUnitForm()]);
     } else {
-      subjectLevels = this.fb.array((subjectLevels as Array<any>).map(item => this.buildUnitForm(item)));
+      subjectLevels = this.fb.array(
+        (subjectLevels as Array<any>).map(item => this.buildUnitForm(item))
+      );
     }
 
     this.unitForm = this.fb.group({
@@ -110,12 +127,17 @@ export class CreateUnitComponent implements OnInit {
       description: [description],
       active: [active],
       subjectLevels,
-      unitCategory: [unitCategory, Validators.required]
+      // unitCategory: [unitCategory, Validators.required]
+      unitCategory: [ unitCategory, Validators.required]
     });
+    // this.unitForm.get('unitCategory').disable()
   }
-  buildUnitForm(item: null | { name: string, id?: number } = null) {
+  buildUnitForm(item: null | { name: string; id?: number } = null) {
     if (item) {
-      return this.fb.group({ id: [item.id], name: [ item.name , Validators.required] });
+      return this.fb.group({
+        id: [item.id],
+        name: [item.name, Validators.required]
+      });
     } else {
       return this.fb.group({ name: ['', Validators.required] });
     }
@@ -133,21 +155,22 @@ export class CreateUnitComponent implements OnInit {
     }
   }
   validateUnitCategory() {
-  if (
-    (this.unitForm.get('unitCategory').dirty || this.unitForm.get('unitCategory').touched) &&
-    !this.unitForm.get('unitCategory').valid
-   ) {
-     if (this.unitForm.get('unitCategory').errors.required) {
+    if (
+      (this.unitForm.get('unitCategory').dirty ||
+        this.unitForm.get('unitCategory').touched) &&
+      !this.unitForm.get('unitCategory').valid
+    ) {
+      if (this.unitForm.get('unitCategory').errors.required) {
         this.errors.unitCategory = 'UnitCategory field is required';
-        } else {
-          this.errors.unitCategory = null;
-        }
+      } else {
+        this.errors.unitCategory = null;
       }
     }
+  }
 
   selectedCategory({ source }) {
     const selected = (source as MatSelect).selected;
-    const { viewValue } = selected as { viewValue: string};
+    const { viewValue } = selected as { viewValue: string };
 
     this.unitCategorySelected = viewValue;
   }
@@ -184,7 +207,7 @@ export class CreateUnitComponent implements OnInit {
   deleteSubjectLevel(i) {
     const deletionConfirmed = confirm('Are you sure you wish to delete item?');
     if (deletionConfirmed) {
-      const items = (this.unitForm.get('subjectLevels') as FormArray);
+      const items = this.unitForm.get('subjectLevels') as FormArray;
       const ItemId = items.controls[i].value.id;
       items.controls.splice(i, 1);
       if (ItemId) {
@@ -195,21 +218,27 @@ export class CreateUnitComponent implements OnInit {
   submit() {
     if (this.unitForm.valid) {
       this.unit.submit(this.unitForm.value).subscribe(() => {
+        this.submitted.emit();
         if (this.newForm) {
           this.generateUnitForm();
           this.unitForm.get('name').clearValidators();
           this.unitForm.get('name').updateValueAndValidity();
         } else {
-          this.unit.get(this.formId, 1).pipe(map(res => {
-            return {
-              ...res,
-              unitCategory: Number(res.unit_category_id),
-              abbr: res.abbreviation,
-              subjectLevels: res.unit_levels as Array<any>
-            };
-          })).subscribe(item => {
-            this.generateUnitForm(item);
-          });
+          this.unit
+            .get(this.formId, 1)
+            .pipe(
+              map(res => {
+                return {
+                  ...res,
+                  unitCategory: Number(res.unit_category_id),
+                  abbr: res.abbreviation,
+                  subjectLevels: res.unit_levels as Array<any>
+                };
+              })
+            )
+            .subscribe(item => {
+              this.generateUnitForm(item);
+            });
         }
         this.store.dispatch({
           type: SHOW_SUCCESS_MESSAGE,

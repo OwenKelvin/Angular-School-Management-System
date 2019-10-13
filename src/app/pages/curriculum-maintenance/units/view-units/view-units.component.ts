@@ -59,7 +59,7 @@ export class ViewUnitsComponent implements OnInit {
           this.getItems();
         },
         error => {
-          console.log(error);
+         // Error Handling done at the Error Interceptor
         }
       );
     }

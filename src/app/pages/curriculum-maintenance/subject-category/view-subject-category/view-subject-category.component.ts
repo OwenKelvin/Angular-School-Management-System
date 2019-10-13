@@ -9,19 +9,33 @@ import { SubjectCategoryService } from '../services/subject-category.service';
 })
 export class ViewSubjectCategoryComponent implements OnInit {
   currentSubjectCategory;
+  id: any;
+  isOpenNewSubjectForm: boolean;
   constructor(
     private router: Router,
-    private subjectCategory: SubjectCategoryService,
-  ) { }
+    private subjectCategory: SubjectCategoryService
+  ) {}
 
   ngOnInit() {
-    const activatedRoute: ActivatedRouteSnapshot = this.router.routerState.root.children[0].children[0].children[0].snapshot;
-    const id = activatedRoute.params.id;
+    this.currentSubjectCategory = { units: null };
+    const activatedRoute: ActivatedRouteSnapshot = this.router.routerState.root
+      .children[0].children[0].children[0].snapshot;
+    this.id = activatedRoute.params.id;
     this.currentSubjectCategory = {};
-    this.subjectCategory.get(id).subscribe(item => {
+    this.subjectCategory.get(this.id).subscribe(item => {
       this.currentSubjectCategory = item;
-      console.log(item)
     });
   }
-
+  onNewSubjectSubmitted($event) {
+    this.isOpenNewSubjectForm = false;
+    this.subjectCategory.get(this.id).subscribe(item => {
+      this.currentSubjectCategory = item;
+    });
+  }
+  closeNewSubjectForm() {
+    const formClosingConfirmed = confirm('Do you wish to close the form?');
+    if (formClosingConfirmed) {
+      this.isOpenNewSubjectForm = false;
+    }
+  }
 }

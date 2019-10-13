@@ -42,6 +42,7 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
   matcher: FormErrorStateMatcher;
   constructor(private subjectCategoriesService: SubjectCategoryService) {
     this.matcher = new FormErrorStateMatcher();
+    this.formControl = new FormControl();
   }
 
   @Input() type: 'units';
@@ -65,7 +66,7 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
     this.onTouched = fn;
   }
   setDisabledState?(isDisabled: boolean): void {
-    this.disabled = isDisabled;
+    // this.disabled = isDisabled;
   }
 
   ngOnInit() {

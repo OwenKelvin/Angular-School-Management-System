@@ -16,14 +16,21 @@
 </section>
 <h1>Subjects/Units</h1>
 <section>
-    <button mat-raised-button type="button" color="primary">Add Subject/Unit</button>
+    <button *ngIf="!isOpenNewSubjectForm" (click)="isOpenNewSubjectForm = true" mat-raised-button type="button"
+      color="primary">Add Subject/Unit</button>
+    <button *ngIf="isOpenNewSubjectForm" (click)="closeNewSubjectForm()" mat-raised-button type="button"
+      color="warn">Cancel</button>
+    <section>
+      <app-create-unit (submitted)="onNewSubjectSubmitted($event)" [category]="currentSubjectCategory.id"
+        *ngIf="isOpenNewSubjectForm"></app-create-unit>
+    </section>
 </section>
 <section class="row" style="border: 1px">
-  <section class="col-lg-3" *ngFor="let message of [1,2,3,4,5,6]">
+  <section class="col-lg-3" *ngFor="let unit of currentSubjectCategory?.units">
     <mat-list>
       <mat-list-item>
         <mat-icon mat-list-icon>label_important_outline</mat-icon>
-        <h3 matLine> Something Here</h3>
+        <h3 matLine> {{ unit.name }}</h3>
       </mat-list-item>
     </mat-list>
   </section>
