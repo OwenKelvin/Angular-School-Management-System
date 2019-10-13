@@ -12,8 +12,8 @@
           </mat-error>
         </mat-form-field>
       </section>
-      <section *ngIf="!category" class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-        <app-select  type="units" formControlName="unitCategory"></app-select>
+      <section *ngIf="!category && hasCategories" class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+        <app-select type="units" formControlName="unitCategory"></app-select>
         <!-- <mat-select placeholder="Select category" (selectionChange)="selectedCategory($event)"
           formControlName="unitCategory" (blur)="validateUnitCategory()"
           id="unitForm">
@@ -71,7 +71,8 @@
             </mat-form-field>
           </section>
           <section class="col-">
-            <button (click)="deleteSubjectLevel(i)" type="button" [disabled]="unitForm.get('subjectLevels').controls.length < 1" mat-icon-button>
+            <button (click)="deleteSubjectLevel(i)" type="button"
+              [disabled]="unitForm.get('subjectLevels').controls.length < 1" mat-icon-button>
               <mat-icon class="text-danger" clickable>delete</mat-icon>
             </button>
 
@@ -83,7 +84,7 @@
       <app-message type="error">No Data Found</app-message>
     </section>
   </fieldset>
-  <section class="row" style="margin-top: 20px">
+  <section *ngIf="submitButton" class="row" style="margin-top: 20px">
     <section class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
       <button [disabled]="!unitForm.valid" type="submit" mat-raised-button class="btn btn-success">
         {{ newForm ? 'Create': 'Update'}} Subject/Unit</button>

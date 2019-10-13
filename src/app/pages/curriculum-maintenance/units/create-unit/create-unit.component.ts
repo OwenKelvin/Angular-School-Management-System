@@ -29,7 +29,11 @@ export class CreateUnitComponent implements OnInit {
   unitCategorySelected: any;
   formId: any;
   @Input() category: number;
+  @Input() submitButton = true;
+  @Input() inputValue;
+  @Input() hasCategories = true;
   @Output() submitted: EventEmitter<any> = new EventEmitter();
+  @Output() valueChange: EventEmitter<any> = new EventEmitter();
   constructor(
     private subjectCategoriesService: SubjectCategoryService,
     private fb: FormBuilder,
@@ -92,6 +96,9 @@ export class CreateUnitComponent implements OnInit {
           });
       }
     }
+    if (this.inputValue) {
+      this.unitForm = this.inputValue;
+    }
   }
   generateUnitForm(
     {
@@ -127,10 +134,11 @@ export class CreateUnitComponent implements OnInit {
       description: [description],
       active: [active],
       subjectLevels,
-      // unitCategory: [unitCategory, Validators.required]
       unitCategory: [ unitCategory, Validators.required]
     });
-    // this.unitForm.get('unitCategory').disable()
+    this.unitForm.valueChanges.subscribe(item => {
+      this.valueChange.emit(this.unitForm);
+    });
   }
   buildUnitForm(item: null | { name: string; id?: number } = null) {
     if (item) {
@@ -210,6 +218,7 @@ export class CreateUnitComponent implements OnInit {
       const items = this.unitForm.get('subjectLevels') as FormArray;
       const ItemId = items.controls[i].value.id;
       items.controls.splice(i, 1);
+      this.valueChange.emit(this.unitForm);
       if (ItemId) {
         this.unitLevel.delete(ItemId).subscribe();
       }

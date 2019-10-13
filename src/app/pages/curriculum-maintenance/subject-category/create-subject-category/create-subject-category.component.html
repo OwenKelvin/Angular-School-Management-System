@@ -1,36 +1,56 @@
 <h1>{{ newForm ? 'Create': 'Update'}} Unit/Subject Category</h1>
 <section>
   <form (submit)="submit()" [formGroup]="newSubjectCategoryForm">
-    <section class="row">
-      <section class="col-lg-2 col-md-3 col-sm-6">
-        <mat-form-field>
+    <fieldset>
+      <legend>General Details</legend>
+      <section class="row">
+        <section class="col-lg-2 col-md-3 col-sm-6">
+          <mat-form-field>
 
-          <label hidden for="name">Category Name</label>
+            <label hidden for="name">Category Name</label>
 
-          <input (blur)="validateName()" id="name" type="text" placeholder="Name" formControlName="name" matInput>
-          <mat-error *ngIf="errors.name">
-            {{ errors.name }}
-          </mat-error>
+            <input (blur)="validateName()" id="name" type="text" placeholder="Name" formControlName="name" matInput>
+            <mat-error *ngIf="errors.name">
+              {{ errors.name }}
+            </mat-error>
 
-        </mat-form-field>
+          </mat-form-field>
+        </section>
+        <section class="col-lg-4 col-md-3 col-sm-6">
+          <mat-form-field>
+            <label hidden for="description">Subject Description</label>
+            <textarea id="description" placeholder="Subject Description" formControlName="description"
+              matInput></textarea>
+          </mat-form-field>
+        </section>
+        <section class="col-lg-2 col-md-3 col-sm-4">
+          <mat-slide-toggle color="primary" formControlName="active">
+            {{ newSubjectCategoryForm.get('active').value ? 'Active' : 'Inactive'}}
+          </mat-slide-toggle>
+        </section>
       </section>
-      <section class="col-lg-2 col-md-3 col-sm-4">
-        <mat-slide-toggle color="primary" formControlName="active">
-          {{ newSubjectCategoryForm.get('active').value ? 'Active' : 'Inactive'}}
-        </mat-slide-toggle>
+    </fieldset>
+    <fieldset>
+      <legend>Subject Details</legend>
+      <button (click)="addSubject()" type="button" mat-raised-button class="btn btn-sm btn-primary">Add</button>
+      <section class="row">
+        <section style="border: inset 3px blue;" class="col-sm-12" *ngFor="let unit of units; let i = index">
+          <span *ngIf="!unit.valid" class="text-danger float-right">*section is incomplete</span>
+          <span *ngIf="unit.valid" class="text-success float-right">*section is complete</span>
+          <app-create-unit [hasCategories]="false" [inputValue]="unit" (valueChange)="updateForm($event, i)"
+            [submitButton]="false">
+          </app-create-unit>
+          <section class="float-right">
+            <button (click)="removeSubject(i)" type="button" class="btn btn-danger btn-sm">Remove Item</button>
+          </section>
+        </section>
+        
       </section>
-
-      <section class="col-lg-4 col-md-3 col-sm-6">
-        <mat-form-field>
-          <label hidden for="description">Subject Description</label>
-          <textarea id="description" placeholder="Subject Description" formControlName="description"
-            matInput></textarea>
-        </mat-form-field>
-      </section>
-      <section class="col-lg-2 col-md-3 col-sm-6">
-        <button type="submit" mat-raised-button color="primary">
-          {{ newForm ? 'Create': 'Update'}} Category</button>
-      </section>
+    </fieldset>
+    <section class="col-lg-2 col-md-3 col-sm-6 mt-2">
+      <button [disabled]="!(newSubjectCategoryForm.valid && newSubjectCategoryForm.touched && allSectionsValid())" type="submit" mat-raised-button
+        color="primary">
+        {{ newForm ? 'Create': 'Update'}} Category</button>
     </section>
 
   </form>
