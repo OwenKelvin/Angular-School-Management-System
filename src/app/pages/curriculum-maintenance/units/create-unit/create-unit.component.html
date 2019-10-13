@@ -13,8 +13,8 @@
         </mat-form-field>
       </section>
       <section class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-        <!-- <app-select type="units" formControlName="unitCategory"></app-select> -->
-        <mat-select placeholder="Select category" (selectionChange)="selectedCategory($event)"
+        <app-select type="units" formControlName="unitCategory"></app-select>
+        <!-- <mat-select placeholder="Select category" (selectionChange)="selectedCategory($event)"
           formControlName="unitCategory" (blur)="validateUnitCategory()"
           id="unitForm">
 
@@ -24,7 +24,7 @@
           <mat-option *ngFor="let category of unitCategories" [value]="category.id" selected>
             {{ category.name }}
           </mat-option>
-        </mat-select>
+        </mat-select> -->
       </section>
       <section class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
         <mat-form-field>

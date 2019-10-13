@@ -1,10 +1,17 @@
-<mat-select [disabled]="disabled" [placeholder]="label"
-  (selectionChange)="selectedCategory($event)"
-  (blur)="validate()" id="name">
-  <mat-select-trigger>
-    {{ categorySelected }}
-  </mat-select-trigger>
-  <mat-option *ngFor="let category of categories" [value]="category.id" selected>
-    {{ category.name }}
-  </mat-option>
-</mat-select>
+ <mat-form-field>
+   <mat-label>{{ label }}</mat-label>
+   <mat-select [formControl]="formControl" [placeholder]="'---select---'"
+     (selectionChange)="selectedCategory($event)"
+     (blur)="validateField()" id="name" [errorStateMatcher]="matcher">
+
+     <mat-select-trigger>
+       {{ categorySelected }}
+     </mat-select-trigger>
+     <mat-option>None</mat-option>
+     <mat-option *ngFor="let category of categories" [value]="category.id" selected>
+       {{ category.name }}
+     </mat-option>
+   </mat-select>
+   <mat-hint>{{ hint }}</mat-hint>
+   <mat-error>{{ error.required }}</mat-error>
+ </mat-form-field>

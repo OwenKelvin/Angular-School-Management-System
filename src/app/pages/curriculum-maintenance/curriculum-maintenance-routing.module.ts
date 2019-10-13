@@ -9,57 +9,77 @@ import { ViewSubjectCategoryComponent } from './subject-category/view-subject-ca
 import { ViewSubjectCategoriesComponent } from './subject-category/view-subject-categories/view-subject-categories.component';
 import { CreateUnitComponent } from './units/create-unit/create-unit.component';
 
-const routes: Routes = [{
-  path: 'curriculum',
-  canActivate: [AuthGuard],
-  component: PagesComponent,
-  children: [{
-    path: '',
+const routes: Routes = [
+  {
+    path: 'curriculum',
     canActivate: [AuthGuard],
-    redirectTo: 'dashboard',
-    pathMatch: 'full'
-  }, {
-    path: 'dashboard',
-    canActivate: [AuthGuard],
-    component: CurriculumMaintenanceComponent
-  }, {
-    path: 'subject-categories',
-    canActivate: [AuthGuard],
-    // component: CurriculumMaintenanceComponent
-    children: [{
-      path: '',
-      pathMatch: 'full',
-      component: SubjectCategoryComponent,
-    }, {
-      path: 'view',
-      canActivate: [AuthGuard],
-      component: ViewSubjectCategoriesComponent,
-    }, {
-      path: 'create',
-      canActivate: [AuthGuard],
-      component: CreateSubjectCategoryComponent,
-    }, {
-      path: 'edit/:id',
-      canActivate: [AuthGuard],
-      component: CreateSubjectCategoryComponent,
-    }, {
-      path: 'view/:id',
-      canActivate: [AuthGuard],
-      component: ViewSubjectCategoryComponent,
-    }]
-  },{
-    path: 'units',
-    canActivate: [AuthGuard],
-    children: [{
-      path: 'view',
-      canActivate: [AuthGuard],
-      component: CreateUnitComponent
-    }]
-  }]
-}];
+    component: PagesComponent,
+    children: [
+      {
+        path: '',
+        canActivate: [AuthGuard],
+        redirectTo: 'dashboard',
+        pathMatch: 'full'
+      },
+      {
+        path: 'dashboard',
+        canActivate: [AuthGuard],
+        component: CurriculumMaintenanceComponent
+      },
+      {
+        path: 'subject-categories',
+        canActivate: [AuthGuard],
+        // component: CurriculumMaintenanceComponent
+        children: [
+          {
+            path: '',
+            pathMatch: 'full',
+            component: SubjectCategoryComponent
+          },
+          {
+            path: 'view',
+            canActivate: [AuthGuard],
+            component: ViewSubjectCategoriesComponent
+          },
+          {
+            path: 'create',
+            canActivate: [AuthGuard],
+            component: CreateSubjectCategoryComponent
+          },
+          {
+            path: 'edit/:id',
+            canActivate: [AuthGuard],
+            component: CreateSubjectCategoryComponent
+          },
+          {
+            path: 'view/:id',
+            canActivate: [AuthGuard],
+            component: ViewSubjectCategoryComponent
+          }
+        ]
+      },
+      {
+        path: 'units',
+        canActivate: [AuthGuard],
+        children: [
+          {
+            path: 'create',
+            canActivate: [AuthGuard],
+            component: CreateUnitComponent
+          },
+          {
+            path: 'view',
+            canActivate: [AuthGuard],
+            component: CreateUnitComponent
+          }
+        ]
+      }
+    ]
+  }
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class CurriculumMaintenanceRoutingModule { }
+export class CurriculumMaintenanceRoutingModule {}

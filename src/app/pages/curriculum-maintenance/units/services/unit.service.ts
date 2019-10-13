@@ -13,13 +13,13 @@ export class UnitService {
     let url = `${this.config.apiUrl}/api/curriculum/units`;
     if (data.id) {
       url += '/' + data.id;
-      return this.http.patch<any>(url, data).pipe(
+      return this.http.patch<any>(url, { ...data, unit_category_id: data.unitCategory }).pipe(
         map(res => {
           return res;
         })
       );
     } else {
-      return this.http.post<any>(url, data).pipe(
+      return this.http.post<any>(url, { ...data, unit_category_id: data.unitCategory }).pipe(
         map(res => {
           return res;
         })

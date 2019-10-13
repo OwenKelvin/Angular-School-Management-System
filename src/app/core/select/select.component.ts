@@ -4,16 +4,26 @@ import {
   Input,
   Output,
   EventEmitter,
-  forwardRef
+  forwardRef,
+  Injectable
 } from '@angular/core';
 import {
   FormControl,
   ControlValueAccessor,
-  NG_VALUE_ACCESSOR
+  NG_VALUE_ACCESSOR,
+  NG_VALIDATORS,
+  FormGroupDirective,
+  NgForm
 } from '@angular/forms';
-import { MatSelect } from '@angular/material';
+import { MatSelect, ErrorStateMatcher } from '@angular/material';
 import { SubjectCategoryService } from 'src/app/pages/curriculum-maintenance/subject-category/services/subject-category.service';
 
+export class FormErrorStateMatcher implements ErrorStateMatcher {
+  constructor() {}
+  isErrorState(control: FormControl): boolean {
+    return (control.dirty || control.touched) && !control.valid;
+  }
+}
 @Component({
   selector: 'app-select',
   templateUrl: './select.component.html',
@@ -23,22 +33,29 @@ import { SubjectCategoryService } from 'src/app/pages/curriculum-maintenance/sub
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => SelectComponent),
       multi: true
+    },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: forwardRef(() => SelectComponent),
+      multi: true
     }
   ]
 })
 export class SelectComponent implements OnInit, ControlValueAccessor {
   disabled: boolean;
   label: string;
-  constructor(
-    private subjectCategoriesService: SubjectCategoryService,
-
-  ) {}
+  formControl: FormControl;
+  hint: string;
+  matcher: FormErrorStateMatcher;
+  constructor(private subjectCategoriesService: SubjectCategoryService) {
+    this.matcher = new FormErrorStateMatcher();
+  }
 
   @Input() type: 'units';
 
   onChanges: ($value) => void;
   onTouched: () => void;
-  error: string;
+  error: { required: string };
   categorySelected: string;
   categories: Array<any>;
   inputValue;
@@ -58,9 +75,14 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
   }
 
   ngOnInit() {
+    this.error = { required: 'Please Select a Category' };
+    this.categorySelected = '';
+    this.categories = [];
     switch (this.type) {
       case 'units':
-        this.label = 'Select category';
+        this.label = 'Unit';
+        this.error.required = 'The unit field is required';
+        this.hint = 'Please select a unit';
         this.subjectCategoriesService.getAll().subscribe(items => {
           this.categories = items;
         });
@@ -69,30 +91,26 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
         this.categories = [];
         break;
     }
-    this.categorySelected = '';
-    this.categories = [
-      { id: 1, name: 'My Name' },
-      { id: 2, name: 'My Name 2' },
-      { id: 3, name: 'My Name 3' }
-    ];
   }
-  validate() {
+  validate(control: FormControl) {
+    this.formControl = control;
+  }
+  validateField() {
     this.onTouched();
-    // if (
-    //   (this.control.get('name').dirty || this.control.get('name').touched) &&
-    //   !this.control.get('name').valid
-    // ) {
-    //   if (this.control.get('name').errors.required) {
-    //     this.error = 'label field is required';
-    //   } else {
-    //     this.error = null;
-    //   }
-    // }
   }
   selectedCategory({ source }) {
     const selected = (source as MatSelect).selected;
-    const { viewValue, value } = selected as { viewValue: string, value: number };
-    this.categorySelected = viewValue;
-    this.onChanges(value);
+    if (selected) {
+      const { viewValue, value } = selected as {
+        viewValue: string;
+        value: number;
+      };
+      this.categorySelected = viewValue;
+      this.onChanges(value);
+    } else {
+      if (this.formControl.errors) {
+      }
+      this.onChanges(null);
+    }
   }
 }
