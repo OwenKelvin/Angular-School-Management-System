@@ -2,19 +2,12 @@ import {
   Component,
   OnInit,
   Input,
-  Output,
-  EventEmitter,
-  forwardRef,
-  Injectable
-} from '@angular/core';
+  forwardRef} from '@angular/core';
 import {
   FormControl,
   ControlValueAccessor,
   NG_VALUE_ACCESSOR,
-  NG_VALIDATORS,
-  FormGroupDirective,
-  NgForm
-} from '@angular/forms';
+  NG_VALIDATORS} from '@angular/forms';
 import { MatSelect, ErrorStateMatcher } from '@angular/material';
 import { SubjectCategoryService } from 'src/app/pages/curriculum-maintenance/subject-category/services/subject-category.service';
 
@@ -52,6 +45,7 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
   }
 
   @Input() type: 'units';
+  @Input() value: 'units';
 
   onChanges: ($value) => void;
   onTouched: () => void;
@@ -85,6 +79,9 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
         this.hint = 'Please select a unit';
         this.subjectCategoriesService.getAll().subscribe(items => {
           this.categories = items;
+          if (this.formControl.value) {
+            this.categorySelected = items.find(item => item.id === this.formControl.value).name;
+          }
         });
         break;
       default:

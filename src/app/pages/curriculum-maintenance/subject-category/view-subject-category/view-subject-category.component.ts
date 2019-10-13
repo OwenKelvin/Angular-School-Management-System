@@ -20,6 +20,7 @@ export class ViewSubjectCategoryComponent implements OnInit {
     this.currentSubjectCategory = {};
     this.subjectCategory.get(id).subscribe(item => {
       this.currentSubjectCategory = item;
+      console.log(item)
     });
   }
 

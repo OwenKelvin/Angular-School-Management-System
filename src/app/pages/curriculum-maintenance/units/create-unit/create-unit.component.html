@@ -71,8 +71,8 @@
             </mat-form-field>
           </section>
           <section class="col-">
-            <button type="button" [disabled]="unitForm.get('subjectLevels').controls.length < 1" mat-icon-button>
-              <mat-icon (click)="deleteSubjectLevel(i)" class="text-danger" clickable>delete</mat-icon>
+            <button (click)="deleteSubjectLevel(i)" type="button" [disabled]="unitForm.get('subjectLevels').controls.length < 1" mat-icon-button>
+              <mat-icon class="text-danger" clickable>delete</mat-icon>
             </button>
 
           </section>

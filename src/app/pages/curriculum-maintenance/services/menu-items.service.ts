@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-export const VIEW_UNIT_CURRICULUM = '/curriculum/units/view';
+export const VIEW_UNITS_CURRICULUM = '/curriculum/units/view';
 export const CREATE_UNIT_CURRICULUM = '/curriculum/units/create';
 export const CREATE_UNIT_CATEGORY_CURRICULUM = '/curriculum/subject-categories/create';
 export const EDIT_UNIT_CATEGORY_CURRICULUM = (id: string | number) => {
@@ -9,6 +9,13 @@ export const EDIT_UNIT_CATEGORY_CURRICULUM = (id: string | number) => {
 export const VIEW_UNIT_CATEGORY_CURRICULUM = (id: string | number) => {
   return '/curriculum/subject-categories/view/' + id;
 };
+export const EDIT_UNIT_CURRICULUM = (id: string | number) => {
+  return '/curriculum/units/edit/' + id;
+};
+export const VIEW_UNIT_CURRICULUM = (id: string | number) => {
+  return '/curriculum/units/view/' + id;
+};
+
 @Injectable({
   providedIn: 'root'
 })
@@ -43,12 +50,12 @@ export class MenuItemsService {
           preIcon: 'book',
           label: 'Create Subjects/Units',
           postIcon: 'remove_red_eye',
-          routerLink: VIEW_UNIT_CURRICULUM
+          routerLink: CREATE_UNIT_CURRICULUM
         }, {
           preIcon: 'book',
           label: 'View Subjects/Units',
           postIcon: 'remove_red_eye',
-          routerLink: CREATE_UNIT_CURRICULUM
+          routerLink: VIEW_UNITS_CURRICULUM
         }]
       }]
     };

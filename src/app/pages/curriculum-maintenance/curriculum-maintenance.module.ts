@@ -12,6 +12,8 @@ import { ViewSubjectCategoryComponent } from './subject-category/view-subject-ca
 import { CreateUnitComponent } from './units/create-unit/create-unit.component';
 import { MessageComponent } from 'src/app/core/message/message.component';
 import { CoreModule } from 'src/app/core/core.module';
+import { ViewUnitComponent } from './units/view-unit/view-unit.component';
+import { ViewUnitsComponent } from './units/view-units/view-units.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,8 @@ import { CoreModule } from 'src/app/core/core.module';
     ViewSubjectCategoriesComponent,
     ViewSubjectCategoryComponent,
     CreateUnitComponent,
+    ViewUnitComponent,
+    ViewUnitsComponent,
   ],
   imports: [
     CommonModule,

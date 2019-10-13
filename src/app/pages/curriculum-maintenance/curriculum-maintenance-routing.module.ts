@@ -8,6 +8,8 @@ import { CreateSubjectCategoryComponent } from './subject-category/create-subjec
 import { ViewSubjectCategoryComponent } from './subject-category/view-subject-category/view-subject-category.component';
 import { ViewSubjectCategoriesComponent } from './subject-category/view-subject-categories/view-subject-categories.component';
 import { CreateUnitComponent } from './units/create-unit/create-unit.component';
+import { ViewUnitComponent } from './units/view-unit/view-unit.component';
+import { ViewUnitsComponent } from './units/view-units/view-units.component';
 
 const routes: Routes = [
   {
@@ -70,7 +72,17 @@ const routes: Routes = [
           {
             path: 'view',
             canActivate: [AuthGuard],
+            component: ViewUnitsComponent
+          },
+          {
+            path: 'edit/:id',
+            canActivate: [AuthGuard],
             component: CreateUnitComponent
+          },
+          {
+            path: 'view/:id',
+            canActivate: [AuthGuard],
+            component: ViewUnitComponent
           }
         ]
       }

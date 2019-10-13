@@ -37,6 +37,9 @@ export class ViewSubjectCategoriesComponent implements OnInit {
   }
   getItems(): void {
     this.subjectCategories.getAll().pipe(map(res => {
+      if (!res) {
+        res = [];
+      }
       return res.map(item => {
         return { ...item, description: item.description ? item.description : 'No Description Available!' };
       });
