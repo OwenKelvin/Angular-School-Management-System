@@ -29,7 +29,7 @@ export class CreateClassLevelComponent implements OnInit {
     private store: Store<any>,
     private classLevel: ClassLevelService,
     private router: Router
-  ) { }
+  ) {}
   errors: {
     name: string;
     abbr: string;
@@ -52,7 +52,11 @@ export class CreateClassLevelComponent implements OnInit {
     const id = activatedRoute.params.id;
 
     if (this.category) {
-      this.generateClassLevelForm({ classLevelCategory: this.category, name: '', abbr: ''});
+      this.generateClassLevelForm({
+        classLevelCategory: this.category,
+        name: '',
+        abbr: ''
+      });
     } else {
       if (id === undefined) {
         this.newForm = true;
@@ -66,6 +70,7 @@ export class CreateClassLevelComponent implements OnInit {
               return {
                 ...res,
                 abbr: res.abbreviation,
+                classLevelCategory: res.class_level_category_id
               };
             })
           )
@@ -83,25 +88,25 @@ export class CreateClassLevelComponent implements OnInit {
       abbr = '',
       classLevelCategory = null
     }: IClassLevel = {
-        id: null,
-        name: '',
-        active: true,
-        abbr: '',
-        classLevelCategory: null
-      }
+      id: null,
+      name: '',
+      active: true,
+      abbr: '',
+      classLevelCategory: null
+    }
   ) {
-
     this.classLevelForm = this.fb.group({
       id: [id],
       name: [name, [Validators.required]],
       abbr: [abbr, [Validators.required]],
-      classLevelCategory: [classLevelCategory,[Validators.required]],
-      active: [active],
+      classLevelCategory: [classLevelCategory, [Validators.required]],
+      active: [active]
     });
   }
   validateName() {
     if (
-      (this.classLevelForm.get('name').dirty || this.classLevelForm.get('name').touched) &&
+      (this.classLevelForm.get('name').dirty ||
+        this.classLevelForm.get('name').touched) &&
       !this.classLevelForm.get('name').valid
     ) {
       if (this.classLevelForm.get('name').errors.required) {
@@ -114,7 +119,8 @@ export class CreateClassLevelComponent implements OnInit {
 
   validateAbbr() {
     if (
-      (this.classLevelForm.get('abbr').dirty || this.classLevelForm.get('abbr').touched) &&
+      (this.classLevelForm.get('abbr').dirty ||
+        this.classLevelForm.get('abbr').touched) &&
       !this.classLevelForm.get('abbr').valid
     ) {
       if (this.classLevelForm.get('abbr').errors.required) {
@@ -125,6 +131,7 @@ export class CreateClassLevelComponent implements OnInit {
     }
   }
   submit() {
+
     if (this.classLevelForm.valid) {
       this.classLevel.submit(this.classLevelForm.value).subscribe(() => {
         this.submitted.emit(true);
@@ -134,17 +141,18 @@ export class CreateClassLevelComponent implements OnInit {
           this.classLevelForm.get('name').updateValueAndValidity();
         } else {
           this.classLevel
-            .get(this.formId)
+            .get({ id: this.formId })
             .pipe(
               map(res => {
                 return {
                   ...res,
                   abbr: res.abbreviation,
+                  classLevelCategory: res.class_level_category_id
                 };
               })
             )
             .subscribe(item => {
-              this.generateClassLevelForm(item);
+              this.generateClassLevelForm({ ...item });
             });
         }
         this.store.dispatch({
@@ -158,4 +166,3 @@ export class CreateClassLevelComponent implements OnInit {
     }
   }
 }
-

@@ -1,1 +1,67 @@
-<p>view-class-levels works!</p>
+
+<h1>Class Levels</h1>
+<a [routerLink]="createClassLevelCurriculum" type="button" mat-raised-button color="primary">New </a>
+<mat-list>
+  <table mat-table [dataSource]="classLevels" class="mat-elevation-z8">
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let category">
+        <mat-list-item>
+          <mat-icon matListIcon>folder</mat-icon>
+          <h3 matLine> {{ category.name }}</h3>
+          <p matLine>
+            <span> {{ category.description }}</span>
+          </p>
+        </mat-list-item>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="active">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let category">
+        <mat-chip-list selectable="false">
+          <mat-chip *ngIf="category.active === 1" disableRipple="true" selectable="false" color="primary" selected>
+            Active
+          </mat-chip>
+          <mat-chip *ngIf="category.active === 0" disabled selectable="false" color="primary" selected>Inactive
+          </mat-chip>
+        </mat-chip-list>
+
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let category">
+        <button [routerLink]="editUnitCurriculum(category.id)"
+          attr.aria-label="{{ 'Edit subject category ' + category.name }}" title="Edit" type="button" mat-icon-button>
+          <mat-icon color="primary">edit</mat-icon>
+        </button>
+        <button (click)="deleteSubject(category.id)" attr.aria-label="{{ 'Delete subject category ' + category.name }}"
+          title="Delete Item" type="button" mat-icon-button>
+          <mat-icon color="warn">delete</mat-icon>
+        </button>
+        <button [routerLink]="viewUnitCurriculum(category.id)"
+          attr.aria-label="{{ 'View subject category ' + category.name }}" title="View Item" type="button"
+          mat-icon-button>
+          <mat-icon color="accent">remove_red_eye</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="['name', 'active','actions']"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['name', 'active', 'actions'];"></tr>
+  </table>
+</mat-list>
+<app-message *ngIf="classLevels && (classLevels.length < 1)">No Data Availbale</app-message>
+
+
+<mat-list>
+  <section *ngFor="let category of classLevels">
+
+  </section>
+</mat-list>
+<style>
+  table {
+    width: 100%;
+  }
+</style>

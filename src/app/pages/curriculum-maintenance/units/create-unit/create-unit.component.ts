@@ -80,7 +80,7 @@ export class CreateUnitComponent implements OnInit {
         this.newForm = false;
         this.formId = id;
         this.unit
-          .get(id, 1)
+          .get({ id, includeUnitLevels: 1})
           .pipe(
             map(res => {
               return {
@@ -234,7 +234,7 @@ export class CreateUnitComponent implements OnInit {
           this.unitForm.get('name').updateValueAndValidity();
         } else {
           this.unit
-            .get(this.formId, 1)
+            .get({ id: this.formId, includeUnitLevels: 1})
             .pipe(
               map(res => {
                 return {

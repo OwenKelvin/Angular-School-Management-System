@@ -22,13 +22,13 @@ export class ViewSubjectCategoryComponent implements OnInit {
       .children[0].children[0].children[0].snapshot;
     this.id = activatedRoute.params.id;
     this.currentSubjectCategory = {};
-    this.subjectCategory.get(this.id).subscribe(item => {
+    this.subjectCategory.get({ id: this.id }).subscribe(item => {
       this.currentSubjectCategory = item;
     });
   }
   onNewSubjectSubmitted($event) {
     this.isOpenNewSubjectForm = false;
-    this.subjectCategory.get(this.id).subscribe(item => {
+    this.subjectCategory.get({ id: this.id }).subscribe(item => {
       this.currentSubjectCategory = item;
     });
   }

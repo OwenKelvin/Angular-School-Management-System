@@ -1,0 +1,17 @@
+<section *ngIf="unit">
+  <mat-chip-list selectable="false">
+    <h1>Units/Subject: {{ unit.name }} </h1>
+  </mat-chip-list>
+</section>
+<section>
+  <h2>Status</h2>
+  <mat-chip class="alert alert-success" *ngIf="unit.active === 1" disableRipple="true" selectable="false"
+    color="primary" selected>
+    Active
+  </mat-chip>
+  <mat-chip *ngIf="unit.active === 0" selectable="false" color="primary" selected>Inactive
+  </mat-chip>
+  <h2>Description</h2>
+  <p>{{ unit.description }}</p>
+  <app-message *ngIf="!unit.description">No Description Found</app-message>
+</section>

@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 
+export const EDIT_CLASS_LEVEL_CURRICULUM = (id: string | number) => {
+  return '/curriculum/class-levels/edit/' + id;
+};
 export const EDIT_CLASS_LEVEL_CATEGORY_CURRICULUM = (id: string | number) => {
   return '/curriculum/class-level-categories/edit/' + id;
 };
@@ -27,7 +30,7 @@ export const EDIT_UNIT_CURRICULUM = (id: string | number) => {
 };
 export const VIEW_UNIT_CURRICULUM = (id: string | number) => {
   return '/curriculum/units/view/' + id;
-};
+}; // EDIT_CLASS_LEVEL_UNIT_CURRICULUM
 
 @Injectable({
   providedIn: 'root'

@@ -6,7 +6,6 @@ import {
   VIEW_UNIT_CURRICULUM
 } from '../../services/menu-items.service';
 import { map } from 'rxjs/operators';
-import { of } from 'rxjs';
 
 @Component({
   selector: 'app-view-units',

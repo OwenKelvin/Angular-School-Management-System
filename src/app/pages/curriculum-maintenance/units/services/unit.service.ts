@@ -10,8 +10,12 @@ import { Observable } from 'rxjs';
 })
 export class UnitService {
   constructor(private http: HttpClient, private config: Config) { }
-  get(id, includeUnitLevels = 0) {
-    const url = `${this.config.apiUrl}/api/curriculum/units/${id}/?include_unit_levels=${includeUnitLevels}`;
+  get(data) {
+    const { includeUnitLevels, id } = data;
+    let url = `${this.config.apiUrl}/api/curriculum/units/${id}`;
+    if (includeUnitLevels === 1) {
+      url += '/?include_unit_levels=${includeUnitLevels}';
+    }
     return this.http.get<any>(url).pipe(
       map(res => {
         return res;

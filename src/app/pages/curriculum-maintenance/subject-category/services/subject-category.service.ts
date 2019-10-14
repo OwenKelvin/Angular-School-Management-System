@@ -14,7 +14,8 @@ export class SubjectCategoryService {
     private http: HttpClient,
     private config: Config
   ) { }
-  get(id, subject = 0) {
+  get(data) {
+    const { units, id } = data;
     const url = `${this.config.apiUrl}/api/curriculum/unit-categories/${id}?units=1`;
     return this.http.get<any>(url).pipe(map(res => {
       return res as unknown;
