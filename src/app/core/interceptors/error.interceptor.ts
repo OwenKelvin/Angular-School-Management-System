@@ -7,6 +7,7 @@ import { AuthenticationService } from '../services/authentication/authentication
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { IMessage } from 'src/app/shared/services/message/message.service';
+import { TOGGLE_DIALOGUE } from 'src/app/store/reducers';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
@@ -71,7 +72,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                 };
             }
             this.store.dispatch({
-                type: '[APP STATE] show dialog',
+                type: TOGGLE_DIALOGUE,
                 payload: this.message
             });
 

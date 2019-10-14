@@ -11,6 +11,7 @@ export default interface IClassLevel {
   id?: number;
   name: string;
   active?: boolean | 1 | 0 | undefined | null;
+  classLevelCategory: number;
   abbr: string;
 }
 
@@ -31,6 +32,7 @@ export class CreateClassLevelComponent implements OnInit {
   errors: {
     name: string;
     abbr: string;
+    classLevelCategory: number;
   };
   classLevelForm: FormGroup;
   newForm: boolean;
@@ -40,6 +42,7 @@ export class CreateClassLevelComponent implements OnInit {
     this.errors = {
       name: '',
       abbr: '',
+      classLevelCategory: null
     };
     this.generateClassLevelForm();
 
@@ -73,11 +76,13 @@ export class CreateClassLevelComponent implements OnInit {
       name = '',
       active = true,
       abbr = '',
+      classLevelCategory = null
     }: IClassLevel = {
         id: null,
         name: '',
         active: true,
         abbr: '',
+        classLevelCategory: null
       }
   ) {
 
@@ -85,6 +90,7 @@ export class CreateClassLevelComponent implements OnInit {
       id: [id],
       name: [name, [Validators.required]],
       abbr: [abbr, [Validators.required]],
+      classLevelCategory: [classLevelCategory,[Validators.required]],
       active: [active],
     });
   }

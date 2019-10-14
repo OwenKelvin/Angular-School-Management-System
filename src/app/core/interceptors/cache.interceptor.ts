@@ -12,10 +12,11 @@ export class CacheInterceptor implements HttpInterceptor {
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const cachedResponse: HttpResponse<any> = this.cacheService.get(req.url);
         const cachableUrl: string[] = [
-            `${this.config.apiUrl}/api/genders/all`,
-            `${this.config.apiUrl}/api/religions/all`,
-            `${this.config.apiUrl}/api/phones/allowed-countries`
-        ];
+            `genders/all`,
+            `religions/all`,
+            `curriculum/class-level-categories`,
+            `phones/allowed-countries`
+        ].map(item => `${this.config.apiUrl}/api/${item}`);
         if (req.method === 'GET' && cachableUrl.includes(req.url)) {
             if (cachedResponse) {
                 return of(cachedResponse);

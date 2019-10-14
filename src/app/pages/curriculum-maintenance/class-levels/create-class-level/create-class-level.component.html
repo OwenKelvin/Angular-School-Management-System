@@ -13,6 +13,9 @@
         </mat-form-field>
       </section>
       <section class='col-lg-3 col-md-4 col-sm-6 col-xs-12'>
+        <app-select type="class-level-categories" formControlName="classLevelCategory"></app-select>
+      </section>
+      <section class='col-lg-3 col-md-4 col-sm-6 col-xs-12'>
         <mat-form-field>
           <label hidden for='abbr'>Abbreviation</label>
           <input (blur)='validateAbbr()' id='abbr' type='text' placeholder='Abbreviation' formControlName='abbr' matInput>
@@ -37,7 +40,7 @@
   <section class="row" style="margin-top: 20px">
     <section class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
       <button [disabled]="!classLevelForm.valid" type="submit" mat-raised-button class="btn btn-success">
-        {{ newForm ? 'Create': 'Update'}} Subject/Unit</button>
+        {{ newForm ? 'Create': 'Update'}} Class Level</button>
     </section>
   </section>
 

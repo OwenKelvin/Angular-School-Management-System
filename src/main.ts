@@ -4,6 +4,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
+import { TOGGLE_DIALOGUE } from './app/store/reducers';
 
 if (environment.production) {
   enableProdMode();
@@ -12,7 +13,7 @@ if (environment.production) {
 platformBrowserDynamic().bootstrapModule(AppModule)
   .catch(err => {
     this.store.dispatch({
-      type: '[APP STATE] show dialog',
+      type: TOGGLE_DIALOGUE,
       payload: 'Unable to bootstrap the application'
     });
   });

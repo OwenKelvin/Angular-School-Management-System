@@ -9,7 +9,7 @@ import IClassLevel from '../create-class-level/create-class-level.component';
   providedIn: 'root'
 })
 export class ClassLevelService {
-  constructor(private http: HttpClient, private config: Config) { }
+  constructor(private http: HttpClient, private config: Config) {}
   get(id) {
     const url = `${this.config.apiUrl}/api/curriculum/class-levels/${id}`;
     return this.http.get<any>(url).pipe(
@@ -28,11 +28,16 @@ export class ClassLevelService {
         })
       );
     } else {
-      return this.http.post<any>(url, { ...data}).pipe(
-        map(res => {
-          return res;
+      return this.http
+        .post<any>(url, {
+          ...data,
+          class_level_category_id: data.classLevelCategory
         })
-      );
+        .pipe(
+          map(res => {
+            return res;
+          })
+        );
     }
   }
   delete(id: number): Observable<any> {

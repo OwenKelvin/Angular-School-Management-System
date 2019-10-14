@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import { Config } from './../../../config/app.config';
 import { OauthInterface } from '../../interfaces/oauth.interface';
 import { Store, select } from '@ngrx/store';
+import { TOGGLE_DIALOGUE } from 'src/app/store/reducers';
 
 @Injectable({
   providedIn: 'root'
@@ -52,7 +53,7 @@ export class AuthenticationService {
         this.currentUserSubject.next(user);
 
         this.store.dispatch({
-          type: '[APP STATE] show dialog',
+          type: TOGGLE_DIALOGUE,
           payload: null
         });
 

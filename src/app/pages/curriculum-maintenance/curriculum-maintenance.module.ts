@@ -17,6 +17,8 @@ import { ViewUnitsComponent } from './units/view-units/view-units.component';
 import { ClassLevelsComponent } from './class-levels/class-levels.component';
 import { CreateClassLevelComponent } from './class-levels/create-class-level/create-class-level.component';
 import { CreateClassLevelCategoryComponent } from './class-levels/create-class-level-category/create-class-level-category.component';
+import { ViewClassLevelsComponent } from './class-levels/view-class-levels/view-class-levels.component';
+import { ViewClassLevelCategoriesComponent } from './class-levels/view-class-level-categories/view-class-level-categories.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,8 @@ import { CreateClassLevelCategoryComponent } from './class-levels/create-class-l
     ClassLevelsComponent,
     CreateClassLevelComponent,
     CreateClassLevelCategoryComponent,
+    ViewClassLevelsComponent,
+    ViewClassLevelCategoriesComponent,
   ],
   imports: [
     CommonModule,

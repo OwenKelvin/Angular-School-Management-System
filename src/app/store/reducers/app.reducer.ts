@@ -1,7 +1,8 @@
 import { SHOW_SUCCESS_MESSAGE } from '../actions/app.action';
+import { TOGGLE_DIALOGUE } from '.';
 
 const TOGGLE_SIDEBAR = '[APP STATE] toggle side bar';
-const TOGGLE_DIALOGUE = '[APP STATE] show dialog';
+
 export const reducer = (state, action) => {
   switch (action.type) {
     case TOGGLE_SIDEBAR:

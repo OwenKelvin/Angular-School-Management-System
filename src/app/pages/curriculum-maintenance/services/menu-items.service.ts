@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 
 export const VIEW_UNITS_CURRICULUM = '/curriculum/units/view';
 export const CREATE_UNIT_CURRICULUM = '/curriculum/units/create';
+export const VIEW_CLASS_LEVELS_CURRICULUM = '/curriculum/class-levels/view';
 export const CREATE_CLASS_LEVEL_CURRICULUM = '/curriculum/class-levels/create';
+export const VIEW_CLASS_LEVEL_CATEGORIES_CURRICULUM = '/curriculum/class-level-categories/view';
 export const CREATE_CLASS_LEVEL_CATEGORY_CURRICULUM =
   '/curriculum/class-level-categories/create';
 export const CREATE_UNIT_CATEGORY_CURRICULUM =
@@ -75,6 +77,12 @@ export class MenuItemsService {
           children: [
             {
               preIcon: 'border_color',
+              label: 'View Class Levels',
+              postIcon: 'remove_red_eye',
+              routerLink: VIEW_CLASS_LEVELS_CURRICULUM
+            },
+            {
+              preIcon: 'border_color',
               label: 'Create Class Level',
               postIcon: 'remove_red_eye',
               routerLink: CREATE_CLASS_LEVEL_CURRICULUM
@@ -85,6 +93,12 @@ export class MenuItemsService {
           preIcon: 'directions_bike',
           label: 'Class Level Categories',
           children: [
+            {
+              preIcon: 'border_color',
+              label: 'View Class Level Category',
+              postIcon: 'remove_red_eye',
+              routerLink: VIEW_CLASS_LEVEL_CATEGORIES_CURRICULUM
+            },
             {
               preIcon: 'border_color',
               label: 'Create Class Level Category',

@@ -10,6 +10,14 @@ import IClassLevelCategory from '../create-class-level-category/create-class-lev
 })
 export class ClassLevelCategoryService {
   constructor(private http: HttpClient, private config: Config) { }
+  getAll() {
+    const url = `${this.config.apiUrl}/api/curriculum/class-level-categories`;
+    return this.http.get<any>(url).pipe(
+      map(res => {
+        return res;
+      })
+    );
+  }
   get(id) {
     const url = `${this.config.apiUrl}/api/curriculum/class-level-categories/${id}`;
     return this.http.get<any>(url).pipe(

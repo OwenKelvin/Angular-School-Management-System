@@ -19,9 +19,9 @@ export const reducers: ActionReducerMap<State> = {
   app: reducer
 };
 
-const TOGGLE_SIDEBAR = '[APP STATE] toggle side bar';
-const TOGGLE_DIALOGUE = '[APP STATE] show dialog';
-const SET_LOGGED_IN_USER = '[APP STATE] set logged in user';
+export const TOGGLE_SIDEBAR = '[APP STATE] toggle side bar';
+export const TOGGLE_DIALOGUE = '[APP STATE] show dialog';
+export const SET_LOGGED_IN_USER = '[APP STATE] set logged in user';
 
 export function reducer(state, action) {
   const freshState: State = {

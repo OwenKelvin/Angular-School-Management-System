@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { IDialogData } from '../error-dialog/error-dialog.component';
 import { IMessage } from 'src/app/shared/services/message/message.service';
 import { Store, select } from '@ngrx/store';
+import { map } from 'rxjs/operators';
+import { TOGGLE_DIALOGUE } from 'src/app/store/reducers';
 
 @Component({
   selector: 'app-error-message-top-bar',
@@ -9,7 +11,6 @@ import { Store, select } from '@ngrx/store';
   styleUrls: ['./error-message-top-bar.component.css']
 })
 export class ErrorMessageTopBarComponent implements OnInit {
-
   message: IMessage;
   showMessage: boolean;
   constructor(private store: Store<any>) {
@@ -18,20 +19,23 @@ export class ErrorMessageTopBarComponent implements OnInit {
 
   ngOnInit() {
     this.showMessage = false;
-    this.store.pipe(select(state => state.app)).subscribe(
-      app => {
-        if (app) {
-          if (app.showMessage) {
-            this.message = app.showMessage;
-            this.openDialog();
-          } else {
-            this.resetMessages();
-          }
+    this.store.pipe(select(state => state.app)).subscribe(app => {
+      if (app) {
+        if (app.showMessage) {
+          this.message = app.showMessage;
+          this.openDialog();
+        } else {
+          this.resetMessages();
         }
-      });
+      }
+    });
   }
   closeDialog() {
     this.resetMessages();
+    this.store.dispatch({
+      type: TOGGLE_DIALOGUE,
+      payload: false
+    });
   }
   openDialog() {
     this.showMessage = true;
@@ -45,5 +49,4 @@ export class ErrorMessageTopBarComponent implements OnInit {
       status: undefined
     };
   }
-
 }
