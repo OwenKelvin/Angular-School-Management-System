@@ -49,7 +49,7 @@
     </section>
     <section class='row' style="margin-top: 20px;" formArrayName="subjectLevels">
       <section class="col-lg-3 col-md-4 col-sm-12 col-xs-12"
-        *ngFor="let subjetLevel of unitForm.get('subjectLevels').controls; let i = index" [formGroupName]="i">
+        *ngFor="let subjetLevel of subjectLevels().controls; let i = index" [formGroupName]="i">
         <section class="row">
           <section class='col-lg-8 col-md-9 col-sm-8 col-xs-9'>
             <mat-form-field>
@@ -61,7 +61,7 @@
           </section>
           <section class="col-">
             <button (click)="deleteSubjectLevel(i)" type="button"
-              [disabled]="unitForm.get('subjectLevels').controls.length < 1" mat-icon-button>
+              [disabled]="i === 0" mat-icon-button>
               <mat-icon class="text-danger" clickable>delete</mat-icon>
             </button>
 

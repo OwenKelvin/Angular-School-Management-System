@@ -9,7 +9,7 @@ import { Store, select } from '@ngrx/store';
   styleUrls: ['./user-profile.component.css']
 })
 export class UserProfileComponent implements OnInit {
-  user: object;
+  user: { first_name: string };
   constructor(
     private router: Router,
     private store: Store<any>,

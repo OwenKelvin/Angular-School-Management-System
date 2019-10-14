@@ -13,7 +13,7 @@ export interface IDialogData {
 })
 
 export class ErrorDialogComponent implements OnInit {
-  dialogText: object;
+  dialogText: any;
   constructor(
     public dialogRef: MatDialogRef<ErrorDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: IDialogData) { }

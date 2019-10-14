@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { UnitService } from '../services/unit.service';
 import { SHOW_SUCCESS_MESSAGE } from 'src/app/store/actions/app.action';
@@ -223,6 +223,9 @@ export class CreateUnitComponent implements OnInit {
         this.unitLevel.delete(ItemId).subscribe();
       }
     }
+  }
+  subjectLevels(): FormArray {
+    return this.unitForm.get('subjectLevels') as FormArray;
   }
   submit() {
     if (this.unitForm.valid) {

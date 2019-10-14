@@ -13,9 +13,9 @@
           <section class="col-sm-6 col-md-4 col-lg-3">
             <mat-form-field>
               <mat-icon matPrefix>email</mat-icon>
-              <label hidden attr.for="{{ email + i }}"> Email </label>
+              <label hidden attr.for="{{ 'email' + i }}"> Email </label>
 
-              <input (blur)="validateEmail(i)" id="{{ email + i }}" type="text" placeholder="Email"
+              <input (blur)="validateEmail(i)" id="{{ 'email' + i }}" type="text" placeholder="Email"
                 formControlName="email" matInput>
               <mat-error *ngIf="errors.guardians[i]?.email">
                 {{ errors.guardians[i]?.email }}

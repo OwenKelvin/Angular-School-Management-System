@@ -2,7 +2,6 @@ import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChange
 import { FormGroup, Validators, FormBuilder, FormControl, AbstractControl } from '@angular/forms';
 import { SubmitStudentIdentificationService } from '../../services/submit-student-identification.service';
 import { debounceTime } from 'rxjs/operators';
-import { StudentIdNumberService } from '../../services/student-id-number/student-id-number.service';
 import { IdNumberValidator } from '../validators/student-id-taken.validator';
 import { SET_ADMITTED_STUDENT_IDENTIFICATION_INFO } from '../../store/actions/pages.actions';
 import { SET_STUDENT_ID_NUMBER } from '../../store/actions/pages.actions';
@@ -17,7 +16,7 @@ import { ReligionService } from 'src/app/core/services/religion/religion.service
   styleUrls: ['./student-identification-form.component.less']
 })
 export class StudentIdentificationFormComponent implements OnInit, OnChanges {
-  @Input() submit = false;
+  @Input() submit: any = false;
   @Output() submitted: EventEmitter<any>;
   genders: any[];
   religions: any[];
@@ -46,7 +45,6 @@ export class StudentIdentificationFormComponent implements OnInit, OnChanges {
     private store: Store<any>,
     private fb: FormBuilder,
     private formSubmit: SubmitStudentIdentificationService,
-    private studentIdNumber: StudentIdNumberService,
     private idNumberValidator: IdNumberValidator,
     private studentDetails: StudentDetailsService,
     private getGenders: GenderService,

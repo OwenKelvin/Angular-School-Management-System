@@ -26,6 +26,7 @@ import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 import { CacheInterceptor } from './core/interceptors/cache.interceptor';
 import { SuccessInterceptor } from './core/interceptors/success.interceptor';
 import { SelectComponent } from './core/select/select.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   imports: [
@@ -52,6 +53,7 @@ import { SelectComponent } from './core/select/select.component';
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot([AppEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   exports: [
     // SharedModule,
