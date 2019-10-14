@@ -8,9 +8,9 @@
           <mat-icon matPrefix>calendar_today</mat-icon>
           <label hidden for="name">Academic Year Name</label>
 
-          <input (blur)="validateName" id="name" type="text" placeholder="Academic Year Name" formControlName="name"
+          <input (blur)="validateName()" id="name" type="text" placeholder="Academic Year Name" formControlName="name"
             matInput>
-          <mat-error *ngIf="errors.email">
+          <mat-error *ngIf="errors.name">
             {{ errors.name }}
           </mat-error>
         </mat-form-field>
@@ -30,7 +30,7 @@
         <mat-form-field>
           <input matInput [matDatepicker]="endDate" placeholder="endDate" formControlName="endDate"
             (blur)="validateEndDate()">
-          <mat-datepicker-toggle matSuffix [for]="validateEndDate()"></mat-datepicker-toggle>
+          <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
           <mat-datepicker #endDate></mat-datepicker>
           <mat-error *ngIf="errors.endDate">
             {{ errors.endDate }}
@@ -43,6 +43,7 @@
     <legend>Academic Year Subjects</legend>
   </fieldset>
   <section>
-    <button style="margin-top: 20px" mat-raised-button color="primary">Save Academic Year</button>
+    <button [disabled]="!academicYearForm.valid" (click)="submit()" style="margin-top: 20px" mat-raised-button
+      color="primary">Save Academic Year</button>
   </section>
 </form>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { SubjectsService } from '../services/subjects.service';
+import { AcademicYearService } from '../services/academic-year.service';
 
 @Component({
   selector: 'app-create-academic-year',
@@ -13,19 +14,18 @@ export class CreateAcademicYearComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private subjects: SubjectsService
+    private academicYear: AcademicYearService
   ) { }
 
   ngOnInit() {
     this.errors = {};
     this.academicYearForm = this.fb.group({
       name: ['', [Validators.required]],
-      startDate: [''],
-      endDate: [''],
+      startDate: ['', [Validators.required]],
+      endDate: ['', [Validators.required]],
     });
   }
-  validateName(i) {
-
+  validateName() {
     if ((this.academicYearForm.get('name').dirty || this.academicYearForm.get('name').touched) &&
       !this.academicYearForm.get('name').valid) {
       if (this.academicYearForm.get('name').errors.required) {
@@ -36,11 +36,37 @@ export class CreateAcademicYearComponent implements OnInit {
     }
   }
   validateStartDate() {
-  }
+  if (
+    (this.academicYearForm.get('startDate').dirty || this.academicYearForm.get('startDate').touched) &&
+    !this.academicYearForm.get('startDate').valid
+   ) {
+     if (this.academicYearForm.get('startDate').errors.required) {
+        this.errors.startDate = 'Start Date field is required';
+        } else {
+          this.errors.startDate = null;
+        }
+      }
+    }
   validateEndDate() {
+    if (
+      (this.academicYearForm.get('endDate').dirty || this.academicYearForm.get('endDate').touched) &&
+      !this.academicYearForm.get('endDate').valid
+    ) {
+      if (this.academicYearForm.get('endDate').errors.required) {
+        this.errors.endDate = 'End Date field is required';
+      } else {
+        this.errors.endDate = null;
+      }
+    }
   }
   submit() {
+    if (this.academicYearForm.valid) {
+      this.academicYear.save(this.academicYearForm.value).subscribe(
+        item => {
 
+        }
+      );
+    }
   }
 
 }
