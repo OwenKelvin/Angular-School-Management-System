@@ -14,6 +14,8 @@ import { CreateClassLevelComponent } from './class-levels/create-class-level/cre
 import { CreateClassLevelCategoryComponent } from './class-levels/create-class-level-category/create-class-level-category.component';
 import { ViewClassLevelsComponent } from './class-levels/view-class-levels/view-class-levels.component';
 import { ViewClassLevelCategoriesComponent } from './class-levels/view-class-level-categories/view-class-level-categories.component';
+import { ViewClassLevelCategoryComponent } from './class-levels/view-class-level-category/view-class-level-category.component';
+import { ViewClassLevelComponent } from './class-levels/view-class-level/view-class-level.component';
 
 const routes: Routes = [
   {
@@ -103,6 +105,16 @@ const routes: Routes = [
             path: 'view',
             canActivate: [AuthGuard],
             component: ViewClassLevelsComponent
+          },
+          {
+            path: 'edit/:id',
+            canActivate: [AuthGuard],
+            component: CreateClassLevelComponent
+          },
+          {
+            path: 'view/:id',
+            canActivate: [AuthGuard],
+            component: ViewClassLevelComponent
           }
         ]
       },
@@ -119,6 +131,16 @@ const routes: Routes = [
             path: 'view',
             canActivate: [AuthGuard],
             component: ViewClassLevelCategoriesComponent
+          },
+          {
+            path: 'edit/:id',
+            canActivate: [AuthGuard],
+            component: CreateClassLevelCategoryComponent
+          },
+          {
+            path: 'view/:id',
+            canActivate: [AuthGuard],
+            component: ViewClassLevelCategoryComponent
           }
         ]
       }

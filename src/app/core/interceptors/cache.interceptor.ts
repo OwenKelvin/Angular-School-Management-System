@@ -27,6 +27,8 @@ export class CacheInterceptor implements HttpInterceptor {
                         this.cacheService.put(req.url, event);
                     }
                 }));
+        } else {
+            this.cacheService.invalidateCache(); // TODO add logics to invalidate only affected Cache
         }
         return next.handle(req);
     }

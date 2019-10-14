@@ -1,5 +1,12 @@
 import { Injectable } from '@angular/core';
 
+export const EDIT_CLASS_LEVEL_CATEGORY_CURRICULUM = (id: string | number) => {
+  return '/curriculum/class-level-categories/edit/' + id;
+};
+export const VIEW_CLASS_LEVEL_CATEGORY_CURRICULUM = (id: string | number) => {
+  return '/curriculum/class-level-categories/view/' + id;
+};
+
 export const VIEW_UNITS_CURRICULUM = '/curriculum/units/view';
 export const CREATE_UNIT_CURRICULUM = '/curriculum/units/create';
 export const VIEW_CLASS_LEVELS_CURRICULUM = '/curriculum/class-levels/view';
