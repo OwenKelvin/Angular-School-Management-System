@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
@@ -21,7 +21,8 @@ export default interface IClassLevel {
   styleUrls: ['./create-class-level.component.css']
 })
 export class CreateClassLevelComponent implements OnInit {
-
+  @Input() category: number;
+  @Output() submitted = new EventEmitter();
   formId: any;
   constructor(
     private fb: FormBuilder,
@@ -50,24 +51,28 @@ export class CreateClassLevelComponent implements OnInit {
       .children[0].children[0].children[0].snapshot;
     const id = activatedRoute.params.id;
 
-    if (id === undefined) {
-      this.newForm = true;
+    if (this.category) {
+      this.generateClassLevelForm({ classLevelCategory: this.category, name: '', abbr: ''});
     } else {
-      this.newForm = false;
-      this.formId = id;
-      this.classLevel
-        .get(id)
-        .pipe(
-          map(res => {
-            return {
-              ...res,
-              abbr: res.abbreviation,
-            };
-          })
-        )
-        .subscribe(item => {
-          this.generateClassLevelForm(item);
-        });
+      if (id === undefined) {
+        this.newForm = true;
+      } else {
+        this.newForm = false;
+        this.formId = id;
+        this.classLevel
+          .get({ id })
+          .pipe(
+            map(res => {
+              return {
+                ...res,
+                abbr: res.abbreviation,
+              };
+            })
+          )
+          .subscribe(item => {
+            this.generateClassLevelForm(item);
+          });
+      }
     }
   }
   generateClassLevelForm(
@@ -122,6 +127,7 @@ export class CreateClassLevelComponent implements OnInit {
   submit() {
     if (this.classLevelForm.valid) {
       this.classLevel.submit(this.classLevelForm.value).subscribe(() => {
+        this.submitted.emit(true);
         if (this.newForm) {
           this.generateClassLevelForm();
           this.classLevelForm.get('name').clearValidators();

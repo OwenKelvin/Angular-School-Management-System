@@ -53,7 +53,7 @@ export class CreateClassLevelCategoryComponent implements OnInit {
       this.newForm = false;
       this.formId = id;
       this.classLevelCategory
-        .get(id)
+        .get({ id })
         .subscribe(item => {
           this.generateClassLevelCategoryForm(item);
         });
@@ -99,7 +99,7 @@ export class CreateClassLevelCategoryComponent implements OnInit {
           this.classLevelCategoryForm.get('name').updateValueAndValidity();
         } else {
           this.classLevelCategory
-            .get(this.formId)
+            .get({ id: this.formId})
             .pipe(
               map(res => {
                 return {

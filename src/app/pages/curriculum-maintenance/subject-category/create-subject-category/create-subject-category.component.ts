@@ -45,7 +45,7 @@ export class CreateSubjectCategoryComponent implements OnInit {
       this.newForm = true;
     } else {
       this.newForm = false;
-      this.subjectCategory.get(id).subscribe(item => {
+      this.subjectCategory.get({ id }).subscribe(item => {
         this.generateForm(item);
       });
     }

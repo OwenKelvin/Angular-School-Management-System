@@ -1,1 +1,38 @@
-<p>view-class-level-category works!</p>
+<section *ngIf="classLevelCategory">
+  <mat-chip-list selectable="false">
+    <h1>Class Level Category: {{ classLevelCategory.name }} </h1>
+  </mat-chip-list>
+</section>
+<section>
+  <h2>Status</h2>
+  <mat-chip class="alert alert-success" *ngIf="classLevelCategory.active === 1" disableRipple="true" selectable="false"
+    color="primary" selected>
+    Active
+  </mat-chip>
+  <mat-chip *ngIf="classLevelCategory.active === 0" selectable="false" color="primary" selected>Inactive
+  </mat-chip>
+  <h2>Description</h2>
+  <p>{{ classLevelCategory.description }}</p>
+  <app-message *ngIf="!classLevelCategory.description">No Description Found</app-message>
+</section>
+<h2>Class Levels</h2>
+<section>
+  <button *ngIf="!isOpenNewClassLevelForm" (click)="isOpenNewClassLevelForm = true" mat-raised-button type="button"
+    color="primary">Add Class Level</button>
+  <button *ngIf="isOpenNewClassLevelForm" (click)="closeNewClassLevelForm()" mat-raised-button type="button"
+    color="warn">Cancel</button>
+  <section>
+    <app-create-class-level (submitted)="onNewClassLevelSubmitted($event)" [category]="classLevelCategory.id"
+      *ngIf="isOpenNewClassLevelForm"></app-create-class-level>
+  </section>
+</section>
+<section class="row" style="border: 1px">
+  <section class="col-lg-3" *ngFor="let classLevels of classLevelCategory?.class_levels">
+    <mat-list>
+      <mat-list-item>
+        <mat-icon mat-list-icon>label_important_outline</mat-icon>
+        <h3 matLine> {{ classLevels.name }}</h3>
+      </mat-list-item>
+    </mat-list>
+  </section>
+</section>

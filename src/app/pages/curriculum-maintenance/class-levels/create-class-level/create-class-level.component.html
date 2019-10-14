@@ -12,7 +12,7 @@
           </mat-error>
         </mat-form-field>
       </section>
-      <section class='col-lg-3 col-md-4 col-sm-6 col-xs-12'>
+      <section *ngIf="!category" class='col-lg-3 col-md-4 col-sm-6 col-xs-12'>
         <app-select type="class-level-categories" formControlName="classLevelCategory"></app-select>
       </section>
       <section class='col-lg-3 col-md-4 col-sm-6 col-xs-12'>

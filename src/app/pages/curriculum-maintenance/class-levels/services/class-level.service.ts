@@ -10,7 +10,7 @@ import IClassLevel from '../create-class-level/create-class-level.component';
 })
 export class ClassLevelService {
   constructor(private http: HttpClient, private config: Config) {}
-  get(id) {
+  get({ id }) {
     const url = `${this.config.apiUrl}/api/curriculum/class-levels/${id}`;
     return this.http.get<any>(url).pipe(
       map(res => {
