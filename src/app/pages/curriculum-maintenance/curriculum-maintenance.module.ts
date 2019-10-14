@@ -14,6 +14,9 @@ import { MessageComponent } from 'src/app/core/message/message.component';
 import { CoreModule } from 'src/app/core/core.module';
 import { ViewUnitComponent } from './units/view-unit/view-unit.component';
 import { ViewUnitsComponent } from './units/view-units/view-units.component';
+import { ClassLevelsComponent } from './class-levels/class-levels.component';
+import { CreateClassLevelComponent } from './class-levels/create-class-level/create-class-level.component';
+import { CreateClassLevelCategoryComponent } from './class-levels/create-class-level-category/create-class-level-category.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +28,9 @@ import { ViewUnitsComponent } from './units/view-units/view-units.component';
     CreateUnitComponent,
     ViewUnitComponent,
     ViewUnitsComponent,
+    ClassLevelsComponent,
+    CreateClassLevelComponent,
+    CreateClassLevelCategoryComponent,
   ],
   imports: [
     CommonModule,

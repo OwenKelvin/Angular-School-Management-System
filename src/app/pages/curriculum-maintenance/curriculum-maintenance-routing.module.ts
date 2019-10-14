@@ -10,6 +10,8 @@ import { ViewSubjectCategoriesComponent } from './subject-category/view-subject-
 import { CreateUnitComponent } from './units/create-unit/create-unit.component';
 import { ViewUnitComponent } from './units/view-unit/view-unit.component';
 import { ViewUnitsComponent } from './units/view-units/view-units.component';
+import { CreateClassLevelComponent } from './class-levels/create-class-level/create-class-level.component';
+import { CreateClassLevelCategoryComponent } from './class-levels/create-class-level-category/create-class-level-category.component';
 
 const routes: Routes = [
   {
@@ -83,6 +85,28 @@ const routes: Routes = [
             path: 'view/:id',
             canActivate: [AuthGuard],
             component: ViewUnitComponent
+          }
+        ]
+      },
+      {
+        path: 'class-levels',
+        canActivate: [AuthGuard],
+        children: [
+          {
+            path: 'create',
+            canActivate: [AuthGuard],
+            component: CreateClassLevelComponent
+          }
+        ]
+      },
+      {
+        path: 'class-level-categories',
+        canActivate: [AuthGuard],
+        children: [
+          {
+            path: 'create',
+            canActivate: [AuthGuard],
+            component: CreateClassLevelCategoryComponent
           }
         ]
       }

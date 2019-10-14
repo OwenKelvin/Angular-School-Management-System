@@ -1,0 +1,37 @@
+<h1> {{ newForm ? 'Create': 'Update'}} Class Level Category</h1>
+<form [formGroup]="classLevelCategoryForm" (submit)="submit()">
+  <fieldset>
+    <legend>General Details</legend>
+    <section class="row">
+      <section class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+        <mat-form-field>
+          <label hidden for="name">Subject/Unit Name</label>
+          <input (blur)="validateName()" id="name" type="text" placeholder="Name" formControlName="name" matInput>
+          <mat-error *ngIf="errors.name">
+            {{ errors.name }}
+          </mat-error>
+        </mat-form-field>
+      </section>
+      <section class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+        <section class="row">
+          <section class="col-lg-6 col-md-7 col-sm-8 col-xs-7">
+            <label for="active">Subject Is Active</label>
+          </section>
+          <section class="col-lg-6 col-md-5 col-sm-4 col-xs-5">
+            <mat-slide-toggle id="active" color="primary" formControlName="active">
+              {{ classLevelCategoryForm.get('active').value ? 'Active' : 'Inactive'}}
+            </mat-slide-toggle>
+          </section>
+        </section>
+      </section>
+    </section>
+
+  </fieldset>
+  <section class="row" style="margin-top: 20px">
+    <section class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+      <button [disabled]="!classLevelCategoryForm.valid" type="submit" mat-raised-button class="btn btn-success">
+        {{ newForm ? 'Create': 'Update'}} Subject/Unit</button>
+    </section>
+  </section>
+
+</form>
