@@ -5,6 +5,7 @@ import { AcademicYearRoutingModule } from './academic-year-routing.module';
 import { AcademicYearComponent } from './academic-year.component';
 import { CreateAcademicYearComponent } from './create-academic-year/create-academic-year.component';
 import { CustomMaterialModule } from 'src/app/shared/custom-material/custom-material.module';
+import { CoreModule } from 'src/app/core/core.module';
 
 
 @NgModule({
@@ -12,7 +13,8 @@ import { CustomMaterialModule } from 'src/app/shared/custom-material/custom-mate
   imports: [
     CommonModule,
     AcademicYearRoutingModule,
-    CustomMaterialModule
+    CustomMaterialModule,
+    CoreModule
   ], exports: []
 })
 export class AcademicYearModule { }

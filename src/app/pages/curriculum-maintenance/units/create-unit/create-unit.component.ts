@@ -80,7 +80,7 @@ export class CreateUnitComponent implements OnInit {
         this.newForm = false;
         this.formId = id;
         this.unit
-          .get({ id, includeUnitLevels: 1})
+          .get({ id, includeUnitLevels: 1, includeClassLevels: 1})
           .pipe(
             map(res => {
               return {
@@ -134,20 +134,21 @@ export class CreateUnitComponent implements OnInit {
       description: [description],
       active: [active],
       subjectLevels,
-      unitCategory: [ unitCategory, Validators.required]
+      unitCategory: [ unitCategory, Validators.required],
     });
     this.unitForm.valueChanges.subscribe(item => {
       this.valueChange.emit(this.unitForm);
     });
   }
-  buildUnitForm(item: null | { name: string; id?: number } = null) {
+  buildUnitForm(item: null | { name: string; id?: number; classLevels?: string } = null) {
     if (item) {
       return this.fb.group({
         id: [item.id],
-        name: [item.name, Validators.required]
+        name: [item.name, Validators.required],
+        classLevels: [item.classLevels]
       });
     } else {
-      return this.fb.group({ name: ['', Validators.required] });
+    return this.fb.group({ name: ['', Validators.required], classLevels: ['']});
     }
   }
   validateName() {
@@ -237,7 +238,7 @@ export class CreateUnitComponent implements OnInit {
           this.unitForm.get('name').updateValueAndValidity();
         } else {
           this.unit
-            .get({ id: this.formId, includeUnitLevels: 1})
+            .get({ id: this.formId, includeUnitLevels: 1, includeClassLevels: 1})
             .pipe(
               map(res => {
                 return {

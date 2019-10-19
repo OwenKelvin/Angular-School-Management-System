@@ -20,7 +20,7 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
     ErrorDialogComponent,
     ErrorMessageTopBarComponent,
     MessageComponent,
-    SelectComponent
+    SelectComponent,
   ],
   providers: [
     AuthGuard,

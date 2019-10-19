@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { SubjectsService } from '../services/subjects.service';
 import { AcademicYearService } from '../services/academic-year.service';
+import { ClassLevelService } from '../../curriculum-maintenance/class-levels/services/class-level.service';
+import { UnitService } from '../../curriculum-maintenance/units/services/unit.service';
+import { UnitLevelService } from '../../curriculum-maintenance/units/services/unit-level.service';
 
 @Component({
   selector: 'app-create-academic-year',
@@ -11,11 +14,17 @@ import { AcademicYearService } from '../services/academic-year.service';
 export class CreateAcademicYearComponent implements OnInit {
   academicYearForm: any;
   errors: any;
-
+  classLevels: any[];
+  // units: any[];
+  unitLevels: any;
   constructor(
     private fb: FormBuilder,
-    private academicYear: AcademicYearService
-  ) { }
+    private academicYear: AcademicYearService,
+    private classLevel: ClassLevelService,
+    private unit: UnitService,
+    private subjectService: SubjectsService,
+    private unitLevelsService: UnitLevelService
+  ) {}
 
   ngOnInit() {
     this.errors = {};
@@ -23,11 +32,44 @@ export class CreateAcademicYearComponent implements OnInit {
       name: ['', [Validators.required]],
       startDate: ['', [Validators.required]],
       endDate: ['', [Validators.required]],
+      units: this.fb.array([])
+    });
+    // this.classLevel.getAll({ includeUnits: 1 }).subscribe(items => {
+    //   // this.classLevels = items;
+    // });
+    this.unitLevelsService.getAll().subscribe(items => {
+      this.unitLevels = items;
+    });
+
+    this.unit.getAll({ unitLevel: 1 }).subscribe(items => {
+      this.getUnits(items).controls.forEach(element => {
+        this.units.controls.push(element);
+      });
+
+      // this.academicYearForm.get('units').setValue(this.getUnits(items));
     });
   }
+  get units() {
+    return this.academicYearForm.get('units');
+  }
+  getUnits(items) {
+    return this.fb.array(
+      items.map(item => {
+        return this.fb.group({
+          subjectId: [item.id],
+          subject: [item.name],
+          value: [],
+          subjectLevel: [{ value: null, disabled: true }, []]
+        });
+      })
+    );
+  }
   validateName() {
-    if ((this.academicYearForm.get('name').dirty || this.academicYearForm.get('name').touched) &&
-      !this.academicYearForm.get('name').valid) {
+    if (
+      (this.academicYearForm.get('name').dirty ||
+        this.academicYearForm.get('name').touched) &&
+      !this.academicYearForm.get('name').valid
+    ) {
       if (this.academicYearForm.get('name').errors.required) {
         this.errors.name = 'Name is required';
       } else {
@@ -36,20 +78,22 @@ export class CreateAcademicYearComponent implements OnInit {
     }
   }
   validateStartDate() {
-  if (
-    (this.academicYearForm.get('startDate').dirty || this.academicYearForm.get('startDate').touched) &&
-    !this.academicYearForm.get('startDate').valid
-   ) {
-     if (this.academicYearForm.get('startDate').errors.required) {
+    if (
+      (this.academicYearForm.get('startDate').dirty ||
+        this.academicYearForm.get('startDate').touched) &&
+      !this.academicYearForm.get('startDate').valid
+    ) {
+      if (this.academicYearForm.get('startDate').errors.required) {
         this.errors.startDate = 'Start Date field is required';
-        } else {
-          this.errors.startDate = null;
-        }
+      } else {
+        this.errors.startDate = null;
       }
     }
+  }
   validateEndDate() {
     if (
-      (this.academicYearForm.get('endDate').dirty || this.academicYearForm.get('endDate').touched) &&
+      (this.academicYearForm.get('endDate').dirty ||
+        this.academicYearForm.get('endDate').touched) &&
       !this.academicYearForm.get('endDate').valid
     ) {
       if (this.academicYearForm.get('endDate').errors.required) {
@@ -59,14 +103,17 @@ export class CreateAcademicYearComponent implements OnInit {
       }
     }
   }
-  submit() {
-    if (this.academicYearForm.valid) {
-      this.academicYear.save(this.academicYearForm.value).subscribe(
-        item => {
-
-        }
-      );
+  selectionChange(i) {
+    if (this.units.controls[i].get('value').value) {
+      this.units.controls[i].get('subjectLevel').enable();
+    } else {
+      this.units.controls[i].get('subjectLevel').disable();
     }
   }
-
+  submit() {
+    if (this.academicYearForm.valid) {
+      this.academicYear.save(this.academicYearForm.value).subscribe(item => {});
+    } else {
+    }
+  }
 }
