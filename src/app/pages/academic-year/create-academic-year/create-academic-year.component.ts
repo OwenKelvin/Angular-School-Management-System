@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { SubjectsService } from '../services/subjects.service';
 import { AcademicYearService } from '../services/academic-year.service';
 import { ClassLevelService } from '../../curriculum-maintenance/class-levels/services/class-level.service';
 import { UnitService } from '../../curriculum-maintenance/units/services/unit.service';
 import { UnitLevelService } from '../../curriculum-maintenance/units/services/unit-level.service';
+import { SHOW_SUCCESS_MESSAGE } from 'src/app/store/actions/app.action';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-create-academic-year',
@@ -23,7 +25,8 @@ export class CreateAcademicYearComponent implements OnInit {
     private classLevel: ClassLevelService,
     private unit: UnitService,
     private subjectService: SubjectsService,
-    private unitLevelsService: UnitLevelService
+    private unitLevelsService: UnitLevelService,
+    private store: Store<any>
   ) {}
 
   ngOnInit() {
@@ -41,12 +44,27 @@ export class CreateAcademicYearComponent implements OnInit {
       this.unitLevels = items;
     });
 
-    this.unit.getAll({ unitLevel: 1 }).subscribe(items => {
+    this.classLevel.getAll({ unitLevel: 1 }).subscribe(items => {
       this.getUnits(items).controls.forEach(element => {
-        this.units.controls.push(element);
+        this.units.push(element);
       });
+    });
+  }
+  generateForm() {
+    this.academicYearForm = this.fb.group({
+      name: ['', [Validators.required]],
+      startDate: ['', [Validators.required]],
+      endDate: ['', [Validators.required]],
+      units: this.fb.array([])
+    });
+    this.unitLevelsService.getAll().subscribe(items => {
+      this.unitLevels = items;
+    });
 
-      // this.academicYearForm.get('units').setValue(this.getUnits(items));
+    this.classLevel.getAll({ unitLevel: 1 }).subscribe(items => {
+      this.getUnits(items).controls.forEach(element => {
+        this.units.push(element);
+      });
     });
   }
   get units() {
@@ -111,8 +129,25 @@ export class CreateAcademicYearComponent implements OnInit {
     }
   }
   submit() {
+    const classLevels = this.units.value.map(item => {
+      return {
+        ...item,
+        subject_id: item.subjectId,
+        subject_levels: item.subjectLevel
+      };
+    });
+    const data = {
+      ...this.academicYearForm.value,
+      class_levels: classLevels
+    };
     if (this.academicYearForm.valid) {
-      this.academicYear.save(this.academicYearForm.value).subscribe(item => {});
+      this.academicYear.save(data).subscribe(item => {
+        this.generateForm();
+        this.store.dispatch({
+          type: SHOW_SUCCESS_MESSAGE,
+          payload: true
+        });
+      });
     } else {
     }
   }
