@@ -11,8 +11,8 @@ export class Config {
     constructor() {
         this.grantType = 'password';
         this.apiUrl = 'http://127.0.0.1:1234';
-        this.clientSecret = 'EF8BVv66v19wWaGGbLPPpKQgYpRf5NSFnaJTJWvx';
-        this.clientId = '4';
+        this.clientSecret = '0TpUsnUuetlEUIMPL6thVTobP90aYuRLkPUV61cl';
+        this.clientId = '2';
         // this.apiUrl = 'http://127.0.0.1:1000';
     }
 }

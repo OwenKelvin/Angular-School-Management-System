@@ -8,8 +8,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AcademicYearService {
-
-  constructor(private http: HttpClient, private config: Config) { }
+  constructor(private http: HttpClient, private config: Config) {}
   getAll() {
     const url = `${this.config.apiUrl}/api/academic-years`;
     return this.http.get<any>(url).pipe(
@@ -18,8 +17,13 @@ export class AcademicYearService {
       })
     );
   }
-  get({ id }) {
-    const url = `${this.config.apiUrl}/api/academic-years/${id}`;
+  get(data: { id: number, classLevels: 1 }) {
+    const { id, classLevels } = data;
+    let url = `${this.config.apiUrl}/api/academic-years/${id}/?`;
+    if (classLevels === 1) {
+      url += 'class_levels=1';
+    }
+
     return this.http.get<any>(url).pipe(
       map(res => {
         return res;
@@ -30,21 +34,23 @@ export class AcademicYearService {
     let url = `${this.config.apiUrl}/api/academic-years`;
     if (data.id) {
       url += '/' + data.id;
-      return this.http.patch<any>(url, {
-        ...data,
-        start_date: data.startDate,
-        end_date: data.endDate,
-      }).pipe(
-        map(res => {
-          return res;
+      return this.http
+        .patch<any>(url, {
+          ...data,
+          start_date: data.startDate,
+          end_date: data.endDate
         })
-      );
+        .pipe(
+          map(res => {
+            return res;
+          })
+        );
     } else {
       return this.http
         .post<any>(url, {
           ...data,
           start_date: data.startDate,
-          end_date: data.endDate,
+          end_date: data.endDate
         })
         .pipe(
           map(res => {

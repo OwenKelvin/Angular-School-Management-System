@@ -87,7 +87,7 @@ export class CreateSubjectCategoryComponent implements OnInit {
       abbr: ['', [Validators.required]],
       active: [true],
       subjectLevels: this.fb.array([
-        this.fb.group({ name: ['', [Validators.required]] })
+        this.fb.group({ classLevels: [], name: ['', [Validators.required]] })
       ])
     });
     this.units.push((newGroup as unknown) as never);
