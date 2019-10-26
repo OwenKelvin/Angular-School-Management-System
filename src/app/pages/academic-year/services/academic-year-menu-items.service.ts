@@ -6,7 +6,7 @@ export const VIEW_ACADEMIC_YEAR = id => '/academic-year/view/' + id;
 @Injectable({
   providedIn: 'root'
 })
-export class MenuItemsService {
+export class AcademicYearMenuItemsService {
   constructor() {}
   getItems(): object {
     const items: object = {

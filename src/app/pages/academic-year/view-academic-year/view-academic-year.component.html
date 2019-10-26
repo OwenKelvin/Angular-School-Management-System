@@ -5,11 +5,11 @@
 </section>
 <section>
     <h2>Units Allocations</h2>
-    <section *ngFor="let allocation of this.academicYear.units_allocations">
+    <section *ngFor="let allocation of this.academicYear.class_level_allocations">
         <h3>{{ allocation.name }}</h3>
         <mat-chip-list>
           <mat-chip *ngFor="let unit of allocation.units">
-            {{ unit.name }}
+            {{ unit.name + ' ' + unit.level }}
           </mat-chip>
         </mat-chip-list>
     </section>

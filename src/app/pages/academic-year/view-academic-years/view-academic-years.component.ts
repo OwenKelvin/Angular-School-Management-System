@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AcademicYearService } from '../services/academic-year.service';
-import { VIEW_ACADEMIC_YEAR, CREATE_ACADEMIC_YEAR } from '../services/menu-items.service';
+import { VIEW_ACADEMIC_YEAR, CREATE_ACADEMIC_YEAR } from '../services/academic-year-menu-items.service';
 
 @Component({
   selector: 'app-view-academic-years',

@@ -3,7 +3,7 @@ import { AcademicYearService } from '../services/academic-year.service';
 import {
   VIEW_ACADEMIC_YEAR,
   CREATE_ACADEMIC_YEAR
-} from '../services/menu-items.service';
+} from '../services/academic-year-menu-items.service';
 import {
   ActivatedRouteSnapshot,
   Router,

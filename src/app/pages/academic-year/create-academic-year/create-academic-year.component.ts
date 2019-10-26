@@ -132,7 +132,7 @@ export class CreateAcademicYearComponent implements OnInit {
     const classLevels = this.units.value.map(item => {
       return {
         ...item,
-        subject_id: item.subjectId,
+        class_level_id: item.subjectId,
         subject_levels: item.subjectLevel
       };
     });
