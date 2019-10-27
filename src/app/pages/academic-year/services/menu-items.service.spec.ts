@@ -1,12 +1,14 @@
 import { TestBed } from '@angular/core/testing';
 
-import { MenuItemsService } from './academic-year-menu-items.service';
+import { AcademicYearMenuItemsService } from './academic-year-menu-items.service';
 
 describe('MenuItemsService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: MenuItemsService = TestBed.get(MenuItemsService);
+    const service: AcademicYearMenuItemsService = TestBed.get(
+      AcademicYearMenuItemsService
+    );
     expect(service).toBeTruthy();
   });
 });

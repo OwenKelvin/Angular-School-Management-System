@@ -26,15 +26,21 @@ export class ViewAcademicYearComponent implements OnInit {
 
   ngOnInit() {
     this.academicYear = {};
-    const activatedRoute: ActivatedRoute = this.router.routerState.root
-      .children[0].children[0];
-    activatedRoute.params.subscribe(item => {
-      this.academicYearService
-        .get({ id: item.id, classLevels: 1 })
-        .subscribe(res => {
-          this.academicYear = res;
-          console.log(res);
-        });
-    });
+    let activatedRoute: ActivatedRoute = new ActivatedRoute();
+    if (
+      this.router.routerState.root &&
+      this.router.routerState.root.children &&
+      this.router.routerState.root.children[0]
+    ) {
+      activatedRoute = this.router.routerState.root.children[0].children[0];
+      activatedRoute.params.subscribe(item => {
+        this.academicYearService
+          .get({ id: item.id, classLevels: 1 })
+          .subscribe(res => {
+            this.academicYear = res;
+            console.log(res);
+          });
+      });
+    }
   }
 }

@@ -11,16 +11,16 @@ export class AddStudentComponent implements OnInit {
   step = 0;
   idNumber: string | number | null | undefined;
   submitStudentIdentificationInfo: boolean;
-  constructor(
-    private cd: ChangeDetectorRef,
-    private store: Store<any>,
-  ) { }
+  constructor(private cd: ChangeDetectorRef, private store: Store<any>) {}
 
   ngOnInit() {
-    this.store.pipe(select(state => state.admissions)).subscribe(
-      app => {
-        this.idNumber = app ? app.student_id_number : null;
-      });
+    this.store.pipe(select(state => state.admissions)).subscribe(app => {
+      if (app) {
+        this.idNumber = app.student_id_number;
+      } else {
+        this.idNumber = null;
+      }
+    });
   }
   setStep(index: number) {
     this.step = index;

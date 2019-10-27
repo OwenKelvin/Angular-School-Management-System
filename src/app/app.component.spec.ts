@@ -1,15 +1,20 @@
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import { SharedModule } from './shared/shared.module';
+import { ErrorMessageTopBarComponent } from './core/error-message-top-bar/error-message-top-bar.component';
+import { StoreModule } from '@ngrx/store';
+import { reducer } from './store/reducers';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule, SharedModule, StoreModule.forRoot(reducer)
       ],
       declarations: [
-        AppComponent
+        AppComponent,
+        ErrorMessageTopBarComponent
       ],
     }).compileComponents();
   }));

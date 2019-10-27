@@ -151,17 +151,17 @@ export class StudentGuardianFormComponent implements OnInit {
     this.getReligions.getAll().subscribe(data => {
       this.religions = data;
     });
-    this.store.dispatch({
-      type: SET_STUDENT_ID_NUMBER,
-      payload: 'Sqwerty'
-    });
+    // this.store.dispatch({
+    //   type: SET_STUDENT_ID_NUMBER,
+    //   payload: 'Sqwerty'
+    // });
     this.userIdentificaionForm = this.fb.group({
       guardians: this.fb.array([this.buildGuardianProfile()])
     });
 
     this.store.pipe(select(state => state.admissions)).subscribe(
       admissions => {
-        if (admissions.student_id_number) {
+        if (admissions && admissions.student_id_number) {
           this.studentAdmissionNumber = admissions.student_id_number;
         }
 

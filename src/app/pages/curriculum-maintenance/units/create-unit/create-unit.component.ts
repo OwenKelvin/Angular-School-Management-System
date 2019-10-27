@@ -69,41 +69,47 @@ export class CreateUnitComponent implements OnInit {
     this.subjectCategoriesService.getAll().subscribe(items => {
       this.unitCategories = items;
     });
-
-    const activatedRoute: ActivatedRouteSnapshot = this.router.routerState.root
-      .children[0].children[0].children[0].snapshot;
-    const id = activatedRoute.params.id;
-    if (this.category) {
-      this.generateUnitForm({
-        unitCategory: this.category,
-        name: '',
-        abbr: ''
-      });
-    } else {
-      if (id === undefined) {
-        this.newForm = true;
+    let activatedRoute: ActivatedRouteSnapshot;
+    if (
+      this.router.routerState.root &&
+      this.router.routerState.root.children &&
+      this.router.routerState.root.children[0]
+    ) {
+      activatedRoute = this.router.routerState.root.children[0].children[0]
+        .children[0].snapshot;
+      const id = activatedRoute.params.id;
+      if (this.category) {
+        this.generateUnitForm({
+          unitCategory: this.category,
+          name: '',
+          abbr: ''
+        });
       } else {
-        this.newForm = false;
-        this.formId = id;
-        this.unit
-          .get({ id, includeUnitLevels: 1, includeClassLevels: 1 })
-          .pipe(
-            map(res => {
-              return {
-                ...res,
-                unitCategory: Number(res.unit_category_id),
-                abbr: res.abbreviation,
-                subjectLevels: res.unit_levels as Array<any>
-              };
-            })
-          )
-          .subscribe(item => {
-            this.generateUnitForm(item);
-          });
+        if (id === undefined) {
+          this.newForm = true;
+        } else {
+          this.newForm = false;
+          this.formId = id;
+          this.unit
+            .get({ id, includeUnitLevels: 1, includeClassLevels: 1 })
+            .pipe(
+              map(res => {
+                return {
+                  ...res,
+                  unitCategory: Number(res.unit_category_id),
+                  abbr: res.abbreviation,
+                  subjectLevels: res.unit_levels as Array<any>
+                };
+              })
+            )
+            .subscribe(item => {
+              this.generateUnitForm(item);
+            });
+        }
       }
-    }
-    if (this.inputValue) {
-      this.unitForm = this.inputValue;
+      if (this.inputValue) {
+        this.unitForm = this.inputValue;
+      }
     }
   }
   generateUnitForm(

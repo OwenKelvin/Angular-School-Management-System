@@ -10,7 +10,12 @@ import IClassLevel from '../create-class-level/create-class-level.component';
 })
 export class ClassLevelService {
   constructor(private http: HttpClient, private config: Config) {}
-  getAll(data = { includeUnits: null, includeLevels: null}) {
+  getAll(
+    data: { includeUnits?: 1; includeLevels?: 1 } = {
+      includeUnits: null,
+      includeLevels: null
+    }
+  ) {
     const { includeUnits, includeLevels } = data;
     let url = `${this.config.apiUrl}/api/curriculum/class-levels/?`;
     if (includeLevels) {

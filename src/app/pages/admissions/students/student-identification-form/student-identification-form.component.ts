@@ -77,10 +77,10 @@ export class StudentIdentificationFormComponent implements OnInit, OnChanges {
     this.getReligions.getAll().subscribe(data => {
       this.religions = data;
     });
-    this.store.dispatch({
-      type: SET_STUDENT_ID_NUMBER,
-      payload: 'Sqwerty'
-    });
+    // this.store.dispatch({
+    //   type: SET_STUDENT_ID_NUMBER,
+    //   payload: 'Sqwerty'
+    // });
     this.userIdentificaionForm = this.fb.group({
       firstName: ['', this.validators.firstName],
       lastName: ['', this.validators.lastName],

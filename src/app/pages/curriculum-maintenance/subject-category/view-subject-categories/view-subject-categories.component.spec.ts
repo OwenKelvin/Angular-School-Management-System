@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ViewSubjectCategoriesComponent } from './view-subject-categories.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { CustomMaterialModule } from 'src/app/shared/custom-material/custom-material.module';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('ViewSubjectCategoriesComponent', () => {
   let component: ViewSubjectCategoriesComponent;
@@ -8,6 +11,7 @@ describe('ViewSubjectCategoriesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [RouterTestingModule, CustomMaterialModule, HttpClientTestingModule],
       declarations: [ ViewSubjectCategoriesComponent ]
     })
     .compileComponents();

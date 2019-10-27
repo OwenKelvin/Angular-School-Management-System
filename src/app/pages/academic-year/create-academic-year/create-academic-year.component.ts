@@ -44,7 +44,7 @@ export class CreateAcademicYearComponent implements OnInit {
       this.unitLevels = items;
     });
 
-    this.classLevel.getAll({ unitLevel: 1 }).subscribe(items => {
+    this.classLevel.getAll({ includeUnits: 1, includeLevels: 1 }).subscribe(items => {
       this.getUnits(items).controls.forEach(element => {
         this.units.push(element);
       });
@@ -61,11 +61,13 @@ export class CreateAcademicYearComponent implements OnInit {
       this.unitLevels = items;
     });
 
-    this.classLevel.getAll({ unitLevel: 1 }).subscribe(items => {
-      this.getUnits(items).controls.forEach(element => {
-        this.units.push(element);
+    this.classLevel
+      .getAll({ includeUnits: 1, includeLevels: 1 })
+      .subscribe(items => {
+        this.getUnits(items).controls.forEach(element => {
+          this.units.push(element);
+        });
       });
-    });
   }
   get units() {
     return this.academicYearForm.get('units');
