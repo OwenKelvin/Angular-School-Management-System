@@ -17,7 +17,17 @@ export class UnitLevelService {
       })
     );
   }
-  getAll(data = {unit: null}) {
+  getFilter(
+    data: { academicYear: number } = { academicYear: null }
+  ): Observable<any> {
+    const { academicYear } = data;
+    let url = `${this.config.apiUrl}/api/curriculum/unit-levels/?`;
+    if (academicYear) {
+      url += 'academic-year=' + academicYear;
+    }
+    return this.http.get<any>(url);
+  }
+  getAll(data = { unit: null }) {
     const { unit } = data;
     let url = `${this.config.apiUrl}/api/curriculum/unit-levels/?`;
     if (unit) {

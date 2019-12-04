@@ -5,18 +5,29 @@ import { SharedModule } from './shared/shared.module';
 import { ErrorMessageTopBarComponent } from './core/error-message-top-bar/error-message-top-bar.component';
 import { StoreModule } from '@ngrx/store';
 import { reducer } from './store/reducers';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ErrorDialogComponent } from './core/error-dialog/error-dialog.component';
+import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule, SharedModule, StoreModule.forRoot(reducer)
+        BrowserAnimationsModule,
+        RouterTestingModule,
+        SharedModule,
+        StoreModule.forRoot(reducer)
       ],
       declarations: [
         AppComponent,
-        ErrorMessageTopBarComponent
-      ],
-    }).compileComponents();
+        ErrorMessageTopBarComponent,
+        ErrorDialogComponent
+      ]
+    })
+      .overrideModule(BrowserDynamicTestingModule, {
+        set: { entryComponents: [ErrorDialogComponent] }
+      })
+      .compileComponents();
   }));
 
   it('should create the app', () => {
@@ -25,11 +36,13 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  // it(`should have as title 'FsmsApp'`, () => {
-  //   const fixture = TestBed.createComponent(AppComponent);
-  //   const app = fixture.debugElement.componentInstance;
-  //   expect(app.title).toEqual('FsmsApp');
-  // });
+  it(`should have as function 'openDialog'`, () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.debugElement.componentInstance;
+    spyOn(app, 'openDialog');
+    app.openDialog();
+    expect(app.openDialog).toHaveBeenCalled();
+  });
 
   // it('should render title in a h1 tag', () => {
   //   const fixture = TestBed.createComponent(AppComponent);

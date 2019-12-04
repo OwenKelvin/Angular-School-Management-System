@@ -17,7 +17,19 @@ export class AcademicYearService {
       })
     );
   }
-  get(data: { id: number, classLevels: 1 }) {
+  getFilter(data: { active: boolean } = { active: false }) {
+    const { active } = data;
+    let url = `${this.config.apiUrl}/api/academic-years/?`;
+    if (active) {
+      url += 'active=1';
+    }
+    return this.http.get<any>(url).pipe(
+      map(res => {
+        return res;
+      })
+    );
+  }
+  get(data: { id: number; classLevels: 1 }) {
     const { id, classLevels } = data;
     let url = `${this.config.apiUrl}/api/academic-years/${id}/?`;
     if (classLevels === 1) {

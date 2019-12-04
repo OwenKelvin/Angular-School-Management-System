@@ -1,4 +1,12 @@
-import { Component, OnInit, Input, forwardRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  forwardRef,
+  SimpleChanges,
+  SimpleChange,
+  OnChanges
+} from '@angular/core';
 import {
   FormControl,
   ControlValueAccessor,
@@ -10,6 +18,7 @@ import { SubjectCategoryService } from 'src/app/pages/curriculum-maintenance/sub
 import { ClassLevelCategoryService } from 'src/app/pages/curriculum-maintenance/class-levels/services/class-level-category.service';
 import { ClassLevelService } from 'src/app/pages/curriculum-maintenance/class-levels/services/class-level.service';
 import { UnitLevelService } from 'src/app/pages/curriculum-maintenance/units/services/unit-level.service';
+import { AcademicYearService } from 'src/app/pages/academic-year/services/academic-year.service';
 
 export class FormErrorStateMatcher implements ErrorStateMatcher {
   constructor() {}
@@ -34,7 +43,8 @@ export class FormErrorStateMatcher implements ErrorStateMatcher {
     }
   ]
 })
-export class SelectComponent implements OnInit, ControlValueAccessor {
+export class SelectComponent
+  implements OnInit, ControlValueAccessor, OnChanges {
   disabled: boolean;
   label: string;
   formControl: FormControl;
@@ -44,7 +54,8 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
     private subjectCategoriesService: SubjectCategoryService,
     private classLevelsCategoriesService: ClassLevelCategoryService,
     private classLevels: ClassLevelService,
-    private unitLevel: UnitLevelService
+    private unitLevel: UnitLevelService,
+    private academicYearService: AcademicYearService
   ) {
     this.matcher = new FormErrorStateMatcher();
     this.formControl = new FormControl();
@@ -52,6 +63,8 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 
   @Input() type:
     | 'units'
+    | 'units:academic-year'
+    | 'academic-years:active'
     | 'class-level-categories'
     | 'class-levels:level'
     | 'unit-levels';
@@ -98,11 +111,21 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
     this.categorySelected = '';
     this.categories = [];
     switch (this.type) {
+      case 'academic-years:active':
+        this.label = 'Academic Year';
+        this.error.required = 'Academic Year is required';
+        this.hint = 'Please select an Academic Year';
+        this.academicYearService
+          .getFilter({ active: true })
+          .subscribe(items => {
+            this.categories = items;
+          });
+        break;
       case 'unit-levels':
         this.label = 'Unit Levels';
         this.error.required = 'Unit Level is required';
         this.hint = 'Please select a unit';
-        const data = { unit: null};
+        const data = { unit: null };
         if (this.parentId) {
           data.unit = this.parentId;
         }
@@ -154,9 +177,29 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
           }
         });
         break;
+      case 'units:academic-year':
+        this.label = 'Units';
+        this.error.required = 'The units field is required';
+        this.hint = 'Please select units';
+        this.unitLevel
+          .getFilter({ academicYear: this.parentId })
+          .subscribe(items => { this.categories = items; });
+        break;
       default:
         this.categories = [];
         break;
+    }
+  }
+  ngOnChanges(changes: SimpleChanges) {
+    const parentId: SimpleChange = changes.parentId;
+    if (parentId) {
+      if (this.type === 'units:academic-year') {
+        this.unitLevel
+          .getFilter({ academicYear: this.parentId })
+          .subscribe(items => {
+            this.categories = items;
+          });
+      }
     }
   }
   validate(control: FormControl) {

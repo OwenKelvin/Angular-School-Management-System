@@ -1,0 +1,16 @@
+<h2>Academic Year and Subject Allocation details</h2>
+<form [formGroup]="academicsDetailsForm">
+  <section class='d-flex flex-wrap'>
+    <section class='col-lg-3 col-md-4 col-sm-6 col-xs-12'>
+      <app-select (blur)='validateAcademicYear()' formControlName="academicYear" type="academic-years:active">
+      </app-select>
+    </section>
+    <section class='col-lg-3 col-md-4 col-sm-6 col-xs-12'>
+      <app-select multiple [parentId]="academicsDetailsForm.get('academicYear').value" (blur)='validateUnits()'
+        formControlName="units" type="units:academic-year">
+      </app-select>
+    </section>
+    <section class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
+    </section>
+  </section>
+</form>

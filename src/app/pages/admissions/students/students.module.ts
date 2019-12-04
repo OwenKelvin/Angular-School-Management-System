@@ -12,6 +12,8 @@ import { StudentIdentificationFormComponent } from './student-identification-for
 import { IdentificationDetailsComponent } from './view-student/identification-details/identification-details.component';
 import { StudentGuardianFormComponent } from './student-guardian-form/student-guardian-form.component';
 import { OrdinalPipe } from 'src/app/shared/pipes/ordinal.pipe';
+import { StudentAcademicYearAllocationComponent } from './student-academic-year-allocation/student-academic-year-allocation.component';
+import { CoreModule } from 'src/app/core/core.module';
 
 
 @NgModule({
@@ -20,6 +22,7 @@ import { OrdinalPipe } from 'src/app/shared/pipes/ordinal.pipe';
     StudentsRoutingModule,
     CustomMaterialModule,
     ReactiveFormsModule,
+    CoreModule
   ],
   exports: [StudentsComponent],
   declarations: [
@@ -30,6 +33,7 @@ import { OrdinalPipe } from 'src/app/shared/pipes/ordinal.pipe';
     StudentsComponent,
     StudentIdentificationFormComponent,
     IdentificationDetailsComponent,
-    StudentGuardianFormComponent],
+    StudentGuardianFormComponent,
+    StudentAcademicYearAllocationComponent],
 })
 export class StudentsModule { }

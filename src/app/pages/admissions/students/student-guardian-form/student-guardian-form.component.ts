@@ -186,7 +186,7 @@ export class StudentGuardianFormComponent implements OnInit {
     this.subscribeToEmailChecking();
     this.getGuardians();
   }
-  getGuardians() : void {
+  getGuardians(): void {
     if (this.studentAdmissionNumber) {
       this.studentGuardians.getGuardiansFor(this.studentAdmissionNumber).subscribe(data => {
         // TODO update any guardians found

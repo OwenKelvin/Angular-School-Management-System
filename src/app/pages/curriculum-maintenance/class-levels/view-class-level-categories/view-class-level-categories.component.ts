@@ -27,7 +27,7 @@ export class ViewClassLevelCategoriesComponent implements OnInit {
 
   createClassLevelCategoryCurriculum: string;
   editClassLevelCategoryCurriculum: any;
-  viewClassLevelCategoryCurriculum: (id: string | number) => string;;
+  viewClassLevelCategoryCurriculum: (id: string | number) => string;
   constructor(
     private classLevelCategory: ClassLevelCategoryService,
 

@@ -20,7 +20,7 @@ export class SuccessInterceptor implements HttpInterceptor {
                         payload: true
                     });
                 }
-                const eventStatus = event instanceof HttpResponse && (event.status === 201 || event.status === 200)
+                const eventStatus = event instanceof HttpResponse && (event.status === 201 || event.status === 200);
                 if (request.method !== 'GET' && eventStatus) {
                     this.store.dispatch({
                         type: SHOW_SUCCESS_MESSAGE,

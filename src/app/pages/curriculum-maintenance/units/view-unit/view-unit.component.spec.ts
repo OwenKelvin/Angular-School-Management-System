@@ -13,7 +13,7 @@ describe('ViewUnitComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports:[RouterTestingModule, CustomMaterialModule, SharedModule, HttpClientModule],
+      imports: [RouterTestingModule, CustomMaterialModule, SharedModule, HttpClientModule],
       declarations: [ ViewUnitComponent, MessageComponent ]
     })
     .compileComponents();

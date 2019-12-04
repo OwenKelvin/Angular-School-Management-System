@@ -11,10 +11,12 @@ import { IMessage } from './shared/services/message/message.service';
 })
 
 
-export class AppComponent implements OnInit {
+export class AppComponent {
+// export class AppComponent implements OnInit {
   private message: IMessage;
-  constructor(private store: Store<any>, public dialog: MatDialog) { }
-  ngOnInit() {
+  constructor(public dialog: MatDialog) { }
+  // constructor(private store: Store<any>, public dialog: MatDialog) { }
+  // ngOnInit() {
     // this.store.pipe(select(state => state.app)).subscribe(
     //   app => {
     //     if (app) {
@@ -22,12 +24,16 @@ export class AppComponent implements OnInit {
     //       this.openDialog();
     //     }
     //   });
-  }
+  // }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(ErrorDialogComponent, {
+    this.dialog.open(ErrorDialogComponent, {
       width: '250px',
       data: { dialogText: this.message }
     });
+    // const dialogRef = this.dialog.open(ErrorDialogComponent, {
+    //   width: '250px',
+    //   data: { dialogText: this.message }
+    // });
   }
 }
