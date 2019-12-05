@@ -27,7 +27,8 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
-      - run: yarn install
+      - run: npm install -g @angular/cli
+      - run: npm install
       - run: ng update @angular/cli @angular/core @angular/material @angular/cdk
 
       - save_cache:
@@ -36,4 +37,4 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
       # run tests!
-      - run: yarn test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox --code-coverage
+      - run: npm test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox --code-coverage
