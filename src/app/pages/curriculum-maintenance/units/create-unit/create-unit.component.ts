@@ -1,5 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  FormArray,
+  FormControl
+} from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { UnitService } from '../services/unit.service';
 import { SHOW_SUCCESS_MESSAGE } from 'src/app/store/actions/app.action';
@@ -63,41 +69,47 @@ export class CreateUnitComponent implements OnInit {
     this.subjectCategoriesService.getAll().subscribe(items => {
       this.unitCategories = items;
     });
-
-    const activatedRoute: ActivatedRouteSnapshot = this.router.routerState.root
-      .children[0].children[0].children[0].snapshot;
-    const id = activatedRoute.params.id;
-    if (this.category) {
-      this.generateUnitForm({
-        unitCategory: this.category,
-        name: '',
-        abbr: ''
-      });
-    } else {
-      if (id === undefined) {
-        this.newForm = true;
+    let activatedRoute: ActivatedRouteSnapshot;
+    if (
+      this.router.routerState.root &&
+      this.router.routerState.root.children &&
+      this.router.routerState.root.children[0]
+    ) {
+      activatedRoute = this.router.routerState.root.children[0].children[0]
+        .children[0].snapshot;
+      const id = activatedRoute.params.id;
+      if (this.category) {
+        this.generateUnitForm({
+          unitCategory: this.category,
+          name: '',
+          abbr: ''
+        });
       } else {
-        this.newForm = false;
-        this.formId = id;
-        this.unit
-          .get({ id, includeUnitLevels: 1})
-          .pipe(
-            map(res => {
-              return {
-                ...res,
-                unitCategory: Number(res.unit_category_id),
-                abbr: res.abbreviation,
-                subjectLevels: res.unit_levels as Array<any>
-              };
-            })
-          )
-          .subscribe(item => {
-            this.generateUnitForm(item);
-          });
+        if (id === undefined) {
+          this.newForm = true;
+        } else {
+          this.newForm = false;
+          this.formId = id;
+          this.unit
+            .get({ id, includeUnitLevels: 1, includeClassLevels: 1 })
+            .pipe(
+              map(res => {
+                return {
+                  ...res,
+                  unitCategory: Number(res.unit_category_id),
+                  abbr: res.abbreviation,
+                  subjectLevels: res.unit_levels as Array<any>
+                };
+              })
+            )
+            .subscribe(item => {
+              this.generateUnitForm(item);
+            });
+        }
       }
-    }
-    if (this.inputValue) {
-      this.unitForm = this.inputValue;
+      if (this.inputValue) {
+        this.unitForm = this.inputValue;
+      }
     }
   }
   generateUnitForm(
@@ -134,20 +146,26 @@ export class CreateUnitComponent implements OnInit {
       description: [description],
       active: [active],
       subjectLevels,
-      unitCategory: [ unitCategory, Validators.required]
+      unitCategory: [unitCategory, Validators.required]
     });
     this.unitForm.valueChanges.subscribe(item => {
       this.valueChange.emit(this.unitForm);
     });
   }
-  buildUnitForm(item: null | { name: string; id?: number } = null) {
+  buildUnitForm(
+    item: null | { name: string; id?: number; classLevels?: string } = null
+  ) {
     if (item) {
       return this.fb.group({
         id: [item.id],
-        name: [item.name, Validators.required]
+        name: [item.name, Validators.required],
+        classLevels: [item.classLevels]
       });
     } else {
-      return this.fb.group({ name: ['', Validators.required] });
+      return this.fb.group({
+        name: ['', Validators.required],
+        classLevels: ['']
+      });
     }
   }
   validateName() {
@@ -224,6 +242,9 @@ export class CreateUnitComponent implements OnInit {
       }
     }
   }
+  subjectLevels(): FormArray {
+    return this.unitForm.get('subjectLevels') as FormArray;
+  }
   submit() {
     if (this.unitForm.valid) {
       this.unit.submit(this.unitForm.value).subscribe(() => {
@@ -234,7 +255,11 @@ export class CreateUnitComponent implements OnInit {
           this.unitForm.get('name').updateValueAndValidity();
         } else {
           this.unit
-            .get({ id: this.formId, includeUnitLevels: 1})
+            .get({
+              id: this.formId,
+              includeUnitLevels: 1,
+              includeClassLevels: 1
+            })
             .pipe(
               map(res => {
                 return {

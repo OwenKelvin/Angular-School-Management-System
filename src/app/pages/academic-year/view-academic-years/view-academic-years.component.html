@@ -1,0 +1,10 @@
+<h1>View Academic Years</h1>
+<a [routerLink]="[createAcademicYearRouter]" class="btn btn-primary">New Academic Year</a>
+<section class='d-flex flex-wrap justify-content-space-around'>
+  <section *ngFor="let academicYear of academicYears" class='year-item col-lg-4 col-md-6 col-sm-12 col-xs-12'>
+    <h2>{{ academicYear.name }}</h2>
+    <section>
+      <a [routerLink]="[viewAcademicYearRouter(academicYear.id)]">View Details</a>
+    </section>
+  </section>
+</section>

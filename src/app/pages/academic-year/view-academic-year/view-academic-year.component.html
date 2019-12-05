@@ -1,0 +1,16 @@
+<h1>View Academic Year: {{ this.academicYear.name }}</h1>
+<section>
+    Period: {{ this.academicYear.start_date | date: 'MMM dd, yyyy' }} TO
+    {{ this.academicYear.end_date | date: 'MMM dd, yyyy'}}
+</section>
+<section>
+    <h2>Units Allocations</h2>
+    <section *ngFor="let allocation of this.academicYear.class_level_allocations">
+        <h3>{{ allocation.name }}</h3>
+        <mat-chip-list>
+          <mat-chip *ngFor="let unit of allocation.units">
+            {{ unit.name + ' ' + unit.level }}
+          </mat-chip>
+        </mat-chip-list>
+    </section>
+</section>

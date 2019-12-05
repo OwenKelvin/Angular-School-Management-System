@@ -18,13 +18,20 @@ export class ViewSubjectCategoryComponent implements OnInit {
 
   ngOnInit() {
     this.currentSubjectCategory = { units: null };
-    const activatedRoute: ActivatedRouteSnapshot = this.router.routerState.root
-      .children[0].children[0].children[0].snapshot;
-    this.id = activatedRoute.params.id;
-    this.currentSubjectCategory = {};
-    this.subjectCategory.get({ id: this.id }).subscribe(item => {
-      this.currentSubjectCategory = item;
-    });
+    let activatedRoute: ActivatedRouteSnapshot;
+    if (
+      this.router.routerState.root &&
+      this.router.routerState.root.children &&
+      this.router.routerState.root.children[0]
+    ) {
+      activatedRoute = this.router.routerState.root.children[0].children[0]
+        .children[0].snapshot;
+      this.id = activatedRoute.params.id;
+      this.currentSubjectCategory = {};
+      this.subjectCategory.get({ id: this.id }).subscribe(item => {
+        this.currentSubjectCategory = item;
+      });
+    }
   }
   onNewSubjectSubmitted($event) {
     this.isOpenNewSubjectForm = false;

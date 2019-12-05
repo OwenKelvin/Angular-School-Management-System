@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ViewClassLevelComponent } from './view-class-level.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ViewClassLevelComponent', () => {
   let component: ViewClassLevelComponent;
@@ -8,6 +9,7 @@ describe('ViewClassLevelComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [RouterTestingModule],
       declarations: [ ViewClassLevelComponent ]
     })
     .compileComponents();

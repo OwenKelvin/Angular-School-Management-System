@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, forwardRef } from '@angular/core';
+import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginModule } from './login/login.module';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
-import { ReactiveFormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ErrorsModule } from './errors/errors.module';
 import { RouterModule } from '@angular/router';
@@ -21,11 +21,9 @@ import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { AppEffects } from './store/effects/app.effects';
 import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 import { CacheInterceptor } from './core/interceptors/cache.interceptor';
-import { SuccessInterceptor } from './core/interceptors/success.interceptor';
-import { SelectComponent } from './core/select/select.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   imports: [
@@ -46,12 +44,18 @@ import { SelectComponent } from './core/select/select.component';
       metaReducers,
       runtimeChecks: {
         strictStateImmutability: true,
-        strictActionImmutability: true,
+        strictActionImmutability: true
       }
     }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot([AppEffects]),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production
+    }),
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production
+    })
   ],
   exports: [
     // SharedModule,
@@ -59,22 +63,22 @@ import { SelectComponent } from './core/select/select.component';
     HttpClientModule,
     // RouterModule,
     // FormsModule'
-    SidebarComponent,
+    SidebarComponent
     // ErrorDialogComponent
     // CoreModule,
     // SelectComponent
   ],
   declarations: [
-    AppComponent,
+    AppComponent
     // ErrorDialogComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi: true },
-   
-   // { provide: HTTP_INTERCEPTORS, useClass: SuccessInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi: true }
+
+    // { provide: HTTP_INTERCEPTORS, useClass: SuccessInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

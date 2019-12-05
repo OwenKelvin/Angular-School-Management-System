@@ -47,36 +47,43 @@ export class CreateClassLevelComponent implements OnInit {
     };
     this.generateClassLevelForm();
 
-    const activatedRoute: ActivatedRouteSnapshot = this.router.routerState.root
-      .children[0].children[0].children[0].snapshot;
-    const id = activatedRoute.params.id;
+    let activatedRoute: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
 
-    if (this.category) {
-      this.generateClassLevelForm({
-        classLevelCategory: this.category,
-        name: '',
-        abbr: ''
-      });
-    } else {
-      if (id === undefined) {
-        this.newForm = true;
+    if (
+      this.router.routerState.root.children &&
+      this.router.routerState.root.children[0] &&
+      this.router.routerState.root.children[0].children
+    ) {
+      activatedRoute = this.router.routerState.root.children[0].children[0]
+        .children[0].snapshot;
+      const id = activatedRoute.params.id;
+      if (this.category) {
+        this.generateClassLevelForm({
+          classLevelCategory: this.category,
+          name: '',
+          abbr: ''
+        });
       } else {
-        this.newForm = false;
-        this.formId = id;
-        this.classLevel
-          .get({ id })
-          .pipe(
-            map(res => {
-              return {
-                ...res,
-                abbr: res.abbreviation,
-                classLevelCategory: res.class_level_category_id
-              };
-            })
-          )
-          .subscribe(item => {
-            this.generateClassLevelForm(item);
-          });
+        if (id === undefined) {
+          this.newForm = true;
+        } else {
+          this.newForm = false;
+          this.formId = id;
+          this.classLevel
+            .get({ id })
+            .pipe(
+              map(res => {
+                return {
+                  ...res,
+                  abbr: res.abbreviation,
+                  classLevelCategory: res.class_level_category_id
+                };
+              })
+            )
+            .subscribe(item => {
+              this.generateClassLevelForm(item);
+            });
+        }
       }
     }
   }
@@ -131,7 +138,6 @@ export class CreateClassLevelComponent implements OnInit {
     }
   }
   submit() {
-
     if (this.classLevelForm.valid) {
       this.classLevel.submit(this.classLevelForm.value).subscribe(() => {
         this.submitted.emit(true);

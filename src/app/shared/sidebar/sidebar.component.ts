@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { AuthenticationService } from 'src/app/core/services/authentication/authentication.service';
-import { Route, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { MenuItemService } from 'src/app/core/menu-item/menu-item.service';
 import { Observable } from 'rxjs';
 import { BreakpointState, BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
@@ -13,7 +13,7 @@ import { Store, select } from '@ngrx/store';
 })
 export class SidebarComponent implements OnInit, OnChanges {
   isHandset: Observable<BreakpointState> = this.breakPointObserver.observe(Breakpoints.Handset);
-  private menuItems: object[];
+  menuItems: object[];
   // @Input() isOpen: boolean;
   // @Output() openedChange: EventEmitter<boolean>;
   opened: boolean;

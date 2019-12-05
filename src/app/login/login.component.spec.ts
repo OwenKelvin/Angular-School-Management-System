@@ -11,6 +11,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
+import { CustomMaterialModule } from '../shared/custom-material/custom-material.module';
+import { StoreModule } from '@ngrx/store';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -21,18 +23,13 @@ describe('LoginComponent', () => {
       imports: [
         RouterTestingModule,
         HttpClientModule,
-        MatCardModule,
         ReactiveFormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatCheckboxModule,
-        MatProgressSpinnerModule,
         BrowserAnimationsModule,
-        MatIconModule
+        CustomMaterialModule,
+        StoreModule.forRoot({})
       ],
       declarations: [LoginComponent]
-    })
-      .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -52,17 +49,23 @@ describe('LoginComponent', () => {
 
   it('should have a label with the text content of username', () => {
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('label[for=username]').textContent).toContain('Username');
+    expect(compiled.querySelector('label[for=username]').textContent).toContain(
+      'Username'
+    );
   });
 
   it('should have a label with the text content of password', () => {
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('label[for=password]').textContent).toContain('Password');
+    expect(compiled.querySelector('label[for=password]').textContent).toContain(
+      'Password'
+    );
   });
 
   it('should have a label with the text content of remember me', () => {
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('label[for=remember_me]').textContent).toContain('Remember me');
+    expect(
+      compiled.querySelector('label[for=remember_me-input]').textContent
+    ).toContain('Remember me');
   });
 
   it(`should have as username ''`, () => {
@@ -81,5 +84,4 @@ describe('LoginComponent', () => {
     expect(app.rememberMe.value).toEqual(false);
     expect(app.loginForm.get('rememberMe').value).toEqual(false);
   });
-
 });

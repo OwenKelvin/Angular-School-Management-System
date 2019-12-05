@@ -2,16 +2,29 @@
    <mat-label>{{ label }}</mat-label>
    <mat-select [formControl]="formControl" [placeholder]="'---select---'"
      (selectionChange)="selectedCategory($event)"
-     (blur)="validateField()" id="name" [errorStateMatcher]="matcher">
+     (blur)="validateField()" id="name" [errorStateMatcher]="matcher"
+     [multiple]="multipleSelector"
+     >
 
      <mat-select-trigger>
-       {{ categorySelected }}
+       <ng-template [ngIf]="multipleSelector" [ngIfElse]="loggedOut">
+          <mat-chip-list *ngIf="categorySelected.length" #chipList attr.aria-label="{{ 'Selection' + label }}">
+            <mat-chip *ngFor="let itemSelect of categorySelected" [selectable]="false" [removable]="true"
+              (removed)="removeSelect(itemSelect.id)">
+              {{ itemSelect.name }}
+              <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+          </mat-chip-list>
+       </ng-template>
+       <ng-template #loggedOut>
+         {{ categorySelected }}
+       </ng-template>
      </mat-select-trigger>
-     <mat-option>None</mat-option>
+     <mat-option [disabled]="multipleSelector">None</mat-option>
      <mat-option *ngFor="let category of categories" [value]="category.id" selected>
        {{ category.name }}
      </mat-option>
    </mat-select>
    <mat-hint>{{ hint }}</mat-hint>
-   <mat-error>{{ error.required }}</mat-error>
+   <mat-error *ngIf="!disabled">{{ error.required }}</mat-error>
  </mat-form-field>

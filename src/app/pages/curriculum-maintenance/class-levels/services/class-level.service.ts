@@ -9,9 +9,21 @@ import IClassLevel from '../create-class-level/create-class-level.component';
   providedIn: 'root'
 })
 export class ClassLevelService {
-  constructor(private http: HttpClient, private config: Config) { }
-  getAll() {
-    const url = `${this.config.apiUrl}/api/curriculum/class-levels`;
+  constructor(private http: HttpClient, private config: Config) {}
+  getAll(
+    data: { includeUnits?: 1; includeLevels?: 1 } = {
+      includeUnits: null,
+      includeLevels: null
+    }
+  ) {
+    const { includeUnits, includeLevels } = data;
+    let url = `${this.config.apiUrl}/api/curriculum/class-levels/?`;
+    if (includeLevels) {
+      url += `include_levels=1`;
+    }
+    if (includeUnits) {
+      url += ``;
+    }
     return this.http.get<any>(url).pipe(
       map(res => {
         return res;
@@ -30,15 +42,17 @@ export class ClassLevelService {
     let url = `${this.config.apiUrl}/api/curriculum/class-levels`;
     if (data.id) {
       url += '/' + data.id;
-      return this.http.patch<any>(url, {
-        ...data,
-        abbreviation: data.abbr,
-        class_level_category_id: data.classLevelCategory
-      }).pipe(
-        map(res => {
-          return res;
+      return this.http
+        .patch<any>(url, {
+          ...data,
+          abbreviation: data.abbr,
+          class_level_category_id: data.classLevelCategory
         })
-      );
+        .pipe(
+          map(res => {
+            return res;
+          })
+        );
     } else {
       return this.http
         .post<any>(url, {

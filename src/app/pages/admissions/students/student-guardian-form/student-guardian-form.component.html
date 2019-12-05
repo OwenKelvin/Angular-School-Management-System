@@ -9,13 +9,13 @@
         <legend>
           <h2>Email and Phone Number</h2>
         </legend>
-        <section class="row">
+        <section class="d-flex justify-content-around">
           <section class="col-sm-6 col-md-4 col-lg-3">
             <mat-form-field>
               <mat-icon matPrefix>email</mat-icon>
-              <label hidden attr.for="{{ email + i }}"> Email </label>
+              <label hidden attr.for="{{ 'email' + i }}"> Email </label>
 
-              <input (blur)="validateEmail(i)" id="{{ email + i }}" type="text" placeholder="Email"
+              <input (blur)="validateEmail(i)" id="{{ 'email' + i }}" type="text" placeholder="Email"
                 formControlName="email" matInput>
               <mat-error *ngIf="errors.guardians[i]?.email">
                 {{ errors.guardians[i]?.email }}
@@ -23,19 +23,19 @@
 
             </mat-form-field>
           </section>
-          <section *ngIf="confirmData[i]">
+          <section class="col-sm-6 col-md-4 col-lg-3" *ngIf="confirmData[i]">
             User with the email Exists. Do You wish to Use this Email?
             <button (click)="updateFieldsForEmail(i)" style="margin-left: 15px" type="button" mat-raised-button
               color="primary">Yes</button>
             <button (click)="clearEmail(i)" style="margin-left: 15px" type="button" mat-raised-button
               color="warn">No</button>
           </section>
-          <section class="col-sm-6 col-md-4 col-lg-3" *ngIf="idNumber" [hidden]="confirmData[i]">
+          <section hidden class="col-sm-6 col-md-4 col-lg-3" *ngIf="idNumber" [hidden]="confirmData[i]">
             Guardian Id Number: {{ idNumber }}
           </section>
           <section [hidden]="confirmData[i]" formGroupName="phoneDetails" class="col-sm-6 col-md-4 col-lg-3"
             class="phone">
-            <mat-form-field style="width: 78px;">
+            <mat-form-field style="width: 78px; float: left;">
 
               <mat-select formControlName="phoneCode" (selectionChange)="updateSelectedPhone(i)"
                 [(value)]="selectedPhoneCode" (blur)="validatePhone(i)" id="{{ 'phoneCode' + i}}">
@@ -49,7 +49,7 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
-            <mat-form-field>
+            <mat-form-field style="max-width: 180px; float: left;">
               <label hidden attr.for="{{ 'phoneNumber' + i}}"> Phone
                 Number
               </label>
@@ -85,84 +85,109 @@
         <legend>
           <h2>Name</h2>
         </legend>
-        <mat-form-field>
-          <label hidden attr.for="{{ 'firstName' + i}}">
-            <span class="material-icons" matPrefix>person</span> First Name</label>
+        <section class='row'>
+          <section class='col-lg-3 col-md-4 col-sm-6 col-xs-12'>
+            <mat-form-field>
+              <label hidden attr.for="{{ 'firstName' + i}}">
+                <span class="material-icons" matPrefix>person</span> First Name</label>
 
-          <input (blur)="validateFirstName(i)" id="{{ 'firstName' + i }}" type="text" placeholder="first Name"
-            formControlName="firstName" matInput>
-          <mat-error *ngIf="errors.guardians[i]?.firstName">
-            {{ errors.guardians[i]?.firstName }}
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <label hidden attr.for="{{ 'middleName' + i}}">Middle Name</label>
-          <input (blur)="validateMiddleName(i)" id="{{ 'middleName' + i}}" type="text" placeholder="Middle Name"
-            formControlName="middleName" matInput>
-          <mat-error *ngIf="errors.guardians[i]?.middleName">
-            {{ errors.guardians[i]?.middleName }}
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <label hidden attr.for="{{ 'lastName' + i}}">Last Name</label>
-          <input (blur)="validateLastName(i)" id="{{ 'lastName' + i}}" type="text" placeholder="Last Name"
-            formControlName="lastName" matInput>
-          <mat-error *ngIf="errors.guardians[i]?.lastName">
-            {{ errors.guardians[i]?.lastName }}
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <label hidden attr.for="{{ 'otherNames' + i}}">Other Names</label>
-          <input (blur)="validateOtherNames(i)" id="{{ 'otherNames' + i}}" type="text" placeholder="Other Names"
-            formControlName="otherNames" matInput>
-          <mat-error *ngIf="errors.guardians[i]?.otherNames">
-            {{ errors.guardians[i]?.lastName }}
-          </mat-error>
-        </mat-form-field>
+              <input (blur)="validateFirstName(i)" id="{{ 'firstName' + i }}" type="text" placeholder="first Name"
+                formControlName="firstName" matInput>
+              <mat-error *ngIf="errors.guardians[i]?.firstName">
+                {{ errors.guardians[i]?.firstName }}
+              </mat-error>
+            </mat-form-field>
+          </section>
+          <section class='col-lg-3 col-md-4 col-sm-6 col-xs-12'>
+            <mat-form-field>
+              <label hidden attr.for="{{ 'middleName' + i}}">Middle Name</label>
+              <input (blur)="validateMiddleName(i)" id="{{ 'middleName' + i }}" type="text" placeholder="Middle Name"
+                formControlName="middleName" matInput>
+              <mat-error *ngIf="errors.guardians[i]?.middleName">
+                {{ errors.guardians[i]?.middleName }}
+              </mat-error>
+            </mat-form-field>
+          </section>
+          <section class='col-lg-3 col-md-4 col-sm-6 col-xs-12'>
+            <mat-form-field>
+              <label hidden attr.for="{{ 'lastName' + i}}">Last Name</label>
+              <input (blur)="validateLastName(i)" id="{{ 'lastName' + i}}" type="text" placeholder="Last Name"
+                formControlName="lastName" matInput>
+              <mat-error *ngIf="errors.guardians[i]?.lastName">
+                {{ errors.guardians[i]?.lastName }}
+              </mat-error>
+            </mat-form-field>
+          </section>
+          <section class='col-lg-3 col-md-4 col-sm-6 col-xs-12'>
+            <mat-form-field>
+              <label hidden attr.for="{{ 'otherNames' + i }}">Other Names</label>
+              <input (blur)="validateOtherNames(i)" id="{{ 'otherNames' + i}}" type="text" placeholder="Other Names"
+                formControlName="otherNames" matInput>
+              <mat-error *ngIf="errors.guardians[i]?.otherNames">
+                {{ errors.guardians[i]?.lastName }}
+              </mat-error>
+            </mat-form-field>
+          </section>
+        </section>
+
+
+
+
       </fieldset>
       <fieldset [hidden]="confirmData[i]">
         <legend>
           <h2>Other Details</h2>
         </legend>
-        <mat-form-field>
-          <label hidden attr.for="{{ 'relation' + i}}">
-            <span class="material-icons" matPrefix>person</span>Relation To Student</label>
+        <section class='row'>
+          <section class='col-lg-3 col-md-4 col-sm-6 col-xs-12'>
+            <mat-form-field>
+              <label hidden attr.for="{{ 'relation' + i}}">
+                <span class="material-icons" matPrefix>person</span>Relation To Student</label>
 
-          <input (keyup)="validateRelation(i)" id="{{ 'relation' + i }}" type="text"
-            placeholder="Relationship To Student" formControlName="relation" matInput>
-          <mat-error *ngIf="errors.guardians[i]?.relation">
-            {{ errors.guardians[i]?.relation }}
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <label hidden attr.for="gender">Gender</label>
-          <mat-select id="{{ 'gender' + i}}" formControlName="gender" placeholder="Gender">
-            <mat-option *ngFor="let gender of genders" [value]="gender.id">
-              {{ gender.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <mat-form-field>
-          <input matInput [matDatepicker]="dateOfBirth" placeholder="Date Of Birth" formControlName="dateOfBirth"
-            (blur)="validateDateOfBirth(i)">
-          <mat-datepicker-toggle matSuffix [for]="dateOfBirth"></mat-datepicker-toggle>
-          <mat-datepicker #dateOfBirth></mat-datepicker>
-          <mat-error *ngIf="errors.guardians[i]?.dateOfBirth">
-            {{ errors.guardians[i]?.dateOfBirth }}
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="Birth Certificate Number" formControlName="birthCertNumber">
-        </mat-form-field>
-        <mat-form-field>
-          <label hidden attr.for="{{ 'religion' + i}}">Religion</label>
-          <mat-select id="{{ 'religion' + i}}" formControlName="religion" placeholder="Religion">
-            <mat-option *ngFor="let religion of religions" [value]="religion.id">
-              {{ religion.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+              <input (keyup)="validateRelation(i)" id="{{ 'relation' + i }}" type="text"
+                placeholder="Relationship To Student" formControlName="relation" matInput>
+              <mat-error *ngIf="errors.guardians[i]?.relation">
+                {{ errors.guardians[i]?.relation }}
+              </mat-error>
+            </mat-form-field>
+          </section>
+          <section class='col-lg-3 col-md-4 col-sm-6 col-xs-12'>
+            <mat-form-field>
+              <label hidden attr.for="gender">Gender</label>
+              <mat-select id="{{ 'gender' + i}}" formControlName="gender" placeholder="Gender">
+                <mat-option *ngFor="let gender of genders" [value]="gender.id">
+                  {{ gender.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </section>
+          <section class='col-lg-3 col-md-4 col-sm-6 col-xs-12'>
+            <mat-form-field>
+              <input matInput [matDatepicker]="dateOfBirth" placeholder="Date Of Birth" formControlName="dateOfBirth"
+                (blur)="validateDateOfBirth(i)">
+              <mat-datepicker-toggle matSuffix [for]="dateOfBirth"></mat-datepicker-toggle>
+              <mat-datepicker #dateOfBirth></mat-datepicker>
+              <mat-error *ngIf="errors.guardians[i]?.dateOfBirth">
+                {{ errors.guardians[i]?.dateOfBirth }}
+              </mat-error>
+            </mat-form-field>
+          </section>
+          <section class='col-lg-3 col-md-4 col-sm-6 col-xs-12'>
+            <mat-form-field>
+              <input matInput placeholder="Birth Certificate Number" formControlName="birthCertNumber">
+            </mat-form-field>
+          </section>
+          <section class='col-lg-3 col-md-4 col-sm-6 col-xs-12'>
+            <mat-form-field>
+              <label hidden attr.for="{{ 'religion' + i}}">Religion</label>
+              <mat-select id="{{ 'religion' + i}}" formControlName="religion" placeholder="Religion">
+                <mat-option *ngFor="let religion of religions" [value]="religion.id">
+                  {{ religion.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </section>
+        </section>
       </fieldset>
     </fieldset>
   </div>

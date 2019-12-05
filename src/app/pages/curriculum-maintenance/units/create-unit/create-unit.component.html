@@ -48,10 +48,10 @@
       </button>
     </section>
     <section class='row' style="margin-top: 20px;" formArrayName="subjectLevels">
-      <section class="col-lg-3 col-md-4 col-sm-12 col-xs-12"
-        *ngFor="let subjetLevel of unitForm.get('subjectLevels').controls; let i = index" [formGroupName]="i">
+      <section class="col-lg-6 col-md-12 col-sm-12 col-xs-12"
+        *ngFor="let subjetLevel of subjectLevels().controls; let i = index" [formGroupName]="i">
         <section class="row">
-          <section class='col-lg-8 col-md-9 col-sm-8 col-xs-9'>
+          <section class='col-lg-5 col-md-5 col-sm-5 col-xs-9'>
             <mat-form-field>
               <label hidden for='name'>Subject/Unit Name</label>
               <input (blur)='validatesubjectLevelName(i)' id='name' type='text' placeholder='Name'
@@ -59,9 +59,13 @@
               <mat-error *ngIf='errors.subjectLevels[i]'> {{ errors.subjectLevels[i] }} </mat-error>
             </mat-form-field>
           </section>
+          <section class='col-lg-5 col-md-5 col-sm-5 col-xs-9'>
+            <app-select type="class-levels:level" formControlName='classLevels' multiple></app-select>
+          </section>
+          
           <section class="col-">
             <button (click)="deleteSubjectLevel(i)" type="button"
-              [disabled]="unitForm.get('subjectLevels').controls.length < 1" mat-icon-button>
+              [disabled]="i === 0" mat-icon-button>
               <mat-icon class="text-danger" clickable>delete</mat-icon>
             </button>
 

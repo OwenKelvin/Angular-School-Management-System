@@ -61,11 +61,11 @@ export class StudentGuardianFormComponent implements OnInit {
   };
   countries: any;
   selectedPhoneCode: number | string;
-  selectedPhone: object;
+  selectedPhone: { country: any, code: any};
   phoneErrorMatcher: MyErrorStateMatcher;
   studentAdmissionNumber: any;
   usersData: any[];
-  confirmData: any[];
+  confirmData: boolean[];
   createError(i): void {
     if (!this.errors.guardians[i]) {
       this.errors.guardians[i] = {
@@ -114,7 +114,7 @@ export class StudentGuardianFormComponent implements OnInit {
     }
 
   }
-  validateAllFormFields(formGroup: FormGroup) {
+  validateAllFormFields(formGroup: FormGroup): void {
     Object.keys(formGroup.controls).forEach(field => {
       const control = formGroup.get(field);
       if (control instanceof FormControl) {
@@ -151,17 +151,17 @@ export class StudentGuardianFormComponent implements OnInit {
     this.getReligions.getAll().subscribe(data => {
       this.religions = data;
     });
-    this.store.dispatch({
-      type: SET_STUDENT_ID_NUMBER,
-      payload: 'Sqwerty'
-    });
+    // this.store.dispatch({
+    //   type: SET_STUDENT_ID_NUMBER,
+    //   payload: 'Sqwerty'
+    // });
     this.userIdentificaionForm = this.fb.group({
       guardians: this.fb.array([this.buildGuardianProfile()])
     });
 
     this.store.pipe(select(state => state.admissions)).subscribe(
       admissions => {
-        if (admissions.student_id_number) {
+        if (admissions && admissions.student_id_number) {
           this.studentAdmissionNumber = admissions.student_id_number;
         }
 
@@ -186,7 +186,7 @@ export class StudentGuardianFormComponent implements OnInit {
     this.subscribeToEmailChecking();
     this.getGuardians();
   }
-  getGuardians() {
+  getGuardians(): void {
     if (this.studentAdmissionNumber) {
       this.studentGuardians.getGuardiansFor(this.studentAdmissionNumber).subscribe(data => {
         // TODO update any guardians found
@@ -202,7 +202,7 @@ export class StudentGuardianFormComponent implements OnInit {
       });
     }
   }
-  subscribeToEmailChecking() {
+  subscribeToEmailChecking(): void {
     (this.userIdentificaionForm.get('guardians') as FormArray).controls.forEach((element, i) => {
       element.get('email').valueChanges.pipe(
         debounceTime(1000)
@@ -246,7 +246,7 @@ export class StudentGuardianFormComponent implements OnInit {
       relation: ['Father', Validators.required]
     });
   }
-  validateFirstName(i) {
+  validateFirstName(i): void {
     this.createError(i);
     const changeFirstNameError = () => {
       if ((this.guardians().controls[i].get('firstName').dirty || this.guardians().controls[i].get('firstName').touched) &&
@@ -268,7 +268,7 @@ export class StudentGuardianFormComponent implements OnInit {
       }
     }
   }
-  validateLastName(i) {
+  validateLastName(i): void {
     this.createError(i);
     if ((this.guardians().controls[i].get('lastName').dirty || this.guardians().controls[i].get('lastName').touched) &&
       !this.guardians().controls[i].get('lastName').valid) {
@@ -281,7 +281,7 @@ export class StudentGuardianFormComponent implements OnInit {
       }
     }
   }
-  validateRelation(i) {
+  validateRelation(i): void {
     this.createError(i);
     if ((this.guardians().controls[i].get('relation').dirty || this.guardians().controls[i].get('relation').touched) &&
       !this.guardians().controls[i].get('relation').valid) {
@@ -292,7 +292,7 @@ export class StudentGuardianFormComponent implements OnInit {
       }
     }
   }
-  validateIdNumber(i) {
+  validateIdNumber(i): void {
     this.createError(i);
     const idNumber = this.guardians().controls[i].get('idNumber');
     if ((idNumber.dirty || idNumber.touched) &&
@@ -306,13 +306,13 @@ export class StudentGuardianFormComponent implements OnInit {
       }
     }
   }
-  validateMiddleName(i) {
+  validateMiddleName(i): void {
     this.createError(i);
   }
-  validateOtherNames(i) {
+  validateOtherNames(i): void {
     this.createError(i);
   }
-  validateDateOfBirth(i) {
+  validateDateOfBirth(i): void {
     this.createError(i);
     if ((this.guardians().controls[i].get('dateOfBirth').dirty || this.guardians().controls[i].get('dateOfBirth').touched) &&
       !this.guardians().controls[i].get('dateOfBirth').valid) {
@@ -323,7 +323,7 @@ export class StudentGuardianFormComponent implements OnInit {
       }
     }
   }
-  validateEmail(i) {
+  validateEmail(i): void {
     this.createError(i);
     if ((this.guardians().controls[i].get('email').dirty || this.guardians().controls[i].get('email').touched) &&
       !this.guardians().controls[i].get('email').valid) {
@@ -335,13 +335,13 @@ export class StudentGuardianFormComponent implements OnInit {
     }
 
   }
-  updatePhoneInputErrorState(i) {
+  updatePhoneInputErrorState(i): void {
     if (this.guardians().controls[i].get('phone').dirty) {
       this.validatePhone(i);
     }
 
   }
-  validatePhone(i) {
+  validatePhone(i): void {
     this.createError(i);
     const getControl = this.guardians().controls[i].get('phoneDetails');
     const phone = String(getControl.get('phoneCode').value) + String(getControl.get('phoneNumber').value);
@@ -359,10 +359,10 @@ export class StudentGuardianFormComponent implements OnInit {
       this.errors.guardians[i].phone = null;
     }
   }
-  updateSelectedPhone(i) {
+  updateSelectedPhone(i): void {
     this.selectedPhone = this.countries.find(country => country.code === this.selectedPhoneCode);
   }
-  removeGuadian(i) {
+  removeGuadian(i): void {
     this.guardians().controls[i].get('phoneDetails').get('phoneNumber').setErrors(null);
     const confirmed = confirm(' Are You sure you wish to remove Item?');
     if (confirmed) {
@@ -371,7 +371,7 @@ export class StudentGuardianFormComponent implements OnInit {
       this.confirmData.splice(i, 1);
     }
   }
-  updateFieldsForEmail(i) {
+  updateFieldsForEmail(i): void {
     const data = this.usersData[i];
     this.guardians().controls[i].get('firstName').setValue(data.first_name);
     this.guardians().controls[i].get('lastName').setValue(data.last_name);
@@ -384,7 +384,7 @@ export class StudentGuardianFormComponent implements OnInit {
     this.guardians().controls[i].get('religion').setValue(data.religion_id);
     this.confirmData[i] = false;
   }
-  clearEmail(i) {
+  clearEmail(i): void {
     this.guardians().controls[i].get('email').setValue('');
     this.usersData[i] = null;
     this.confirmData[i] = false;

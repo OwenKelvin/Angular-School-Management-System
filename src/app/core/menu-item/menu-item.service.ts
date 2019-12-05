@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MenuItemsService as LibraryMenus } from 'src/app/pages/library/services/menu-items.service';
 import { MenuItemsService as AdmissionsMenus } from 'src/app/pages/admissions/services/menu-items.service';
-import { MenuItemsService as AcademicYearMenus } from 'src/app/pages/Academic-year/services/menu-items.service';
+import { AcademicYearMenuItemsService as AcademicYearMenus } from 'src/app/pages/academic-year/services/academic-year-menu-items.service';
 import { MenuItemsService as CurriculumMaintenanceMenus } from 'src/app/pages/curriculum-maintenance/services/menu-items.service';
 
 @Injectable({

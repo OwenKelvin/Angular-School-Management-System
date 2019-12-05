@@ -3,7 +3,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 @Pipe({ name: 'ordinal' })
 export class OrdinalPipe implements PipeTransform {
     transform(value: number): string {
-        if (value > 10) {
+        if (value > 10 && value < 20) {
             return value + 'th';
         }
         if (/1$/.test(value.toString())) {

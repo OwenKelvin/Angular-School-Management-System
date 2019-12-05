@@ -8,30 +8,40 @@ import { ClassLevelCategoryService } from '../services/class-level-category.serv
   styleUrls: ['./view-class-level-category.component.css']
 })
 export class ViewClassLevelCategoryComponent implements OnInit {
-
   classLevelCategory;
   id: any;
   isOpenNewClassLevelForm: boolean;
   constructor(
     private router: Router,
     private classLevelCategoryService: ClassLevelCategoryService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.classLevelCategory = { units: null };
-    const activatedRoute: ActivatedRouteSnapshot = this.router.routerState.root
-      .children[0].children[0].children[0].snapshot;
-    this.id = activatedRoute.params.id;
-    this.classLevelCategory = {};
-    this.classLevelCategoryService.get({ id: this.id, classLevel: 1 }).subscribe(item => {
-      this.classLevelCategory = item;
-    });
+    let activatedRoute: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
+    if (
+      this.router.routerState.root &&
+      this.router.routerState.root.children &&
+      this.router.routerState.root.children[0]
+    ) {
+      activatedRoute = this.router.routerState.root.children[0].children[0]
+        .children[0].snapshot;
+      this.id = activatedRoute.params.id;
+      this.classLevelCategory = {};
+      this.classLevelCategoryService
+        .get({ id: this.id, classLevel: 1 })
+        .subscribe(item => {
+          this.classLevelCategory = item;
+        });
+    }
   }
   onNewClassLevelSubmitted($event) {
     this.isOpenNewClassLevelForm = false;
-    this.classLevelCategoryService.get({ id: this.id, classLevel: 1 }).subscribe(item => {
-      this.classLevelCategory = item;
-    });
+    this.classLevelCategoryService
+      .get({ id: this.id, classLevel: 1 })
+      .subscribe(item => {
+        this.classLevelCategory = item;
+      });
   }
   closeNewClassLevelForm() {
     const formClosingConfirmed = confirm('Do you wish to close the form?');

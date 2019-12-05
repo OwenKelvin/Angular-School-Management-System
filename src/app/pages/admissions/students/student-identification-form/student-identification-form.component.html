@@ -1,99 +1,125 @@
-<form [formGroup]="userIdentificaionForm" (ngSubmit)="submit()">
-  <fieldset>
+<!-- <form [formGroup]="userIdentificaionForm" (ngSubmit)="submit()"> TODO Check why this is a function -->
+<form [formGroup]="userIdentificaionForm" class="d-flex flex-wrap">
+  <fieldset class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
     <legend>
       <h2>ID Number</h2>
     </legend>
-    <section class="id-number-field">
-      <section *ngIf="idNumber">
+    <section class="d-flex flex-wrap id-number-field">
+      <section *ngIf="idNumber" class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
         Studeny Id Number: {{ idNumber }}
       </section>
-      <label for="autogenerate-id-number" *ngIf="!idNumber">
-        Autogenerate Id Number <mat-checkbox type="checkbox" formControlName="autogenerateIdNumber"
-          id="autogenerate-id-number"></mat-checkbox>
-      </label>
+      <section class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+        <label for="autogenerate-id-number" *ngIf="!idNumber">
+          Autogenerate Id Number <mat-checkbox type="checkbox" formControlName="autogenerateIdNumber"
+            id="autogenerate-id-number"></mat-checkbox>
+        </label>
+      </section>
+      <section class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+        <mat-form-field *ngIf="!userIdentificaionForm.get('autogenerateIdNumber').value">
+          <label hidden for="idNumber"><span class="material-icons" matPrefix>person</span> Id Number</label>
 
-      <mat-form-field *ngIf="!userIdentificaionForm.get('autogenerateIdNumber').value">
-        <label hidden for="idNumber"><span class="material-icons" matPrefix>person</span> Id Number</label>
+          <input (blur)="validateIdNumber()" id="idNumber" type="text" placeholder="Id Number"
+            formControlName="idNumber" matInput>
+          <mat-error *ngIf="errors.idNumber">
+            {{ errors.idNumber }}
+          </mat-error>
 
-        <input (blur)="validateIdNumber()" id="idNumber" type="text" placeholder="Id Number" formControlName="idNumber"
-          matInput>
-        <mat-error *ngIf="errors.idNumber">
-          {{ errors.idNumber }}
-        </mat-error>
+        </mat-form-field>
+      </section>
 
-      </mat-form-field>
+
     </section>
   </fieldset>
-  <fieldset>
+  <fieldset class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
     <legend>
       <h2>Name</h2>
     </legend>
-    <mat-form-field>
-      <label hidden for="firstName"><span class="material-icons" matPrefix>person</span> First Name</label>
+    <section class='d-flex justify-content-around'>
+      <section class='col-lg-3 col-md-4 col-sm-6 col-xs-12'>
+        <mat-form-field>
+          <label hidden for="firstName"><span class="material-icons" matPrefix>person</span> First Name</label>
 
-      <input (keyup)="validateFirstName({ blur: false })" (blur)="validateFirstName()" id="firstName" type="text"
-        placeholder="first Name" formControlName="firstName" matInput>
-      <mat-error *ngIf="errors.firstName">
-        {{ errors.firstName }}
-      </mat-error>
-    </mat-form-field>
-    <mat-form-field>
-      <label hidden for="lastName">Middle Name</label>
-      <input (blur)="validateMiddleName()" id="middleName" type="text" placeholder="Middle Name"
-        formControlName="middleName" matInput>
-      <mat-error *ngIf="errors.middleName">
-        {{ errors.middleName }}
-      </mat-error>
-    </mat-form-field>
-    <mat-form-field>
-      <label hidden for="lastName">Last Name</label>
-      <input (blur)="validateLastName()" id="lastName" type="text" placeholder="Last Name" formControlName="lastName"
-        matInput>
-      <mat-error *ngIf="errors.lastName">
-        {{ errors.lastName }}
-      </mat-error>
-    </mat-form-field>
-    <mat-form-field>
-      <label hidden for="otherNames">Other Names</label>
-      <input (blur)="validateOtherNames()" id="otherNames" type="text" placeholder="Other Names"
-        formControlName="otherNames" matInput>
-      <mat-error *ngIf="errors.otherNames">
-        {{ errors.lastName }}
-      </mat-error>
-    </mat-form-field>
+          <input (keyup)="validateFirstName({ blur: false })" (blur)="validateFirstName()" id="firstName" type="text"
+            placeholder="first Name" formControlName="firstName" matInput>
+          <mat-error *ngIf="errors.firstName">
+            {{ errors.firstName }}
+          </mat-error>
+        </mat-form-field>
+      </section>
+      <section class='col-lg-3 col-md-4 col-sm-6 col-xs-12'>
+        <mat-form-field>
+          <label hidden for="lastName">Middle Name</label>
+          <input (blur)="validateMiddleName()" id="middleName" type="text" placeholder="Middle Name"
+            formControlName="middleName" matInput>
+          <mat-error *ngIf="errors.middleName">
+            {{ errors.middleName }}
+          </mat-error>
+        </mat-form-field>
+      </section>
+      <section class='col-lg-3 col-md-4 col-sm-6 col-xs-12'>
+        <mat-form-field>
+          <label hidden for="lastName">Last Name</label>
+          <input (blur)="validateLastName()" id="lastName" type="text" placeholder="Last Name"
+            formControlName="lastName" matInput>
+          <mat-error *ngIf="errors.lastName">
+            {{ errors.lastName }}
+          </mat-error>
+        </mat-form-field>
+      </section>
+      <section class='col-lg-3 col-md-4 col-sm-6 col-xs-12'>
+        <mat-form-field>
+          <label hidden for="otherNames">Other Names</label>
+          <input (blur)="validateOtherNames()" id="otherNames" type="text" placeholder="Other Names"
+            formControlName="otherNames" matInput>
+          <mat-error *ngIf="errors.otherNames">
+            {{ errors.lastName }}
+          </mat-error>
+        </mat-form-field>
+      </section>
+    </section>
+
   </fieldset>
-  <fieldset>
+  <fieldset class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
     <legend>
       <h2>Other Details</h2>
     </legend>
-    <mat-form-field>
-      <label hidden for="gender">Gender</label>
-      <mat-select id="gender" formControlName="gender" placeholder="Gender">
-        <mat-option *ngFor="let gender of genders" [value]="gender.id">
-          {{ gender.name }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <mat-form-field>
-      <input matInput [matDatepicker]="dateOfBirth" placeholder="Date Of Birth" formControlName="dateOfBirth"
-        (blur)="validateDateOfBirth()">
-      <mat-datepicker-toggle matSuffix [for]="dateOfBirth"></mat-datepicker-toggle>
-      <mat-datepicker #dateOfBirth></mat-datepicker>
-      <mat-error *ngIf="errors.dateOfBirth">
-        {{ errors.dateOfBirth }}
-      </mat-error>
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput placeholder="Birth Certificate Number" formControlName="birthCertNumber">
-    </mat-form-field>
-    <mat-form-field>
-      <label hidden for="religion">Religion</label>
-      <mat-select id="religion" formControlName="religion" placeholder="Religion">
-        <mat-option *ngFor="let religion of religions" [value]="religion.id">
-          {{ religion.name }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+    <section class='row'>
+      <section class='col-lg-3 col-md-4 col-sm-6 col-xs-12'>
+        <mat-form-field>
+          <label hidden for="gender">Gender</label>
+          <mat-select id="gender" formControlName="gender" placeholder="Gender">
+            <mat-option *ngFor="let gender of genders" [value]="gender.id">
+              {{ gender.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </section>
+      <section class='col-lg-3 col-md-4 col-sm-6 col-xs-12'>
+        <mat-form-field>
+          <input matInput [matDatepicker]="dateOfBirth" placeholder="Date Of Birth" formControlName="dateOfBirth"
+            (blur)="validateDateOfBirth()">
+          <mat-datepicker-toggle matSuffix [for]="dateOfBirth"></mat-datepicker-toggle>
+          <mat-datepicker #dateOfBirth></mat-datepicker>
+          <mat-error *ngIf="errors.dateOfBirth">
+            {{ errors.dateOfBirth }}
+          </mat-error>
+        </mat-form-field>
+      </section>
+      <section class='col-lg-3 col-md-4 col-sm-6 col-xs-12'>
+        <mat-form-field>
+          <input matInput placeholder="Birth Certificate Number" formControlName="birthCertNumber">
+        </mat-form-field>
+      </section>
+      <section class='col-lg-3 col-md-4 col-sm-6 col-xs-12'>
+        <mat-form-field>
+          <label hidden for="religion">Religion</label>
+          <mat-select id="religion" formControlName="religion" placeholder="Religion">
+            <mat-option *ngFor="let religion of religions" [value]="religion.id">
+              {{ religion.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </section>
+    </section>
   </fieldset>
 </form>

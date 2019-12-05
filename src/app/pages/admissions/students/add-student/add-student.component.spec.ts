@@ -7,6 +7,12 @@ import { StudentIdentificationFormComponent } from '../student-identification-fo
 import { CustomMaterialModule } from 'src/app/shared/custom-material/custom-material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { StudentGuardianFormComponent } from '../student-guardian-form/student-guardian-form.component';
+import { OrdinalPipe } from 'src/app/shared/pipes/ordinal.pipe';
+import { StoreModule } from '@ngrx/store';
+import { reducer } from 'src/app/store/reducers';
+import { StudentAcademicYearAllocationComponent } from '../student-academic-year-allocation/student-academic-year-allocation.component';
+import { SelectComponent } from 'src/app/core/select/select.component';
 
 describe('AddStudentComponent', () => {
   let component: AddStudentComponent;
@@ -20,9 +26,16 @@ describe('AddStudentComponent', () => {
         FormsModule,
         ReactiveFormsModule,
         CustomMaterialModule,
-        HttpClientModule
+        HttpClientModule,
+        StoreModule.forRoot(reducer)
       ],
-      declarations: [ AddStudentComponent, StudentIdentificationFormComponent ]
+      declarations: [
+        SelectComponent,
+        AddStudentComponent,
+        StudentIdentificationFormComponent,
+        StudentGuardianFormComponent,
+        OrdinalPipe,
+        StudentAcademicYearAllocationComponent]
     })
     .compileComponents();
   }));

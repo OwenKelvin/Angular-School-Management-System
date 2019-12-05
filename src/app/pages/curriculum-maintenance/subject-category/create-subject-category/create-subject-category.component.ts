@@ -38,16 +38,23 @@ export class CreateSubjectCategoryComponent implements OnInit {
     this.addSubject();
     this.generateForm();
     this.errors = { name: '' };
-    const activatedRoute: ActivatedRouteSnapshot = this.router.routerState.root
-      .children[0].children[0].children[0].snapshot;
-    const id = activatedRoute.params.id;
-    if (id === undefined) {
-      this.newForm = true;
-    } else {
-      this.newForm = false;
-      this.subjectCategory.get({ id }).subscribe(item => {
-        this.generateForm(item);
-      });
+    let activatedRoute: ActivatedRouteSnapshot;
+    if (
+      this.router.routerState.root &&
+      this.router.routerState.root.children &&
+      this.router.routerState.root.children[0]
+    ) {
+      activatedRoute = this.router.routerState.root.children[0].children[0]
+        .children[0].snapshot;
+      const id = activatedRoute.params.id;
+      if (id === undefined) {
+        this.newForm = true;
+      } else {
+        this.newForm = false;
+        this.subjectCategory.get({ id }).subscribe(item => {
+          this.generateForm(item);
+        });
+      }
     }
   }
   generateForm(
@@ -87,7 +94,7 @@ export class CreateSubjectCategoryComponent implements OnInit {
       abbr: ['', [Validators.required]],
       active: [true],
       subjectLevels: this.fb.array([
-        this.fb.group({ name: ['', [Validators.required]] })
+        this.fb.group({ classLevels: [], name: ['', [Validators.required]] })
       ])
     });
     this.units.push((newGroup as unknown) as never);
@@ -98,31 +105,31 @@ export class CreateSubjectCategoryComponent implements OnInit {
   submit() {
     if (this.newSubjectCategoryForm.valid) {
       const dataSubmit = {
-        ...this.newSubjectCategoryForm.value, units: (this.units as Array<any>)
-          .map(item => item.value)
+        ...this.newSubjectCategoryForm.value,
+        units: (this.units as Array<any>).map(item => item.value)
       };
-      this.newSubjectCategory
-        .submit(dataSubmit)
-        .subscribe(data => {
-          if (this.newForm) {
-            this.generateForm();
-            this.newSubjectCategoryForm.get('name').clearValidators();
-            this.newSubjectCategoryForm.get('name').updateValueAndValidity();
-            this.units = [];
-            this.addSubject();
-          }
-          this.store.dispatch({
-            type: SHOW_SUCCESS_MESSAGE,
-            payload: true
-          });
+      this.newSubjectCategory.submit(dataSubmit).subscribe(data => {
+        if (this.newForm) {
+          this.generateForm();
+          this.newSubjectCategoryForm.get('name').clearValidators();
+          this.newSubjectCategoryForm.get('name').updateValueAndValidity();
+          this.units = [];
+          this.addSubject();
+        }
+        this.store.dispatch({
+          type: SHOW_SUCCESS_MESSAGE,
+          payload: true
         });
+      });
     } else {
       this.newSubjectCategoryForm.markAllAsTouched();
       this.validateName();
     }
   }
   removeSubject(i) {
-    const removalConfirmed = confirm('Please confirm you wish to remove section');
+    const removalConfirmed = confirm(
+      'Please confirm you wish to remove section'
+    );
     if (removalConfirmed) {
       this.units.splice(i, 1);
     }

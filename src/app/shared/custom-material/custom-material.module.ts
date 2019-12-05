@@ -5,7 +5,6 @@ import {
   MatTabsModule,
   MatDatepickerModule,
   MatNativeDateModule,
-  MatSnackBarModule,
   MatSlideToggleModule,
   MatTableModule,
   MatChipsModule,
@@ -21,7 +20,8 @@ import {
   MatListModule,
   MatExpansionModule,
   MatDialogModule,
-  MatSelectModule
+  MatSelectModule,
+  MatSnackBarModule
 } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
