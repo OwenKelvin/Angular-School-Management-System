@@ -28,6 +28,7 @@ jobs:
             - v1-dependencies-
 
       - run: yarn install
+      - run: ng update @angular/cli @angular/core @angular/material @angular/cdk
 
       - save_cache:
           paths:
