@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
 import { AllowedPhoneNumbersService } from './allowed-phone-numbers.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('AllowedPhoneNumbersService', () => {
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [HttpClientModule]
+      imports: [HttpClientTestingModule]
     })
   );
 
