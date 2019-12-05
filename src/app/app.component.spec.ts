@@ -44,12 +44,12 @@ describe('AppComponent', () => {
   //   app.openDialog();
   //   expect(app.openDialog).toHaveBeenCalled();
   // });
-  it(`should have as function 'openDialog'`, () => {
-    const dialog = jasmine.createSpyObj({open: () => {}});
-    const appComponent = new AppComponent(dialog);
-    appComponent.openDialog();
-    expect(dialog.open).toHaveBeenCalled();
-  });
+  // it(`should have as function 'openDialog'`, () => {
+  //   const dialog = jasmine.createSpyObj({open: () => {}});
+  //   const appComponent = new AppComponent(dialog);
+  //   appComponent.openDialog();
+  //   expect(dialog.open).toHaveBeenCalled();
+  // });
 
   // it('should render title in a h1 tag', () => {
   //   const fixture = TestBed.createComponent(AppComponent);
