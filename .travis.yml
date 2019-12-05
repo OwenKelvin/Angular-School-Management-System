@@ -22,6 +22,7 @@ cache:
 
 install:
   - npm install
+  - npm i coveralls
   
 before_install:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
@@ -29,7 +30,9 @@ before_install:
   - ./cc-test-reporter before-build
 
 script:
-  - npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox --code-coverage
+  - npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox --code-coverage && cat ./coverage/**/lcov.info
+  # - copy ./coverage/FsmsApp ./coverage
+  # - npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox --code-coverage
   
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
