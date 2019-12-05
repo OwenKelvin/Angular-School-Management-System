@@ -30,10 +30,12 @@ before_install:
   - ./cc-test-reporter before-build
 
 script:
-  - npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox --code-coverage && cat ./coverage/**/lcov.info | coveralls
+  - npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox --code-coverage
   # - copy ./coverage/FsmsApp ./coverage
   # - npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox --code-coverage
   
-after_script:
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
-  
+# after_script:
+
+after_success:
+  - cat ./coverage/**/lcov.info | coveralls
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT  
