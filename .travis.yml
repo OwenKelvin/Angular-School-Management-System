@@ -29,7 +29,7 @@ before_install:
   - ./cc-test-reporter before-build
 
 script:
-  - npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox --coverage
+  - npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
   
 after_script:
   - ./cc-test-reporter format-coverage -t simplecov -o coverage/codeclimate.backend.json coverage/backend/.resultset.json # Format backend coverage
