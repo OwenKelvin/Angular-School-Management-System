@@ -22,6 +22,7 @@ describe('AuthenticateService', () => {
     const config = jasmine.createSpyObj({ post: () => { } });
     const spy = spyOn(mockHttp, 'post').and.returnValue({pipe: () => {}});
     const service = new AuthenticationService(store, mockHttp, config);
+    service.logout();
     service.login({ username: 'user', password: 'password', rememberMe: true });
     expect(spy).toHaveBeenCalled();
   }));
@@ -34,13 +35,13 @@ describe('AuthenticateService', () => {
   //   service.logout();
   //   expect(spy).toHaveBeenCalled();
   // }));
-  it('should have a login function that calls http with correct parameters', inject([HttpClient], (http: HttpClient) => {
-    const store = jasmine.createSpyObj({ dispatch: () => { } });
-    const mockHttp = Object.create(http);
-    const config = jasmine.createSpyObj({ post: () => { } });
-    const spy = spyOn(mockHttp, 'post').and.returnValue({pipe: () => {}});
-    const service = new AuthenticationService(store, mockHttp, config);
-    service.logout();
-    expect(service.authorizationToken()).toBeTruthy();
-  }));
+  // it('should have a login function that calls http with correct parameters', inject([HttpClient], (http: HttpClient) => {
+  //   const store = jasmine.createSpyObj({ dispatch: () => { } });
+  //   const mockHttp = Object.create(http);
+  //   const config = jasmine.createSpyObj({ post: () => { } });
+  //   const spy = spyOn(mockHttp, 'post').and.returnValue({pipe: () => {}});
+  //   const service = new AuthenticationService(store, mockHttp, config);
+  //   service.logout();
+  //   expect(service.authorizationToken()).toBeTruthy();
+  // }));
 });
