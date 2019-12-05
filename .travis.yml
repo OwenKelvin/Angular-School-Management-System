@@ -21,4 +21,4 @@ install:
 
 script:
   # - npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
-  - npm run test -- --watch=false --browsers=ChromeHeadlessNoSandbox
+  - npm run test -- --watch=false --browsers=Chrome
