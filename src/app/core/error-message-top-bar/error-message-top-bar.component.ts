@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { IDialogData } from '../error-dialog/error-dialog.component';
 import { IMessage } from 'src/app/shared/services/message/message.service';
 import { Store, select } from '@ngrx/store';
-import { map } from 'rxjs/operators';
 import { TOGGLE_DIALOGUE } from 'src/app/store/reducers';
 
 @Component({

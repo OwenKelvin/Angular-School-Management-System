@@ -11,7 +11,7 @@ describe('ErrorMessageTopBarComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [CustomMaterialModule, StoreModule.forRoot({})],
-      declarations: [ErrorMessageTopBarComponent]
+      declarations: [ErrorMessageTopBarComponent],
     })
       .compileComponents();
   }));
@@ -24,5 +24,17 @@ describe('ErrorMessageTopBarComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+  it('should call dispatch method when "closeDialog" is called', () => {
+    const store = jasmine.createSpyObj({ dispatch: () => { } });
+    const errorMessageTopBarComponent = new ErrorMessageTopBarComponent(store);
+    errorMessageTopBarComponent.closeDialog();
+    expect(store.dispatch).toHaveBeenCalled();
+  });
+  it('should have as showMessage = true when "openDialog" is called', () => {
+    const store = jasmine.createSpyObj({ dispatch: () => { } });
+    const errorMessageTopBarComponent = new ErrorMessageTopBarComponent(store);
+    errorMessageTopBarComponent.openDialog();
+    expect(errorMessageTopBarComponent.showMessage).toBeTruthy();
   });
 });
