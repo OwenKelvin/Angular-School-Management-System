@@ -2,8 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SelectComponent } from './select.component';
 import { CustomMaterialModule } from 'src/app/shared/custom-material/custom-material.module';
-import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('SelectComponent', () => {
   let component: SelectComponent;
@@ -11,7 +11,7 @@ describe('SelectComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [CustomMaterialModule, HttpClientModule, BrowserAnimationsModule],
+      imports: [CustomMaterialModule, HttpClientTestingModule, BrowserAnimationsModule],
       declarations: [ SelectComponent ]
     })
     .compileComponents();

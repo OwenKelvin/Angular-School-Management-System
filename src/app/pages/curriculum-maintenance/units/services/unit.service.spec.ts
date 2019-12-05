@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
 import { UnitService } from './unit.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('UnitService', () => {
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [HttpClientModule]
+      imports: [HttpClientTestingModule]
     })
   );
 

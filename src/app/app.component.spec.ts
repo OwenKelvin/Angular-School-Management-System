@@ -8,7 +8,6 @@ import { reducer } from './store/reducers';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ErrorDialogComponent } from './core/error-dialog/error-dialog.component';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
-import { MatDialog } from '@angular/material';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
