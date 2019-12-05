@@ -1,14 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
 import { AuthenticationService } from './authentication.service';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 
 describe('AuthenticateService', () => {
   beforeEach(() => TestBed.configureTestingModule({
-    imports: [HttpClientModule, StoreModule.forRoot({})]
+    imports: [HttpClientTestingModule, StoreModule.forRoot({})]
   }));
 
   it('should be created', () => {

@@ -7,10 +7,10 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { MatMenuWrapperComponent } from '../mat-menu-wrapper/mat-menu-wrapper.component';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
-import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
 import { reducers } from 'src/app/store/reducers';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('SidebarComponent', () => {
   let component: SidebarComponent;
@@ -20,7 +20,7 @@ describe('SidebarComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         BrowserAnimationsModule,
-        HttpClientModule,
+        HttpClientTestingModule,
         MatIconModule,
         MatListModule,
         MatSidenavModule,

@@ -2,11 +2,10 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { StudentIdentificationFormComponent } from './student-identification-form.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { MatFormFieldModule, MatDatepickerModule } from '@angular/material';
 import { CustomMaterialModule } from 'src/app/shared/custom-material/custom-material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('StudentIdentificationFormComponent', () => {
   let component: StudentIdentificationFormComponent;
@@ -19,7 +18,7 @@ describe('StudentIdentificationFormComponent', () => {
         CustomMaterialModule,
         BrowserAnimationsModule,
         ReactiveFormsModule,
-        HttpClientModule,
+        HttpClientTestingModule,
         StoreModule.forRoot({})
       ],
       declarations: [StudentIdentificationFormComponent]

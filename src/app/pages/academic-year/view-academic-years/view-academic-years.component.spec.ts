@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ViewAcademicYearsComponent } from './view-academic-years.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('ViewAcademicYearsComponent', () => {
   let component: ViewAcademicYearsComponent;
@@ -10,7 +10,7 @@ describe('ViewAcademicYearsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule, HttpClientModule],
+      imports: [RouterTestingModule, HttpClientTestingModule],
       declarations: [ ViewAcademicYearsComponent ]
     })
     .compileComponents();

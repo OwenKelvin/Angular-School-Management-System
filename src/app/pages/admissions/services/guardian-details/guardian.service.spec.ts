@@ -1,11 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 
 import { GuardianService } from './guardian.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('GuardianService', () => {
   beforeEach(() => TestBed.configureTestingModule({
-    imports: [HttpClientModule]
+    imports: [HttpClientTestingModule]
   }));
 
   it('should be created', () => {

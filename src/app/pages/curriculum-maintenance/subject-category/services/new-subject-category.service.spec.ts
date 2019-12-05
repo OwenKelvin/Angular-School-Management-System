@@ -1,11 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 
 import { NewSubjectCategoryService } from './new-subject-category.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('NewSubjectCategoryService', () => {
   beforeEach(() => TestBed.configureTestingModule({
-    imports: [HttpClientModule]
+    imports: [HttpClientTestingModule]
   }));
 
   it('should be created', () => {
