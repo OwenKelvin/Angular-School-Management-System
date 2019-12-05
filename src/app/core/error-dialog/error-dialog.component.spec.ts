@@ -35,4 +35,11 @@ describe('ErrorDialogComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  it('should have as function "onNoClick" that calls dialogRef.close()', () => {
+    const dialogRef = jasmine.createSpyObj({ close: () => { } });
+    const data = jasmine.createSpyObj({open: () => {}});
+    const errorDialogComponent = new ErrorDialogComponent(dialogRef, data);
+    errorDialogComponent.onNoClick();
+    expect(dialogRef.close).toHaveBeenCalled();
+  });
 });

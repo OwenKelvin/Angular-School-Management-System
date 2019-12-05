@@ -8,6 +8,7 @@ import { reducer } from './store/reducers';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ErrorDialogComponent } from './core/error-dialog/error-dialog.component';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+import { MatDialog } from '@angular/material';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -36,12 +37,18 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
+  // it(`should have as function 'openDialog'`, () => {
+  //   const fixture = TestBed.createComponent(AppComponent);
+  //   const app = fixture.debugElement.componentInstance;
+  //   spyOn(app, 'openDialog');
+  //   app.openDialog();
+  //   expect(app.openDialog).toHaveBeenCalled();
+  // });
   it(`should have as function 'openDialog'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    spyOn(app, 'openDialog');
-    app.openDialog();
-    expect(app.openDialog).toHaveBeenCalled();
+    const dialog = jasmine.createSpyObj({open: () => {}});
+    const appComponent = new AppComponent(dialog);
+    appComponent.openDialog();
+    expect(dialog.open).toHaveBeenCalled();
   });
 
   // it('should render title in a h1 tag', () => {
