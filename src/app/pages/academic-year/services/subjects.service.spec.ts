@@ -1,11 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 
 import { SubjectsService } from './subjects.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('SubjectsService', () => {
   beforeEach(() => TestBed.configureTestingModule({
-    imports: [HttpClientModule]
+    imports: [HttpClientTestingModule]
   }));
 
   it('should be created', () => {

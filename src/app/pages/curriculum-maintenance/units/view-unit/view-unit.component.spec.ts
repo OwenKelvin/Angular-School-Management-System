@@ -5,7 +5,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { CustomMaterialModule } from 'src/app/shared/custom-material/custom-material.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MessageComponent } from 'src/app/core/message/message.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('ViewUnitComponent', () => {
   let component: ViewUnitComponent;
@@ -13,7 +13,7 @@ describe('ViewUnitComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule, CustomMaterialModule, SharedModule, HttpClientModule],
+      imports: [RouterTestingModule, CustomMaterialModule, SharedModule, HttpClientTestingModule],
       declarations: [ ViewUnitComponent, MessageComponent ]
     })
     .compileComponents();

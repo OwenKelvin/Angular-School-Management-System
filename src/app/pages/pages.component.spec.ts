@@ -4,12 +4,12 @@ import { PagesComponent } from './pages.component';
 import { SidebarComponent } from '../shared/sidebar/sidebar.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatMenuWrapperComponent } from '../shared/mat-menu-wrapper/mat-menu-wrapper.component';
-import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CustomMaterialModule } from '../shared/custom-material/custom-material.module';
 import { StoreModule } from '@ngrx/store';
 import { reducer } from '../store/reducers';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('PagesComponent', () => {
   let component: PagesComponent;
@@ -20,7 +20,7 @@ describe('PagesComponent', () => {
       imports: [
         BrowserAnimationsModule,
         RouterTestingModule,
-        HttpClientModule,
+        HttpClientTestingModule,
         CustomMaterialModule,
         StoreModule.forRoot(reducer),
       ],

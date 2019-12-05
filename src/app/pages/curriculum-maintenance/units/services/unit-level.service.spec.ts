@@ -1,11 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 
 import { UnitLevelService } from './unit-level.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('UnitService', () => {
   beforeEach(() => TestBed.configureTestingModule({
-    imports: [HttpClientModule]
+    imports: [HttpClientTestingModule]
   }));
 
   it('should be created', () => {

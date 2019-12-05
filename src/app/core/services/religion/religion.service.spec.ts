@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
 import { ReligionService } from './religion.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('ReligionService', () => {
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [HttpClientModule]
+      imports: [HttpClientTestingModule]
     })
   );
 

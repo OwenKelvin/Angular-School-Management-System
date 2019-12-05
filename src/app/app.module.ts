@@ -8,7 +8,7 @@ import { LoginModule } from './login/login.module';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ErrorsModule } from './errors/errors.module';
 import { RouterModule } from '@angular/router';
 import { PagesModule } from './pages/pages.module';
@@ -24,6 +24,7 @@ import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
 import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 import { CacheInterceptor } from './core/interceptors/cache.interceptor';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 @NgModule({
   imports: [
@@ -60,7 +61,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
   exports: [
     // SharedModule,
     // ReactiveFormsModule,
-    HttpClientModule,
+    HttpClientTestingModule,
     // RouterModule,
     // FormsModule'
     SidebarComponent
