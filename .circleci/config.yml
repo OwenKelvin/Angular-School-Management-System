@@ -13,7 +13,8 @@ jobs:
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
       # - image: circleci/mongo:3.4.4
-
+    # environment:
+    #   CHROME_BIN: /usr/bin/google-chrome
     working_directory: ~/repo
 
     steps:
@@ -34,4 +35,4 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
       # run tests!
-      # - run: yarn test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox --code-coverage
+      - run: yarn test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox --code-coverage
