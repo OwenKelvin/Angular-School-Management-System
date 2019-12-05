@@ -30,7 +30,7 @@ before_install:
   - ./cc-test-reporter before-build
 
 script:
-  - npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox --code-coverage && cat ./coverage/**/lcov.info
+  - npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox --code-coverage && cat ./coverage/**/lcov.info | coveralls
   # - copy ./coverage/FsmsApp ./coverage
   # - npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox --code-coverage
   
