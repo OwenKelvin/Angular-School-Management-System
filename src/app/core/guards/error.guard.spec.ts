@@ -1,13 +1,13 @@
-import { TestBed, async, inject } from '@angular/core/testing';
+import { TestBed, inject } from '@angular/core/testing';
 
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientModule } from '@angular/common/http';
 import { ErrorGuard } from './error.guard';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('ErrorGuard', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule, HttpClientModule],
+      imports: [RouterTestingModule, HttpClientTestingModule],
       providers: [ErrorGuard]
     });
   });
