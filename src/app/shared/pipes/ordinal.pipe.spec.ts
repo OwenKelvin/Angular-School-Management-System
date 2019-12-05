@@ -29,4 +29,7 @@ describe('ORDINAL PIPE', () => {
     it('Should return "21st" when value is 21', () => {
         expect(pipe.transform(22)).toBe('22nd');
     });
+    it('Should return "50th" when value is 50', () => {
+        expect(pipe.transform(50)).toBe('50th');
+    });
 });
