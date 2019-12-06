@@ -15,7 +15,7 @@ jobs:
       # - image: circleci/mongo:3.4.4
     environment:
       CHROME_BIN: /usr/bin/google-chrome
-    working_directory: ~/FSMSAPP
+    working_directory: ~/Angular-School-Management-System
 
     steps:
       - checkout
@@ -35,4 +35,4 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
       # run tests!
-      - run: npm test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox --code-coverage
+      - run: npm test --single-run --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox --code-coverage
