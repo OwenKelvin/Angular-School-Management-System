@@ -41,6 +41,6 @@ jobs:
           name: Linting
           command: npm run lint
       # Test the source code
-      - run:
-          name: Testing
-          command: npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+      # - run:
+      #     name: Testing
+      #     command: npm run test -- --no-watch --no-progress
