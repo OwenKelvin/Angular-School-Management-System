@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/node:12.6.0
+      - image: circleci/node:12-browsers
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -35,4 +35,12 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
       # run tests!
-      - run: npm test --single-run --code-coverage
+      # - run: npm test --single-run --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox --code-coverage
+      # Lint the source code
+      - run:
+          name: Linting
+          command: npm run lint
+      # Test the source code
+      - run:
+          name: Testing
+          command: npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
