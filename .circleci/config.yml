@@ -35,4 +35,4 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
       # run tests!
-      - run: npm test --single-run --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox --code-coverage
+      - run: npm test --single-run --code-coverage
